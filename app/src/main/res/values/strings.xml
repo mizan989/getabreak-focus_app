@@ -6,32 +6,32 @@
 
     <!-- region App & Services -->
     <!-- not named "app_name": that resource name is already taken by a library -->
-    <string name="app_displayName" translatable="false">Break</string>
-    <string name="app_quickSettingsTile">Pause Break</string>
-    <string name="app_quickSettingsTile_paused">Break has been paused for %d minutes.</string>
+    <string name="app_displayName" translatable="false">getabreak</string>
+    <string name="app_quickSettingsTile">Pause getabreak</string>
+    <string name="app_quickSettingsTile_paused">getabreak has been paused for %d minutes.</string>
     <string name="app_quickSettingsTile_noPause">Take another pause in %d minutes.</string>
     <string name="app_brakeTile_until">Until %s</string>
-    <string name="app_accessibilityService_name">Break Accessibility Service</string>
-    <string name="app_accessibilityService_description">Applies your Break rules in real time based on the app you are using.</string>
+    <string name="app_accessibilityService_name">getabreak Accessibility Service</string>
+    <string name="app_accessibilityService_description">Applies your getabreak rules in real time based on the app you are using.</string>
     <string name="app_notification_action_pause">Pause</string>
     <string name="app_notification_action_resume">Resume</string>
-    <string name="app_notification_channelName">Break Service</string>
-    <string name="app_notification_channelDescription">Keeps Break active in the background</string>
-    <string name="app_notification_alertChannelName">Break alerts</string>
-    <string name="app_notification_alertChannelDescription">Tells you when your phone has stopped Break</string>
+    <string name="app_notification_channelName">getabreak Service</string>
+    <string name="app_notification_channelDescription">Keeps getabreak active in the background</string>
+    <string name="app_notification_alertChannelName">getabreak alerts</string>
+    <string name="app_notification_alertChannelDescription">Tells you when your phone has stopped getabreak</string>
     <string name="app_notification_screenTime">%s screen time today</string>
     <string name="app_notification_budget">%1$s: %2$s</string>
-    <string name="reliability_serviceDown_title">Break stopped</string>
-    <string name="reliability_serviceDown_message">Your phone stopped Break in the background. Tap to start it again.</string>
-    <string name="reliability_keepAlive_title">Keep Break running</string>
-    <string name="reliability_keepAlive_subtitle">Show an ongoing notification with today\'s screen time, so the system is less likely to stop Break in the background.</string>
-    <string name="reliability_keepAlive_locked_subtitle">Locked while your commitment password is in force. Without the notification, Break could simply be swiped away.</string>
+    <string name="reliability_serviceDown_title">getabreak stopped</string>
+    <string name="reliability_serviceDown_message">Your phone stopped getabreak in the background. Tap to start it again.</string>
+    <string name="reliability_keepAlive_title">Keep getabreak running</string>
+    <string name="reliability_keepAlive_subtitle">Show an ongoing notification with today\'s screen time, so the system is less likely to stop getabreak in the background.</string>
+    <string name="reliability_keepAlive_locked_subtitle">Locked while your commitment password is in force. Without the notification, getabreak could simply be swiped away.</string>
     <string name="reliability_battery_title">Allow unrestricted battery</string>
-    <string name="reliability_battery_subtitle">Stops the system from putting Break to sleep. Recommended if your phone aggressively closes background apps.</string>
+    <string name="reliability_battery_subtitle">Stops the system from putting getabreak to sleep. Recommended if your phone aggressively closes background apps.</string>
     <string name="reliability_onboarding_title">Stay reliable</string>
-    <string name="reliability_onboarding_message">Some phones stop background apps to save battery, which can silently switch Break off. These optional settings help it keep running.</string>
-    <string name="reliability_forceStopped_title">Your phone switched Break off</string>
-    <string name="reliability_forceStopped_message">Android switches off an app\'s accessibility service whenever the app is force-stopped, and clearing your recent apps or your phone\'s battery manager can do exactly that. Lock Break in your recent apps, let it run in the background, then start it again.</string>
+    <string name="reliability_onboarding_message">Some phones stop background apps to save battery, which can silently switch getabreak off. These optional settings help it keep running.</string>
+    <string name="reliability_forceStopped_title">Your phone switched getabreak off</string>
+    <string name="reliability_forceStopped_message">Android switches off an app\'s accessibility service whenever the app is force-stopped, and clearing your recent apps or your phone\'s battery manager can do exactly that. Lock getabreak in your recent apps, let it run in the background, then start it again.</string>
     <string name="reliability_forceStopped_howTo">Show me how</string>
     <string name="reliability_forceStopped_dismiss">Leave it off</string>
     <!-- endregion -->
@@ -73,12 +73,12 @@
     <!-- region Navigation -->
     <string name="navigation_reportIssue">Report an issue</string>
     <string name="navigation_about">About &amp; settings</string>
-    <string name="navigation_premium">Break Premium</string>
+    <string name="navigation_premium">getabreak Premium</string>
     <!-- endregion -->
 
     <!-- region Home -->
-    <string name="home_start">Start Break</string>
-    <string name="home_stop">Stop Break</string>
+    <string name="home_start">Start getabreak</string>
+    <string name="home_stop">Stop getabreak</string>
     <string name="home_state_active">Running</string>
     <string name="home_state_paused">Paused until %s</string>
     <string name="home_state_braking">Brake on until %s</string>
@@ -87,17 +87,17 @@
     <string name="home_screenTime_unavailable">Screen time unavailable</string>
     <string name="home_screenTime_allLeftOut">Everything you used today is left out of the numbers.</string>
     <string name="home_screenTime_allLeftOut_action">Change what counts</string>
-    <string name="home_uninstall">Uninstall Break</string>
-    <string name="home_uninstall_hint">Uninstalling may fail because Break has elevated permissions. Tap here to revoke them first.</string>
+    <string name="home_uninstall">Uninstall getabreak</string>
+    <string name="home_uninstall_hint">Uninstalling may fail because getabreak has elevated permissions. Tap here to revoke them first.</string>
     <string name="home_uninstall_blocked_hint">Disabled while Commitment Password is active.</string>
     <string name="home_uninstall_dialog_title">Are you sure?</string>
-    <string name="home_uninstall_dialog_message">This revokes Break permissions so you can uninstall it normally.\n\nIf you install Break again, you will need to grant these permissions again.</string>
+    <string name="home_uninstall_dialog_message">This revokes getabreak permissions so you can uninstall it normally.\n\nIf you install getabreak again, you will need to grant these permissions again.</string>
     <string name="home_finishSetup_title">Finish your setup</string>
     <string name="home_finishSetup_message">A group turns apps gray and is waiting on one permission.</string>
     <string name="home_finishSetup_message_overlay">The wait, the lock and the scroll breaks are waiting for the \"display over other apps\" permission.</string>
     <string name="home_finishSetup_action">Finish</string>
-    <string name="home_batteryOptimization_title">Keep Break running</string>
-    <string name="home_batteryOptimization_message">Your phone may stop Break in the background. Allow it to run without battery restrictions so your rules keep working.</string>
+    <string name="home_batteryOptimization_title">Keep getabreak running</string>
+    <string name="home_batteryOptimization_message">Your phone may stop getabreak in the background. Allow it to run without battery restrictions so your rules keep working.</string>
     <string name="home_batteryOptimization_action">Allow</string>
     <string name="home_batteryOptimization_why">Why?</string>
     <string name="home_batteryOptimization_dismiss">Not now</string>
@@ -125,7 +125,7 @@
     <string name="appList_browser_websites_all">Active on every website in it</string>
     <string name="appList_browser_websites_only">Active only on the selected websites in it</string>
     <string name="appList_browser_websites_allExcept">Active on every website in it except the selected ones</string>
-    <string name="appList_browser_websites_unreadable">Break can\'t read the websites in it</string>
+    <string name="appList_browser_websites_unreadable">getabreak can\'t read the websites in it</string>
     <plurals name="websites_coveredBrowsers">
         <item quantity="one">Active on every website in %s anyway, because the browser itself is covered on the Apps side.</item>
         <item quantity="other">Active on every website in %s anyway, because the browsers themselves are covered on the Apps side.</item>
@@ -169,8 +169,8 @@
     <string name="websites_source_stevenBlackAndUt1">from the StevenBlack hosts lists and the UT1 blacklists</string>
     <!-- %s is one browser or several, like "Chrome and Firefox" -->
     <string name="websites_browsers_readable">Works in %s.</string>
-    <string name="websites_browsers_unreadable">Break can\'t read %s, so websites go unnoticed there. Add the browser itself as an app instead.</string>
-    <string name="websites_browsers_none">Break can\'t read any of your browsers. Chrome, Firefox, Samsung Internet, Brave, Edge and most of their relatives work.</string>
+    <string name="websites_browsers_unreadable">getabreak can\'t read %s, so websites go unnoticed there. Add the browser itself as an app instead.</string>
+    <string name="websites_browsers_none">getabreak can\'t read any of your browsers. Chrome, Firefox, Samsung Internet, Brave, Edge and most of their relatives work.</string>
     <string name="websites_inAppBrowsers">Links that open inside another app, in Instagram\'s own browser for example, aren\'t covered.</string>
     <!-- endregion -->
 
@@ -495,7 +495,7 @@
     <!-- region Feature: Do Not Disturb -->
     <string name="feature_doNotDisturb">\"Do Not Disturb\" mode</string>
     <string name="feature_doNotDisturb_subtitle">Make it your new default</string>
-    <string name="feature_doNotDisturb_description">Automatically turns Do Not Disturb on while Break is active. Configure exceptions in system settings.</string>
+    <string name="feature_doNotDisturb_description">Automatically turns Do Not Disturb on while getabreak is active. Configure exceptions in system settings.</string>
     <string name="feature_doNotDisturb_systemSettings">System settings</string>
     <string name="feature_doNotDisturb_systemSettings_description">Open Android settings to fine-tune Do Not Disturb.</string>
     <!-- endregion -->
@@ -533,26 +533,26 @@
     <!-- region Feature: Pause -->
     <string name="feature_pause">Pause Button</string>
     <string name="feature_pause_subtitle">Breaks you actually choose</string>
-    <string name="feature_pause_description">Pauses Break for a few minutes, for when you really need your phone.</string>
+    <string name="feature_pause_description">Pauses getabreak for a few minutes, for when you really need your phone.</string>
     <string name="feature_pause_duration">Pause duration</string>
-    <string name="feature_pause_duration_description">When the pause ends, Break automatically resumes.</string>
+    <string name="feature_pause_duration_description">When the pause ends, getabreak automatically resumes.</string>
     <string name="feature_pause_minimumTimeBetween">Minimum time between pauses</string>
     <string name="feature_pause_minimumTimeBetween_description">So pausing doesn\'t quietly become the habit.</string>
     <string name="feature_pause_fromAssistant">Assistant</string>
-    <string name="feature_pause_fromAssistant_description">Set Break as your default assistant app to start a pause. (Assistant is often opened by long-pressing Home.)</string>
+    <string name="feature_pause_fromAssistant_description">Set getabreak as your default assistant app to start a pause. (Assistant is often opened by long-pressing Home.)</string>
     <string name="feature_pause_fromHardwareButton">Hardware button</string>
-    <string name="feature_pause_fromHardwareButton_description">Choose a hardware button to long-press for 2 seconds to pause Break.</string>
+    <string name="feature_pause_fromHardwareButton_description">Choose a hardware button to long-press for 2 seconds to pause getabreak.</string>
     <string name="feature_pause_fromHardwareButton_press">Press any hardware button on your phone</string>
     <string name="feature_pause_fromHardwareButton_noButtonPressed">No button pressed yet</string>
     <string name="feature_pause_fromHardwareButton_selected">Selected button: %s</string>
-    <string name="feature_pause_fromHardwareButton_appNotRunning">Break must be running to assign a hardware button.</string>
+    <string name="feature_pause_fromHardwareButton_appNotRunning">getabreak must be running to assign a hardware button.</string>
     <string name="feature_pause_ways">Ways to pause</string>
     <string name="feature_pause_fromQuickSettings">Quick Settings</string>
     <string name="feature_pause_fromQuickSettings_description">Tap to put the pause tile into your Quick Settings.</string>
     <string name="feature_pause_fromQuickSettings_alreadyAdded">The pause tile is already in your Quick Settings.</string>
     <string name="feature_pause_fromNotification">Notification</string>
-    <string name="feature_pause_fromNotification_description">Break\'s notification has a pause button.</string>
-    <string name="feature_pause_fromNotification_blocked">Allow notifications, and Break\'s notification gets a pause button.</string>
+    <string name="feature_pause_fromNotification_description">getabreak\'s notification has a pause button.</string>
+    <string name="feature_pause_fromNotification_blocked">Allow notifications, and getabreak\'s notification gets a pause button.</string>
     <string name="feature_pause_affectedFeatures">Affected features</string>
     <string name="feature_pause_affectedFeatures_all">All features</string>
     <string name="feature_pause_affectedFeatures_count">%1$d of %2$d features</string>
@@ -565,7 +565,7 @@
     <string name="feature_brake_description">For the moment you notice you\'re slipping. For a set time, every group and feature you have switched on runs at its strictest: the whole screen goes gray, locked apps stay locked whatever is left of their budget, schedules don\'t count, and pausing is off.</string>
     <string name="feature_brake_status_off">Pick how long, then pull.</string>
     <string name="feature_brake_status_notActivated">Switch the brake on at the top first.</string>
-    <string name="feature_brake_status_notRunning">Break isn\'t running, so there is nothing to brake.</string>
+    <string name="feature_brake_status_notRunning">getabreak isn\'t running, so there is nothing to brake.</string>
     <string name="feature_brake_status_on">The brake is on until %s. Settings are locked until then.</string>
     <string name="feature_brake_status_ending">You asked to end it. The brake comes off at %s.</string>
     <string name="feature_brake_duration">How long</string>
@@ -578,13 +578,13 @@
     <string name="feature_brake_endEarly_confirm">Start the wait</string>
     <string name="feature_brake_keepOn">Keep it on</string>
     <string name="feature_brake_noPause">No pause while the brake is on. It runs until %s.</string>
-    <string name="feature_brake_stop_locked">The brake is on until %s. Break can\'t be stopped until then.</string>
+    <string name="feature_brake_stop_locked">The brake is on until %s. getabreak can\'t be stopped until then.</string>
     <string name="feature_brake_ways">Ways to pull it</string>
     <string name="feature_brake_fromQuickSettings_description">Tap to put the brake tile into your Quick Settings. It pulls for as long as you last picked.</string>
     <string name="feature_brake_fromQuickSettings_alreadyAdded">The brake tile is already in your Quick Settings.</string>
     <string name="feature_brake_fromHomeScreen">Home screen</string>
-    <string name="feature_brake_fromHomeScreen_description">Tap to put a brake icon on your home screen. Long-pressing the Break icon offers the same shortcut.</string>
-    <string name="feature_brake_fromHomeScreen_unsupported">Your launcher doesn\'t take icons from apps. Long-press the Break icon instead.</string>
+    <string name="feature_brake_fromHomeScreen_description">Tap to put a brake icon on your home screen. Long-pressing the getabreak icon offers the same shortcut.</string>
+    <string name="feature_brake_fromHomeScreen_unsupported">Your launcher doesn\'t take icons from apps. Long-press the getabreak icon instead.</string>
     <string name="feature_brake_shortcut">Brake</string>
     <string name="feature_brake_autoPull_header">Pulling itself</string>
     <string name="feature_brake_autoPull">Pull it for me</string>
@@ -661,12 +661,12 @@
     <!-- region Feature: Commitment Password -->
     <string name="feature_commitmentPassword">Commitment Password</string>
     <string name="feature_commitmentPassword_subtitle">Lock settings with a passphrase</string>
-    <string name="feature_commitmentPassword_description">Protect selected Break settings with a passphrase so they cannot be changed impulsively. Requires Device Admin.</string>
+    <string name="feature_commitmentPassword_description">Protect selected getabreak settings with a passphrase so they cannot be changed impulsively. Requires Device Admin.</string>
     <string name="feature_commitmentPassword_requiresDeviceAdmin_message">Grant Device Admin to enable Commitment Password.</string>
     <string name="feature_commitmentPassword_walkthrough_title">Before you switch this on</string>
     <string name="feature_commitmentPassword_walkthrough_lock">Locks the settings you pick</string>
     <string name="feature_commitmentPassword_walkthrough_passphrase">Changing them takes your passphrase</string>
-    <string name="feature_commitmentPassword_walkthrough_stop">Break can\'t be stopped while they\'re locked</string>
+    <string name="feature_commitmentPassword_walkthrough_stop">getabreak can\'t be stopped while they\'re locked</string>
     <string name="feature_commitmentPassword_walkthrough_attempts">3 wrong tries pause input for 5 minutes</string>
     <string name="feature_commitmentPassword_walkthrough_recovery">Forgot it? Recovery takes 24 hours</string>
     <string name="feature_commitmentPassword_walkthrough_next">You get your passphrase on the next step. Keep it somewhere safe.</string>
@@ -713,12 +713,12 @@
     <string name="feature_commitmentPassword_selectNone">None</string>
     <string name="feature_commitmentPassword_featuresSelected">%1$d of %2$d selected</string>
     <string name="feature_commitmentPassword_deviceOwner_hint_title">Optional: strengthen with Device Owner</string>
-    <string name="feature_commitmentPassword_deviceOwner_hint_subtitle">Commitment Password works with Device Admin. Device Owner also blocks uninstalling Break. Tap to view the ADB command.</string>
+    <string name="feature_commitmentPassword_deviceOwner_hint_subtitle">Commitment Password works with Device Admin. Device Owner also blocks uninstalling getabreak. Tap to view the ADB command.</string>
     <string name="feature_commitmentPassword_stop_locked">Stop is locked by Commitment Password. Unlock settings first.</string>
     <string name="feature_commitmentPassword_tamper_overlay_title">Locked for now</string>
-    <string name="feature_commitmentPassword_tamper_overlay_message_uninstall">Break can\'t be uninstalled while your settings are locked.</string>
-    <string name="feature_commitmentPassword_tamper_overlay_message_deviceAdmin">Break\'s device admin can\'t be switched off while your settings are locked.</string>
-    <string name="feature_commitmentPassword_tamper_overlay_message_accessibility">Break\'s accessibility service can\'t be switched off while your settings are locked.</string>
+    <string name="feature_commitmentPassword_tamper_overlay_message_uninstall">getabreak can\'t be uninstalled while your settings are locked.</string>
+    <string name="feature_commitmentPassword_tamper_overlay_message_deviceAdmin">getabreak\'s device admin can\'t be switched off while your settings are locked.</string>
+    <string name="feature_commitmentPassword_tamper_overlay_message_accessibility">getabreak\'s accessibility service can\'t be switched off while your settings are locked.</string>
     <string name="feature_commitmentPassword_tamper_overlay_reassurance">You\'re back on your home screen, and your protection is still on.</string>
     <string name="feature_commitmentPassword_tamper_overlay_action_backHome">Back to home</string>
     <string name="feature_commitmentPassword_tamper_iconDescription">Security warning icon</string>
@@ -732,13 +732,13 @@
     <string name="deviceAdminRevoked_inputLabel">Type the sentence</string>
     <string name="deviceAdminRevoked_continue">I understand, continue</string>
     <string name="deviceAdminRevoked_reenable_explanation">Device Admin makes your commitment harder to bypass. Re-enable it to restore full protection.</string>
-    <string name="deviceAdminRevoked_disableRequestedWarning">Commitment Password is active. Disabling Device Admin makes Break easier to uninstall and bypass.</string>
+    <string name="deviceAdminRevoked_disableRequestedWarning">Commitment Password is active. Disabling Device Admin makes getabreak easier to uninstall and bypass.</string>
     <string name="accessibilityDisabledWarning_title">Accessibility service was disabled</string>
-    <string name="accessibilityDisabledWarning_message">Break\'s accessibility service was disabled while Commitment Password is active. Re-enable it to keep your commitment settings enforced.</string>
+    <string name="accessibilityDisabledWarning_message">getabreak\'s accessibility service was disabled while Commitment Password is active. Re-enable it to keep your commitment settings enforced.</string>
     <!-- endregion -->
 
     <!-- region Minimal Launcher Widget -->
-    <string name="widget_minimalLauncher_name">Break Launcher Widget</string>
+    <string name="widget_minimalLauncher_name">getabreak Launcher Widget</string>
     <string name="widget_minimalLauncher_description">Text-only launcher widget for selected apps.</string>
     <string name="widget_minimalLauncher_empty">Tap here to select apps</string>
     <string name="widget_minimalLauncher_configure_title">Configure launcher widget</string>
@@ -778,7 +778,7 @@
     <string name="widget_today_vsUsual_less_short" translatable="false">−%s</string>
     <string name="widget_today_vsUsual_more_short" translatable="false">+%s</string>
     <string name="widget_today_vsUsual_same_short" translatable="false">±0</string>
-    <string name="widget_today_off">Break is off</string>
+    <string name="widget_today_off">getabreak is off</string>
     <string name="widget_minimalLauncher_parts_description">How long you have used each app today, and which apps your groups lock right now.</string>
     <string name="widget_minimalLauncher_part_timeToday">Time today</string>
     <string name="widget_minimalLauncher_part_dimBlocked">Dim blocked apps</string>
@@ -792,8 +792,8 @@
     <!-- region Usage Stats -->
     <string name="usageStats_more">More</string>
     <string name="usageStats_title">App usage</string>
-    <string name="usageStats_usageAccessRequired">Break needs usage access to show your screen time.</string>
-    <string name="usageStats_usageAccess_restrictedSettingsHint">If the switch is greyed out, Android is holding it back because Break was not installed from an app store. Open the app info, tap the three-dot menu and choose \"Allow restricted settings\" first.</string>
+    <string name="usageStats_usageAccessRequired">getabreak needs usage access to show your screen time.</string>
+    <string name="usageStats_usageAccess_restrictedSettingsHint">If the switch is greyed out, Android is holding it back because getabreak was not installed from an app store. Open the app info, tap the three-dot menu and choose \"Allow restricted settings\" first.</string>
     <string name="usageStats_timeframe_today">Today</string>
     <string name="usageStats_timeframe_last7Days">7 days</string>
     <string name="usageStats_timeframe_last30Days">30 days</string>
@@ -806,8 +806,8 @@
     <string name="usageStats_timeframe_custom_inputFormat">d/M/yyyy</string>
     <string name="usageStats_timeframe_custom_switchToCalendar">Switch to calendar selection</string>
     <string name="usageStats_timeframe_custom_switchToInput">Switch to text input</string>
-    <string name="usageStats_selfMeasured">Your phone will not let Break read the system\'s screen time, so these numbers are its own: only what it saw while it was running.</string>
-    <string name="usageStats_improvesOverTime">Stats get better the longer Break runs. Scroll data only exists while it is active.</string>
+    <string name="usageStats_selfMeasured">Your phone will not let getabreak read the system\'s screen time, so these numbers are its own: only what it saw while it was running.</string>
+    <string name="usageStats_improvesOverTime">Stats get better the longer getabreak runs. Scroll data only exists while it is active.</string>
     <string name="usageStats_dailyAverage">Daily avg: %s</string>
     <string name="usageStats_dailyAverage_short">daily avg</string>
     <string name="usageStats_vsYesterday">vs yesterday</string>
@@ -858,7 +858,7 @@
     <string name="usageStats_sort_opens">By opens</string>
     <string name="usageStats_sort_scrollIntensity">By scroll intensity</string>
     <string name="usageStats_websites_title">Time on websites</string>
-    <string name="usageStats_websites_optIn">Break can count how long you spend on each website in %s. It keeps only the site, never the page, and nothing leaves your phone.</string>
+    <string name="usageStats_websites_optIn">getabreak can count how long you spend on each website in %s. It keeps only the site, never the page, and nothing leaves your phone.</string>
     <string name="usageStats_websites_optIn_action">Count time on websites</string>
     <string name="usageStats_websites_empty">Nothing counted yet. Time on websites counts from the moment you switched this on.</string>
     <string name="usageStats_websites_partOf">Already in your browsers\' screen time.</string>
@@ -908,10 +908,10 @@
     <string name="onboarding_skipSetup_dialog_confirm">Skip</string>
     <string name="onboarding_progress_stepOf">Step %1$d of %2$d</string>
     <string name="onboarding_welcome_title">Take back your attention</string>
-    <string name="onboarding_welcome_message">Break helps you build healthier phone habits: it can gray out distracting apps, interrupt endless scrolling and block apps once your daily budget is used up. The next steps set it up around how you actually use your phone.</string>
-    <string name="onboarding_welcome_privacy">Everything stays on your device. Break is open source, has no ads and collects nothing.</string>
+    <string name="onboarding_welcome_message">getabreak helps you build healthier phone habits: it can gray out distracting apps, interrupt endless scrolling and block apps once your daily budget is used up. The next steps set it up around how you actually use your phone.</string>
+    <string name="onboarding_welcome_privacy">Everything stays on your device. getabreak is open source, has no ads and collects nothing.</string>
     <string name="onboarding_usageAccess_title">See where your time goes</string>
-    <string name="onboarding_usageAccess_message">To suggest which apps to tame, and a daily budget you might actually keep, Break needs the system\'s \"usage access\". It also feeds your statistics. The data never leaves your phone.</string>
+    <string name="onboarding_usageAccess_message">To suggest which apps to tame, and a daily budget you might actually keep, getabreak needs the system\'s \"usage access\". It also feeds your statistics. The data never leaves your phone.</string>
     <string name="onboarding_usageAccess_grant">Grant usage access</string>
     <string name="onboarding_usageAccess_granted">Granted. Now we can suggest actual apps.</string>
     <string name="onboarding_usageAccess_skipHint">You can skip this. Then we go by app category instead.</string>
@@ -934,7 +934,7 @@
     <string name="onboarding_preset_strict">Strict</string>
     <string name="onboarding_preset_strict_description">Balanced, plus a hard block once the daily budget is spent. Grayscale warns you shortly before.</string>
     <string name="onboarding_preset_budget">Daily budget</string>
-    <string name="onboarding_preset_budget_description">Your daily allowance for the selected apps before Break steps in.</string>
+    <string name="onboarding_preset_budget_description">Your daily allowance for the selected apps before getabreak steps in.</string>
     <string name="onboarding_preset_budget_suggested">Suggested from your last 7 days of usage</string>
     <string name="onboarding_permissions_title">A few permissions</string>
     <string name="onboarding_permissions_message">Your setup needs the permissions below. Grant what you like. The rest you can pick up later on the feature screens.</string>
@@ -943,16 +943,16 @@
     <string name="onboarding_permissions_notifications">Notifications</string>
     <string name="onboarding_permissions_notifications_description">Status and reminders while a detox feature is active.</string>
     <string name="onboarding_permissions_secureSettings">Grayscale permission</string>
-    <string name="onboarding_permissions_secureSettings_description">A special permission that lets Break control the system\'s color filters.</string>
+    <string name="onboarding_permissions_secureSettings_description">A special permission that lets getabreak control the system\'s color filters.</string>
     <string name="onboarding_permissions_secureSettings_oneTap">Tap to grant. Shizuku or root was detected on your device.</string>
     <string name="onboarding_permissions_secureSettings_later">Tap for a guided setup. Or leave it, we\'ll remind you on the home screen.</string>
     <string name="onboarding_permissions_accessibility">Accessibility service</string>
-    <string name="onboarding_permissions_accessibility_description">Break\'s engine: the accessibility service detects which app is in the foreground and applies your rules. No data leaves your device.</string>
+    <string name="onboarding_permissions_accessibility_description">getabreak\'s engine: the accessibility service detects which app is in the foreground and applies your rules. No data leaves your device.</string>
     <string name="onboarding_permissions_accessibility_auto">Tap to enable it automatically.</string>
-    <string name="onboarding_permissions_accessibility_manual">Tap to open the accessibility settings and enable Break there.</string>
+    <string name="onboarding_permissions_accessibility_manual">Tap to open the accessibility settings and enable getabreak there.</string>
     <string name="onboarding_permissions_state_granted">Granted</string>
     <string name="onboarding_done_title">You\'re all set</string>
-    <string name="onboarding_done_message">Break is configured. Your picks are one group on the home screen, where apps, schedule, budget and steps stay editable.</string>
+    <string name="onboarding_done_message">getabreak is configured. Your picks are one group on the home screen, where apps, schedule, budget and steps stay editable.</string>
     <plurals name="onboarding_done_summary_scrollBreaks">
         <item quantity="one">Scroll breaks in %d app</item>
         <item quantity="other">Scroll breaks in %d apps</item>
@@ -962,7 +962,7 @@
     <string name="onboarding_done_summary_grayscaleFilter">Distracting apps get dull and blurry after %s of daily use. Real grayscale needs a one-time setup.</string>
     <string name="onboarding_done_summary_blocking">Apps blocked after %s of daily use</string>
     <string name="onboarding_done_summary_blockingPending">App blocking is ready, but needs the \"display over other apps\" permission to work.</string>
-    <string name="onboarding_done_summary_accessibilityPending">Break\'s accessibility service is not enabled yet. You can start it from the home screen.</string>
+    <string name="onboarding_done_summary_accessibilityPending">getabreak\'s accessibility service is not enabled yet. You can start it from the home screen.</string>
     <string name="onboarding_done_summary_nothing">No apps were selected, so nothing was configured. Explore the features from the home screen.</string>
     <string name="onboarding_done_summary_rerunHint">Finishing adds a new group next to the ones you have.</string>
     <string name="onboarding_done_summary_permissionsHint">Grant the missing permissions to switch these on. Later works too, we\'ll remind you on the home screen.</string>
@@ -980,18 +980,18 @@
     <string name="shizukuSetup_step2_openShizuku">Open Shizuku</string>
     <string name="shizukuSetup_step2_openDeveloperSettings">Developer options</string>
     <string name="shizukuSetup_step2_rebootHint">After every reboot you have to start Shizuku again. The permission it granted stays, though.</string>
-    <string name="shizukuSetup_step3_title">Allow Break to use Shizuku</string>
+    <string name="shizukuSetup_step3_title">Allow getabreak to use Shizuku</string>
     <string name="shizukuSetup_step3_description">Shizuku will ask for your confirmation in a dialog.</string>
     <string name="shizukuSetup_step3_go">Request access</string>
     <string name="shizukuSetup_step4_title">Grant the grayscale permission</string>
-    <string name="shizukuSetup_step4_description">One tap and Break grants itself the color-filter permission through Shizuku.</string>
+    <string name="shizukuSetup_step4_description">One tap and getabreak grants itself the color-filter permission through Shizuku.</string>
     <string name="shizukuSetup_completed_title">All done!</string>
     <string name="shizukuSetup_completed_message">The permission is granted and grayscale is ready. If it was waiting from your setup, it is now active.</string>
     <!-- The same wizard opened for the suspend lock mode, which needs Shizuku itself rather than a permission -->
     <string name="shizukuSetup_suspend_title">Set up Shizuku</string>
     <string name="shizukuSetup_suspend_intro">Suspending apps goes through Shizuku, a free helper app. Setting it up takes about five minutes. One catch: Shizuku has to be running for a lock to suspend an app, and it stops at every reboot.</string>
     <string name="shizukuSetup_suspend_step2_rebootHint">After every reboot you have to start Shizuku again. Until then, locked apps get the block screen instead.</string>
-    <string name="shizukuSetup_suspend_completed_message">Shizuku is running and Break may use it. Go back and pick Suspend.</string>
+    <string name="shizukuSetup_suspend_completed_message">Shizuku is running and getabreak may use it. Go back and pick Suspend.</string>
     <!-- endregion -->
 
     <!-- region Elevated Permissions -->
@@ -1012,21 +1012,21 @@
     <!-- region Premium -->
     <string name="premium_tile_subtitle">Support the project &amp; unlock power-user extras</string>
     <!-- Sheet headline adapts to what opened it -->
-    <string name="premium_sheet_title_generic">Support Break</string>
-    <string name="premium_sheet_title_nudge">Getting a lot out of Break?</string>
+    <string name="premium_sheet_title_generic">Support getabreak</string>
+    <string name="premium_sheet_title_nudge">Getting a lot out of getabreak?</string>
     <string name="premium_sheet_title_locked">Unlock %1$s</string>
     <string name="premium_sheet_subtitle">Free, open source, no ads. Maintained by one person.</string>
     <!-- Personal impact card ("reciprocity beats feature lists") -->
     <string name="premium_impact_title">Your detox so far</string>
-    <string name="premium_impact_interventions">times Break stepped in</string>
+    <string name="premium_impact_interventions">times getabreak stepped in</string>
     <string name="premium_impact_grayscale">spent in grayscale</string>
     <string name="premium_impact_days">days of stats</string>
     <string name="premium_impact_count">%d×</string>
     <string name="premium_extras_title">All features unlocked</string>
-    <string name="premium_extras_body">All digital wellbeing features in Break are completely free and distraction-free.</string>
+    <string name="premium_extras_body">All digital wellbeing features in getabreak are completely free and distraction-free.</string>
     <string name="premium_unlocked_title">All features available</string>
     <string name="premium_unlocked_subtitle">Full access to wellbeing tools</string>
-    <string name="premium_unlocked_body">Break is designed to help you regain control over your attention without interruptions, paywalls, or tracking.</string>
+    <string name="premium_unlocked_body">getabreak is designed to help you regain control over your attention without interruptions, paywalls, or tracking.</string>
     <string name="premium_action_donatedUnlock">Unlock</string>
     <string name="premium_action_freeUnlock">Unlock all features</string>
     <string name="premium_action_relock">Reset</string>
@@ -1037,16 +1037,16 @@
 
     <!-- region About -->
     <string name="about_summary">Make digital detox your default.</string>
-    <string name="about_tile_subtitle">Settings, project info and the tip jar.</string>
+    <string name="about_tile_subtitle">Settings and project info.</string>
     <string name="about_section_settings">Settings</string>
     <string name="about_theme">Theme</string>
     <string name="about_theme_system">System</string>
     <string name="about_theme_light">Light</string>
     <string name="about_theme_dark">Dark</string>
-    <string name="about_onboarding">Set up Break again</string>
+    <string name="about_onboarding">Set up getabreak again</string>
     <string name="about_onboarding_subtitle">Replay the welcome tour and starter presets</string>
     <string name="about_onboarding_locked_subtitle">That would add to the groups you locked. Unlock them first.</string>
-    <string name="about_debugLog_subtitle">Records what Break does, for bug reports. Stays on this phone and is deleted when you turn it off.</string>
+    <string name="about_debugLog_subtitle">Records what getabreak does, for bug reports. Stays on this phone and is deleted when you turn it off.</string>
     <string name="about_debugLog_open">Open the debug log</string>
     <string name="about_section_backup">Backup</string>
     <string name="about_backup_export">Save settings to a file</string>
@@ -1054,16 +1054,16 @@
     <string name="about_backup_export_saved">Saved as %s</string>
     <string name="about_backup_export_failed">Could not write the file.</string>
     <string name="about_backup_restore">Restore settings from a file</string>
-    <string name="about_backup_restore_subtitle">Shows what the file holds first, then restarts Break.</string>
+    <string name="about_backup_restore_subtitle">Shows what the file holds first, then restarts getabreak.</string>
     <string name="about_backup_restore_locked_subtitle">Locked while your commitment password is in force.</string>
     <string name="settings_lockedByBrake_subtitle">Locked while the brake is on.</string>
-    <string name="about_backup_restore_failed">That file does not hold Break settings.</string>
+    <string name="about_backup_restore_failed">That file does not hold getabreak settings.</string>
     <string name="about_backup_restore_readFailed">Could not read that file.</string>
-    <string name="about_backup_restore_nothingApplies">Nothing in that file applies to this version of Break.</string>
+    <string name="about_backup_restore_nothingApplies">Nothing in that file applies to this version of getabreak.</string>
     <string name="about_backup_preview_title">Restore these settings?</string>
-    <string name="about_backup_preview_saved">Saved on %1$s with Break %2$s</string>
+    <string name="about_backup_preview_saved">Saved on %1$s with getabreak %2$s</string>
     <string name="about_backup_preview_savedUnknownVersion">Saved on %s</string>
-    <string name="about_backup_preview_newerVersion">Written by a newer Break. Whatever this version does not know is left out.</string>
+    <string name="about_backup_preview_newerVersion">Written by a newer getabreak. Whatever this version does not know is left out.</string>
     <plurals name="about_backup_preview_apps">
         <item quantity="one">%d app</item>
         <item quantity="other">%d apps</item>
@@ -1092,8 +1092,8 @@
     </plurals>
     <string name="about_version_putItDown">Now put it down.</string>
     <string name="about_github">Contribute on GitHub</string>
-    <string name="about_github_link" translatable="false">https://github.com/flxapps/DetoxDroid</string>
-    <string name="about_reportIssue_link" translatable="false">https://github.com/flxapps/DetoxDroid/issues/new</string>
+    <string name="about_github_link" translatable="false">https://github.com/mizan989/getabreak-focus_app</string>
+    <string name="about_reportIssue_link" translatable="false">https://github.com/mizan989/getabreak-focus_app/issues/new</string>
     <!-- endregion -->
 
     <!-- region Debug Log -->
@@ -1117,7 +1117,7 @@
     <string name="debugLog_clear_message">Everything recorded so far is deleted. New entries keep coming in as long as the log is on.</string>
     <string name="debugLog_clear_confirm">Clear</string>
     <string name="debugLog_empty_title">Nothing recorded yet</string>
-    <string name="debugLog_empty_message">Entries show up here as soon as Break does something.</string>
+    <string name="debugLog_empty_message">Entries show up here as soon as getabreak does something.</string>
     <string name="debugLog_noMatch_title">No entries match</string>
     <string name="debugLog_noMatch_reset">Clear filters</string>
     <string name="debugLog_run_current">Running since %1$s</string>

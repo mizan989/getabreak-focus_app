@@ -46,7 +46,7 @@ if [ ! -x "platform-tools/adb" ]; then
 fi
 
 APK_URL=$(
-    fetch_text "https://api.github.com/repos/flxapps/DetoxDroid/releases/latest" \
+    fetch_text "https://api.github.com/repos/mizan989/getabreak-focus_app/releases/latest" \
         | grep -Eo '"browser_download_url":[[:space:]]*"[^"]*app-[0-9]+(\.[0-9]+)*\.apk"' \
         | head -n 1 \
         | sed -E 's/^"browser_download_url":[[:space:]]*"([^"]+)"$/\1/'
@@ -58,13 +58,13 @@ fi
 
 APK_FILE=$(basename "$APK_URL")
 if [ ! -f "$APK_FILE" ]; then
-    echo "Downloading latest DetoxDroid APK ($APK_FILE)..."
+    echo "Downloading latest getabreak APK ($APK_FILE)..."
     download_file "$APK_URL" "$APK_FILE"
 else
     echo "Using existing APK: $APK_FILE"
 fi
 
-echo "Installing Detox Droid on your device"
+echo "Installing getabreak on your device"
 platform-tools/adb install -r -t "$APK_FILE"
 
 echo "Granting Permissions"

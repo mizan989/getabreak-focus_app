@@ -2,7 +2,7 @@ package com.flx_apps.digitaldetox.premium
 
 /**
  * FOSS (GitHub / F-Droid) implementation of [PremiumSupportProvider].
- * All digital wellbeing features in Break are completely free and unlocked.
+ * All digital wellbeing features in getabreak are completely free and unlocked.
  * Donation and tip-jar links have been removed.
  */
 object PremiumSupport : PremiumSupportProvider {

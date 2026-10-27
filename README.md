@@ -1,12 +1,12 @@
 <p align="center">
   <a href="https://github.com/mizan989/getabreak-focus_app">
-    <img src="fastlane/metadata/android/en-US/images/icon.png" alt="Break Logo" width="100" height="100" style="border-radius: 20px;">
+    <img src="fastlane/metadata/android/en-US/images/icon.png" alt="getabreak Logo" width="100" height="100" style="border-radius: 20px;">
   </a>
 </p>
 
 <div align="center">
 
-# Break
+# getabreak
 
 ### Minimal, distraction-free digital wellbeing & focus utility for Android. Interruption science, doomscroll disruption, intelligent friction delays, real-time screen filters, and emergency focus lockdown — built natively with Kotlin & Jetpack Compose.
 
@@ -29,15 +29,15 @@
 </div>
 
 > [!TIP]
-> **Distraction-Free Digital Wellbeing:** Break makes a calm phone your baseline state. Unlike typical timers that demand continuous willpower, Break operates at the Android OS layer—desaturating apps into grayscale, introducing intentional friction delays before opening addictive apps, breaking endless scroll feeds, and enforcing locked focus intervals. 100% on-device, zero telemetry, zero accounts, and zero paywalls.
+> **Distraction-Free Digital Wellbeing:** getabreak makes a calm phone your baseline state. Unlike typical timers that demand continuous willpower, getabreak operates at the Android OS layer—desaturating apps into grayscale, introducing intentional friction delays before opening addictive apps, breaking endless scroll feeds, and enforcing locked focus intervals. 100% on-device, zero telemetry, zero accounts, and zero paywalls.
 
 ---
 
-## Break Overview
+## getabreak Overview
 
-**Break** is an open-source, system-level digital wellbeing utility engineered for Android. While most focus apps are opt-in and passive—asking you to manually start a timer and hope your willpower holds—Break reverses the burden: **a calm, focused phone becomes your default baseline**.
+**getabreak** is an open-source, system-level digital wellbeing utility engineered for Android. While most focus apps are opt-in and passive—asking you to manually start a timer and hope your willpower holds—getabreak reverses the burden: **a calm, focused phone becomes your default baseline**.
 
-Designed according to the philosophy **Classic. Minimal. Calm. Precise. Native.**, Break avoids flashy gamification, badges, trophies, artificial streaks, or loud gradients. Instead, it pairs cognitive behavioral friction with deep Android platform capabilities—utilizing Accessibility Services, System Overlays, and Secure Settings to systematically interrupt compulsive phone checking and doomscrolling.
+Designed according to the philosophy **Classic. Minimal. Calm. Precise. Native.**, getabreak avoids flashy gamification, badges, trophies, artificial streaks, or loud gradients. Instead, it pairs cognitive behavioral friction with deep Android platform capabilities—utilizing Accessibility Services, System Overlays, and Secure Settings to systematically interrupt compulsive phone checking and doomscrolling.
 
 ### Key Capabilities
 
@@ -54,7 +54,7 @@ Designed according to the philosophy **Classic. Minimal. Calm. Precise. Native.*
 <div align="center">
   <pre>
 ┌─────────────────────────────────────────────────────────────────────────────────┐
-│                                     BREAK                                       │
+│                                   getabreak                                     │
 │          Interrupt Compulsion ➔ Enforce Friction ➔ Regain Attention            │
 ├───────────────────────────────┬─────────────────────────────────────────────────┤
 │  🧠 Interruption Engine       │  🛡️ System-Level Enforcement                    │
@@ -78,7 +78,7 @@ sequenceDiagram
     autonumber
     actor User
     participant OS as Android System (Window Manager)
-    participant Service as Break Accessibility Service
+    participant Service as getabreak Accessibility Service
     participant Engine as Rules & Intervention Engine
     participant Overlay as Intervention Screen (Compose)
     participant Target as Distracting App
@@ -186,7 +186,7 @@ adb install app/build/outputs/apk/foss/debug/app-foss-debug.apk
 
 ## System Integration & Permissions
 
-Break requires key Android permissions to enforce digital wellbeing at the OS layer:
+getabreak requires key Android permissions to enforce digital wellbeing at the OS layer:
 
 | Permission | Purpose |
 | :--- | :--- |
@@ -199,7 +199,7 @@ Break requires key Android permissions to enforce digital wellbeing at the OS la
 
 ### Optional: Enabling Native Grayscale via ADB
 
-To grant Break access to the system hardware color matrix without root or Shizuku:
+To grant getabreak access to the system hardware color matrix without root or Shizuku:
 
 ```bash
 adb shell pm grant com.flx_apps.digitaldetox android.permission.WRITE_SECURE_SETTINGS
@@ -233,6 +233,6 @@ app/src/main/java/com/flx_apps/digitaldetox/
 
 ## Open Source & Licence
 
-Break is free and open-source software licensed under the **GNU General Public License v3.0** ([GPL-3.0](LICENSE)).
+getabreak is free and open-source software licensed under the **GNU General Public License v3.0** ([GPL-3.0](LICENSE)).
 
-Based on the original DetoxDroid project by Felix Schulze, completely redesigned and rebranded as **Break** with a monochromatic native interface, zero donation/tip-jar requests, and ungated digital wellbeing capabilities.
+Based on the original DetoxDroid project by Felix Schulze, completely redesigned and rebranded as **getabreak** with a monochromatic native interface, zero donation/tip-jar requests, and ungated digital wellbeing capabilities.

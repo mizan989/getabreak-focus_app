@@ -142,7 +142,7 @@ fun PermissionsRequiredScreenContent(
         HyperlinkText(
             fullTextResId = R.string.noPermissions_visitGitHub,
             linksActions = listOf("GITHUB"),
-            hyperLinks = listOf("https://github.com/flxapps/DetoxDroid"),
+            hyperLinks = listOf("https://github.com/mizan989/getabreak-focus_app"),
             textStyle = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurface),
             linkTextColor = MaterialTheme.colorScheme.primary,
             linkTextDecoration = TextDecoration.Underline,

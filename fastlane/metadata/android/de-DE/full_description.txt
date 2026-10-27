@@ -1,4 +1,4 @@
-Die meisten Digital-Detox-Apps wollen, dass du einen Vertrag mit dir selbst schließt: kein Handy für die nächsten X Minuten, nicht mehr als Z Minuten in App Y. Manche nehmen dir sogar Geld ab, wenn du es nicht durchhältst. DetoxDroid dreht das um. Es nimmt deinem Handy die Tricks, mit denen es dich einfängt, damit es von selbst ruhig ist, wenn du gar nichts tust. Nichts starten, nichts durchhalten. Der Schutz läuft, und du pausierst ihn bewusst, wenn du wirklich mal was brauchst.
+Die meisten Digital-Detox-Apps wollen, dass du einen Vertrag mit dir selbst schließt: kein Handy für die nächsten X Minuten, nicht mehr als Z Minuten in App Y. Manche nehmen dir sogar Geld ab, wenn du es nicht durchhältst. getabreak dreht das um. Es nimmt deinem Handy die Tricks, mit denen es dich einfängt, damit es von selbst ruhig ist, wenn du gar nichts tust. Nichts starten, nichts durchhalten. Der Schutz läuft, und du pausierst ihn bewusst, wenn du wirklich mal was brauchst.
 
 Nutze dein Handy, statt dich von ihm nutzen zu lassen.
 
@@ -17,8 +17,8 @@ Echte Graustufen sind es halt nicht. Ein Overlay kann nur oben drauf malen, es z
 UND DRUMHERUM
 
 * Notbremse. Einmal tippen, und für eine Zeit deiner Wahl läuft jede Gruppe auf der strengsten Stufe: Bildschirm komplett grau, gesperrte Apps bleiben gesperrt, Zeitpläne und Pause aus. Früher raus geht, dauert aber zehn Minuten.
-* Automatisch „Bitte nicht stören“. An, solange DetoxDroid läuft. Benachrichtigungen warten dann auf dich.
-* Pause-Taste. Über die Schnelleinstellungen, den Assistenten oder zwei Sekunden auf einer Hardware-Taste. Danach läuft DetoxDroid von allein weiter, und ein Mindestabstand zwischen zwei Pausen hält „nur noch einmal“ im Zaum.
+* Automatisch „Bitte nicht stören“. An, solange getabreak läuft. Benachrichtigungen warten dann auf dich.
+* Pause-Taste. Über die Schnelleinstellungen, den Assistenten oder zwei Sekunden auf einer Hardware-Taste. Danach läuft getabreak von allein weiter, und ein Mindestabstand zwischen zwei Pausen hält „nur noch einmal“ im Zaum.
 * Commitment-Passwort. Sperrt Gruppen hinter einem Passwort, einzeln oder alle. Behalt es selbst oder gib es jemandem, der es dir nicht sofort wieder rausrückt.
 * Bildschirmzeit. Pro App und, wenn du willst, pro Website; Öffnungen, Scroll-Strecke, was die Stunden wert wären. Ein Widget und die Benachrichtigung zeigen die Zeit von heute, ohne dass du die App öffnest. Das andere Widget ist ein Launcher, der die Apps deiner Wahl als reinen Text zeigt, ohne die Symbole, nach denen der Daumen blind greift.
 
@@ -32,10 +32,10 @@ Die Unschärfe braucht Android 12 oder neuer, und im Energiesparmodus schaltet A
 
 DAMIT ES AUCH LÄUFT
 
-Manche Handys räumen Hintergrund-Apps rigoros ab, und ein gestopptes DetoxDroid macht dann gar nichts mehr, ohne Bescheid zu sagen. Es gibt eine Einstellung dagegen und eine Benachrichtigung für den Fall, dass dein Handy es trotzdem stoppt.
+Manche Handys räumen Hintergrund-Apps rigoros ab, und ein gestopptes getabreak macht dann gar nichts mehr, ohne Bescheid zu sagen. Es gibt eine Einstellung dagegen und eine Benachrichtigung für den Fall, dass dein Handy es trotzdem stoppt.
 
 KOSTENLOS & QUELLOFFEN
 
-Keine Werbung, kein Tracking, kein Konto. Alle Funktionen stehen allen offen. Die Extras (gerade die längere Statistik-Historie) liegen hinter einer Sperre, die aufgeht, wenn du spendest oder auf „Ohne Spende freischalten“ tippst. Die Sperre ist ein Schubs. Das prüft niemand nach.
+Keine Werbung, kein Tracking, kein Konto. Alle Funktionen sind komplett kostenlos.
 
-Wenn DetoxDroid sich seinen Platz auf deinem Handy verdient: LiberaPay und Ko-fi halten mich dran. Fehler und Ideen: https://github.com/flxapps/DetoxDroid
+Open Source unter GPL-3.0. Fehler und Ideen: https://github.com/mizan989/getabreak-focus_app

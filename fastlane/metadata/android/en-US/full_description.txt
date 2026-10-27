@@ -1,4 +1,4 @@
-Most digital detox apps want you to sign a contract with yourself: no phone for the next X minutes, no more than Z minutes in app Y. A few of them take your money when you break it. DetoxDroid works the other way round. It strips the attention-grabbing tricks out of the phone, so that a calm phone is what you get when you do nothing at all. Nothing to start, no session to survive. The protection is simply on, and you pause it on purpose when you actually need something.
+Most digital detox apps want you to sign a contract with yourself: no phone for the next X minutes, no more than Z minutes in app Y. A few of them take your money when you break it. getabreak works the other way round. It strips the attention-grabbing tricks out of the phone, so that a calm phone is what you get when you do nothing at all. Nothing to start, no session to survive. The protection is simply on, and you pause it on purpose when you actually need something.
 
 Use your phone. Don't let your phone use you.
 
@@ -8,7 +8,7 @@ You sort your apps and websites into groups. A group says when it counts: always
 
 WHAT A GROUP CAN DO
 
-* Turn gray (and dim, and blur). The color drains out of the apps and websites in the group, from the first minute or once part of the budget is used, and on Android 12 and newer they go soft and blurry too: a feed turns into shapes, still navigable and no longer worth scrolling. This runs from the minute you install DetoxDroid. No computer, no root, nothing to grant.
+* Turn gray (and dim, and blur). The color drains out of the apps and websites in the group, from the first minute or once part of the budget is used, and on Android 12 and newer they go soft and blurry too: a feed turns into shapes, still navigable and no longer worth scrolling. This runs from the minute you install getabreak. No computer, no root, nothing to grant.
 True grayscale it is not. An overlay can only ever paint on top of the screen, so it drags color and contrast towards a flat gray instead of taking the color out. A red notification dot stays recognisably red. The screen just looks dead, which is the entire point. For the real thing, see SETUP.
 * Break doomscrolling. Notices when you are stuck in an endless feed, and counts the short videos you swipe through on Reels, Shorts and TikTok. After the break, that feed stays locked for a cooldown.
 * Wait and lock. A distracting app can make you wait a few seconds before it opens, sit behind a blocking screen, or be deactivated outright, launcher icon and notifications included. Once the group's budget is gone, its apps lock until the next window.
@@ -17,8 +17,8 @@ True grayscale it is not. An overlay can only ever paint on top of the screen, s
 AND AROUND IT
 
 * Emergency Brake. One tap, and for a time you pick every group runs at its strictest: whole screen gray, locked apps stay locked, schedules and pause off. Ending early takes a ten-minute wait.
-* Automatic Do Not Disturb. On for as long as DetoxDroid runs. Notifications wait for you.
-* Pause Button. From Quick Settings, from your assistant, or by holding a hardware button for two seconds. DetoxDroid resumes by itself afterwards, and a minimum gap between pauses keeps "just one more" in check.
+* Automatic Do Not Disturb. On for as long as getabreak runs. Notifications wait for you.
+* Pause Button. From Quick Settings, from your assistant, or by holding a hardware button for two seconds. getabreak resumes by itself afterwards, and a minimum gap between pauses keeps "just one more" in check.
 * Commitment Password. Locks groups behind a password, one by one or all of them. Keep it yourself, or hand it to someone who won't give it back the second you ask.
 * Screen time. Per app and, if you want, per website; app opens, scroll distance, what the hours are worth. A widget and the notification show today's time without opening the app. The other widget is a launcher that lists the apps you pick as plain text, without the icons your thumb goes for on autopilot.
 
@@ -32,10 +32,10 @@ The blur needs Android 12 or newer, and Android drops it while battery saver is 
 
 KEEPING IT RUNNING
 
-Some phones are ruthless with background apps, and a stopped DetoxDroid does nothing at all without telling you. There is a setting to keep it alive, and a notification for when your phone stops it anyway.
+Some phones are ruthless with background apps, and a stopped getabreak does nothing at all without telling you. There is a setting to keep it alive, and a notification for when your phone stops it anyway.
 
 FREE AND OPEN SOURCE
 
-No ads, no tracking, no account. Every feature is there for everyone. The extras (right now that is the longer usage history) sit behind a lock that opens when you donate, or when you tap "unlock without donating". The lock is a nudge. Nobody checks.
+No ads, no tracking, no account. Every feature is completely free for everyone.
 
-If DetoxDroid earns its place on your phone, LiberaPay and Ko-fi keep me working on it. Bugs and ideas: https://github.com/flxapps/DetoxDroid
+Open source under GPL-3.0. Bugs and ideas: https://github.com/mizan989/getabreak-focus_app

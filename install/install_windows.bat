@@ -15,7 +15,7 @@ if not exist "platform-tools\adb.exe" (
 
 set "APK_URL="
 set "APK_FILE="
-for /f "usebackq tokens=1,2 delims=|" %%i in (`powershell.exe -nologo -noprofile -command "$asset = (Invoke-RestMethod 'https://api.github.com/repos/flxapps/DetoxDroid/releases/latest').assets | Where-Object { $_.name -match '^app-[0-9]+(\.[0-9]+)*\.apk$' } | Select-Object -First 1; if ($null -ne $asset) { Write-Output ($asset.browser_download_url + '|' + $asset.name) }"`) do (
+for /f "usebackq tokens=1,2 delims=|" %%i in (`powershell.exe -nologo -noprofile -command "$asset = (Invoke-RestMethod 'https://api.github.com/repos/mizan989/getabreak-focus_app/releases/latest').assets | Where-Object { $_.name -match '^app-[0-9]+(\.[0-9]+)*\.apk$' } | Select-Object -First 1; if ($null -ne $asset) { Write-Output ($asset.browser_download_url + '|' + $asset.name) }"`) do (
     set "APK_URL=%%i"
     set "APK_FILE=%%j"
 )
@@ -30,7 +30,7 @@ if "!APK_FILE!"=="" (
 )
 
 if not exist "!APK_FILE!" (
-    echo Downloading latest DetoxDroid APK (!APK_FILE!)...
+    echo Downloading latest getabreak APK (!APK_FILE!)...
     powershell.exe -nologo -noprofile -command "(New-Object Net.WebClient).DownloadFile('!APK_URL!', '!APK_FILE!')"
 ) else (
     echo Using existing APK: !APK_FILE!
@@ -40,7 +40,7 @@ echo Starting ADB
 echo If your device asks you to allow USB Debugging, press "Accept".
 %cd%\platform-tools\adb.exe start-server
 
-echo Installing DetoxDroid on your device...
+echo Installing getabreak on your device...
 %cd%\platform-tools\adb.exe install -r -t "!APK_FILE!"
 
 echo Granting Permissions

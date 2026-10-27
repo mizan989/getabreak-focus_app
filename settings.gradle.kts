@@ -14,6 +14,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "DetoxDroid 2"
+rootProject.name = "getabreak"
 include(":app")
  

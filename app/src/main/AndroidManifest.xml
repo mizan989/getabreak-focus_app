@@ -153,7 +153,7 @@
                  in the foreground for as long as it runs. -->
             <property
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="User-initiated, user-visible digital wellbeing service. The user switches DetoxDroid on to have their own screen rules applied continuously; the ongoing notification shows whether it is running or paused and offers a pause action. Optionally the user keeps it in the foreground for the whole session so their rules are not interrupted without them noticing. All processing stays on the device and nothing is transmitted." />
+                android:value="User-initiated, user-visible digital wellbeing service. The user switches getabreak on to have their own screen rules applied continuously; the ongoing notification shows whether it is running or paused and offers a pause action. Optionally the user keeps it in the foreground for the whole session so their rules are not interrupted without them noticing. All processing stays on the device and nothing is transmitted." />
         </service>
         <service android:name=".ui.screens.feature.break_doom_scrolling.BreakDoomScrollingOverlayService" />
         <service android:name=".ui.screens.feature.disable_apps.AppDisabledOverlayService" />
@@ -162,7 +162,7 @@
         <receiver
             android:name="com.flx_apps.digitaldetox.system_integration.DetoxDroidDeviceAdminReceiver"
             android:exported="true"
-            android:label="Detox Droid Device Admin"
+            android:label="getabreak Device Admin"
             android:permission="android.permission.BIND_DEVICE_ADMIN">
             <meta-data
                 android:name="android.app.device_admin"
