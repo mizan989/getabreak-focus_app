@@ -1,6 +1,8 @@
-name: Android PR Checks
+name: Android CI
 
 on:
+  push:
+    branches: [ main, master, develop ]
   pull_request:
     branches: [ main, master, develop ]
 
@@ -22,9 +24,6 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-
-      - name: Check code style
-        run: ./gradlew ktlintCheck || true
 
       # Public CI only builds the `foss` flavor: the `googlePlay` flavor needs the gitignored
       # private overlay (app/googlePlay.gradle.kts + app/src/googlePlay/) and cannot compile here.

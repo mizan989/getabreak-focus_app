@@ -45,23 +45,43 @@ if [ ! -x "platform-tools/adb" ]; then
     fail "platform-tools/adb was not found after setup."
 fi
 
-APK_URL=$(
-    fetch_text "https://api.github.com/repos/mizan989/getabreak-focus_app/releases/latest" \
-        | grep -Eo '"browser_download_url":[[:space:]]*"[^"]*app-[0-9]+(\.[0-9]+)*\.apk"' \
-        | head -n 1 \
-        | sed -E 's/^"browser_download_url":[[:space:]]*"([^"]+)"$/\1/'
-)
+APK_FILE=""
+# Check for a local APK file first
+for f in *.apk; do
+    if [ -f "$f" ]; then
+        APK_FILE="$f"
+        echo "Using local APK: $APK_FILE"
+        break
+    fi
+done
 
-if [ -z "$APK_URL" ]; then
-    fail "Could not resolve APK download URL from latest release."
+if [ -z "$APK_FILE" ]; then
+    echo "Checking for latest release on GitHub..."
+    RELEASE_JSON=$(fetch_text "https://api.github.com/repos/mizan989/getabreak-focus_app/releases/latest" 2>/dev/null || true)
+    APK_URL=$(
+        echo "$RELEASE_JSON" \
+            | grep -Eo '"browser_download_url":[[:space:]]*"[^"]*\.apk"' \
+            | head -n 1 \
+            | sed -E 's/^"browser_download_url":[[:space:]]*"([^"]+)"$/\1/'
+    )
+    if [ -n "$APK_URL" ]; then
+        APK_FILE=$(basename "$APK_URL")
+        if [ ! -f "$APK_FILE" ]; then
+            echo "Downloading latest getabreak APK ($APK_FILE)..."
+            download_file "$APK_URL" "$APK_FILE"
+        fi
+    fi
 fi
 
-APK_FILE=$(basename "$APK_URL")
-if [ ! -f "$APK_FILE" ]; then
-    echo "Downloading latest getabreak APK ($APK_FILE)..."
-    download_file "$APK_URL" "$APK_FILE"
-else
-    echo "Using existing APK: $APK_FILE"
+if [ -z "$APK_FILE" ] || [ ! -f "$APK_FILE" ]; then
+    echo ""
+    echo "Error: No getabreak APK was found."
+    echo "Either:"
+    echo "  1. Copy a getabreak APK file (*.apk) into this directory, or"
+    echo "  2. Publish a release with an attached APK asset at:"
+    echo "     https://github.com/mizan989/getabreak-focus_app/releases"
+    echo ""
+    exit 1
 fi
 
 echo "Installing getabreak on your device"

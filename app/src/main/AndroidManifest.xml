@@ -23,7 +23,7 @@
     <!-- ACCESS_NOTIFICATION_POLICY permission in order to activate/deactivate zen mode ("do not disturb" mode) -->
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
 
-    <!-- android.permission.REQUEST_DELETE_PACKAGES permission to self-uninstall DetoxDroid when it is in DeviceOwner mode -->
+    <!-- android.permission.REQUEST_DELETE_PACKAGES permission to self-uninstall getabreak when it is in DeviceOwner mode -->
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
 
     <!-- android.permission.QUERY_ALL_PACKAGES permission to get the list of installed apps on Android >= 11-->
@@ -102,7 +102,7 @@
             android:showWhenLocked="true"
             android:theme="@style/Theme.DetoxDroid" />
         <!-- singleInstance: a task of its own, so finishing it returns to the app it held back
-             instead of to whatever DetoxDroid screen was left open -->
+             instead of to whatever getabreak screen was left open -->
         <activity
             android:name=".ui.screens.feature.disable_apps.WaitBeforeOpeningActivity"
             android:excludeFromRecents="true"

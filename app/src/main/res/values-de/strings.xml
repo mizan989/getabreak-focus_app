@@ -981,11 +981,11 @@
     <!-- endregion -->
 
     <!-- region Premium -->
-    <string name="premium_tile_subtitle">Unterstütze das Projekt &amp; schalte Extras für Power-User frei</string>
-    <string name="premium_sheet_title_generic">getabreak unterstützen</string>
+    <string name="premium_tile_subtitle">Alle Funktionen freigeschaltet &amp; ablenkungsfrei</string>
+    <string name="premium_sheet_title_generic">getabreak Wellbeing-Tools</string>
     <string name="premium_sheet_title_nudge">Holst du viel aus getabreak raus?</string>
     <string name="premium_sheet_title_locked">%1$s freischalten</string>
-    <string name="premium_sheet_subtitle">Kostenlos, quelloffen, keine Werbung. Gepflegt von einer einzigen Person.</string>
+    <string name="premium_sheet_subtitle">Kostenlos, quelloffen, keine Werbung. Entwickelt für ablenkungsfreien Fokus.</string>
     <string name="premium_impact_title">Dein Detox bisher</string>
     <string name="premium_impact_interventions">hat getabreak eingegriffen</string>
     <string name="premium_impact_grayscale">in Graustufen verbracht</string>

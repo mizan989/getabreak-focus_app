@@ -13,27 +13,44 @@ if not exist "platform-tools\adb.exe" (
     exit /b 1
 )
 
-set "APK_URL="
 set "APK_FILE="
-for /f "usebackq tokens=1,2 delims=|" %%i in (`powershell.exe -nologo -noprofile -command "$asset = (Invoke-RestMethod 'https://api.github.com/repos/mizan989/getabreak-focus_app/releases/latest').assets | Where-Object { $_.name -match '^app-[0-9]+(\.[0-9]+)*\.apk$' } | Select-Object -First 1; if ($null -ne $asset) { Write-Output ($asset.browser_download_url + '|' + $asset.name) }"`) do (
-    set "APK_URL=%%i"
-    set "APK_FILE=%%j"
+set "APK_URL="
+
+for %%f in (*.apk) do (
+    if "!APK_FILE!"=="" (
+        set "APK_FILE=%%f"
+        echo Using local APK: !APK_FILE!
+    )
 )
 
-if "!APK_URL!"=="" (
-    echo Could not resolve APK download URL from latest release.
-    exit /b 1
-)
 if "!APK_FILE!"=="" (
-    echo Could not resolve APK file name from latest release.
+    echo Checking for latest release on GitHub...
+    for /f "usebackq tokens=1,2 delims=|" %%i in (`powershell.exe -nologo -noprofile -command "try { $release = Invoke-RestMethod 'https://api.github.com/repos/mizan989/getabreak-focus_app/releases/latest'; $asset = $release.assets | Where-Object { $_.name -match '.*\.apk$' } | Select-Object -First 1; if ($null -ne $asset) { Write-Output ($asset.browser_download_url + '|' + $asset.name) } } catch {}"`) do (
+        set "APK_URL=%%i"
+        set "APK_FILE=%%j"
+    )
+    if not "!APK_URL!"=="" (
+        echo Downloading latest getabreak APK (!APK_FILE!)...
+        powershell.exe -nologo -noprofile -command "(New-Object Net.WebClient).DownloadFile('!APK_URL!', '!APK_FILE!')"
+    )
+)
+
+if "!APK_FILE!"=="" (
+    echo.
+    echo Error: No getabreak APK was found.
+    echo Either:
+    echo   1. Copy a getabreak APK file (*.apk) into this directory, or
+    echo   2. Publish a release with an attached APK asset at:
+    echo      https://github.com/mizan989/getabreak-focus_app/releases
+    echo.
+    pause
     exit /b 1
 )
 
 if not exist "!APK_FILE!" (
-    echo Downloading latest getabreak APK (!APK_FILE!)...
-    powershell.exe -nologo -noprofile -command "(New-Object Net.WebClient).DownloadFile('!APK_URL!', '!APK_FILE!')"
-) else (
-    echo Using existing APK: !APK_FILE!
+    echo Error: Expected APK file "!APK_FILE!" was not found.
+    pause
+    exit /b 1
 )
 
 echo Starting ADB

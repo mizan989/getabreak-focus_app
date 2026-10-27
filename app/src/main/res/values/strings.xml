@@ -588,7 +588,7 @@
     <string name="feature_brake_shortcut">Brake</string>
     <string name="feature_brake_autoPull_header">Pulling itself</string>
     <string name="feature_brake_autoPull">Pull it for me</string>
-    <string name="feature_brake_autoPull_description">Caught doomscrolling %1$d times within %2$d min, and the brake goes on for %3$s. Only counts while Break \"Doom Scrolling\" is on.</string>
+    <string name="feature_brake_autoPull_description">Caught doomscrolling %1$d times within %2$d min, and the brake goes on for %3$s. Only counts while \"Interrupt doomscrolling\" is on.</string>
     <string name="feature_brake_autoPull_breaks">Times caught</string>
     <string name="feature_brake_autoPull_breaks_description">How often it takes, counted across all apps.</string>
     <string name="feature_brake_autoPull_window">Within</string>
@@ -598,7 +598,7 @@
     <!-- endregion -->
 
     <!-- region Feature: Break Doom Scrolling -->
-    <string name="feature_doomScrolling">Break \"Doom Scrolling\"</string>
+    <string name="feature_doomScrolling">Interrupt doomscrolling</string>
     <string name="feature_doomScrolling_subtitle">Sensitivity and cooldown</string>
     <string name="feature_doomScrolling_description">Experimental. Spots long, fast scrolling in the apps a group covers and offers a way out. Which apps and after how long is set on the group.</string>
     <string name="feature_doomScrolling_timeUntilWarning">Time until warning</string>
@@ -1010,12 +1010,12 @@
     <!-- endregion -->
 
     <!-- region Premium -->
-    <string name="premium_tile_subtitle">Support the project &amp; unlock power-user extras</string>
+    <string name="premium_tile_subtitle">All features unlocked &amp; distraction-free</string>
     <!-- Sheet headline adapts to what opened it -->
-    <string name="premium_sheet_title_generic">Support getabreak</string>
+    <string name="premium_sheet_title_generic">getabreak Wellbeing Tools</string>
     <string name="premium_sheet_title_nudge">Getting a lot out of getabreak?</string>
     <string name="premium_sheet_title_locked">Unlock %1$s</string>
-    <string name="premium_sheet_subtitle">Free, open source, no ads. Maintained by one person.</string>
+    <string name="premium_sheet_subtitle">Free, open source, no ads. Built for distraction-free focus.</string>
     <!-- Personal impact card ("reciprocity beats feature lists") -->
     <string name="premium_impact_title">Your detox so far</string>
     <string name="premium_impact_interventions">times getabreak stepped in</string>
