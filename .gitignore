@@ -25,3 +25,5 @@ local.properties
 /app/upload-keystore.properties
 /private-plugins.txt
 .agents/
+qa_evidence/
+getabreak-emulator-qa-report.md
