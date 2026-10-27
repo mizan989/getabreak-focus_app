@@ -1,0 +1,10 @@
+### Release v2.6.1
+
+✨ New Features
+- target SDK 35 for future compatibiltiy
+- add German translation
+- enhance doom scrolling detection with probation thresholds and grace handling
+
+🐛 Bug Fixes
+- enhance foreground package tracking in accessibility service
+

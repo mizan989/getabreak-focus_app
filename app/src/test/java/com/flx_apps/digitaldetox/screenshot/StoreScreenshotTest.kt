@@ -1,0 +1,367 @@
+package com.flx_apps.digitaldetox.screenshot
+
+import android.os.Looper
+import android.os.SystemClock
+import androidx.activity.compose.setContent
+import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.HourglassTop
+import androidx.compose.material.icons.outlined.QueryStats
+import androidx.compose.material.icons.outlined.Rule
+import androidx.compose.material.icons.outlined.Widgets
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.swipeLeft
+import androidx.lifecycle.ViewModelProvider
+import com.flx_apps.digitaldetox.MainActivity
+import com.flx_apps.digitaldetox.R
+import com.flx_apps.digitaldetox.data.DailyAppUsageDao
+import com.flx_apps.digitaldetox.data.DailyGrayscaleStatsDao
+import com.flx_apps.digitaldetox.ui.screens.feature.break_doom_scrolling.BreakDoomScrollingOverlay
+import com.flx_apps.digitaldetox.ui.screens.feature.disable_apps.WaitBeforeOpeningScreen
+import com.flx_apps.digitaldetox.ui.screens.nav_host.NavHostScreen
+import com.flx_apps.digitaldetox.ui.screens.nav_host.NavViewModel
+import com.flx_apps.digitaldetox.ui.screens.nav_host.NavigationRoutes
+import com.flx_apps.digitaldetox.ui.screens.usage_stats.TrendsCarouselTestTag
+import com.flx_apps.digitaldetox.ui.theme.DetoxDroidTheme
+import com.github.takahirom.roborazzi.captureRoboImage
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.HiltTestApplication
+import kotlinx.coroutines.runBlocking
+import org.junit.Assume.assumeTrue
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.junit.rules.TestRule
+import org.junit.runner.RunWith
+import org.junit.runners.model.Statement
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
+import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.Config
+import org.robolectric.annotation.GraphicsMode
+import java.util.Locale
+import javax.inject.Inject
+
+/**
+ * Generates the Play Store / F-Droid phone screenshots into
+ * `fastlane/metadata/android/<locale>/images/phoneScreenshots/1.png … 8.png`.
+ *
+ * Real app screens (home, usage-stats) are driven through the real [MainActivity]/[NavHostScreen]
+ * — they cannot be instantiated standalone because `NavViewModel.navViewModel()` casts the local
+ * activity to [MainActivity] and reimagined `hiltViewModel()` needs a nav-entry scope. The
+ * grayscale / exceptions / doomscrolling / minimal-launcher beats are static mock scenes (see
+ * [MockScenes]), per product decision, since Roborazzi can only render DetoxDroid's own UI.
+ *
+ * Each slot's colour, caption icon and composition come from [Slot] and [CardShape].
+ *
+ * Run with:
+ *   ./gradlew :app:generateScreenshots
+ */
+@HiltAndroidTest
+@RunWith(RobolectricTestRunner::class)
+@GraphicsMode(GraphicsMode.Mode.NATIVE)
+@Config(application = HiltTestApplication::class, sdk = [34], qualifiers = PHONE_QUALIFIERS)
+class StoreScreenshotTest {
+
+    @get:Rule(order = 0)
+    val hiltRule = HiltAndroidRule(this)
+
+    /**
+     * Runs between Hilt setup and the activity launch (order 1 of 3): DetoxDroid's singletons read
+     * from [com.flx_apps.digitaldetox.DetoxDroidApplication.appContext], which is never set under
+     * HiltTestApplication — so it must exist before [MainActivity] first renders the home screen.
+     */
+    @get:Rule(order = 1)
+    val appContextRule = TestRule { base, _ ->
+        object : Statement() {
+            override fun evaluate() {
+                ScreenshotSeed.seedAppContext(RuntimeEnvironment.getApplication())
+                base.evaluate()
+            }
+        }
+    }
+
+    @get:Rule(order = 2)
+    val composeRule = createAndroidComposeRule<MainActivity>()
+
+    @Inject
+    lateinit var dailyAppUsageDao: DailyAppUsageDao
+
+    @Inject
+    lateinit var dailyGrayscaleStatsDao: DailyGrayscaleStatsDao
+
+    @Before
+    fun setUp() {
+        // Only run when explicitly recording/verifying screenshots (i.e. via `generateScreenshots`
+        // or -Proborazzi.test.record/verify), so a plain `testDebugUnitTest` doesn't regenerate the
+        // store assets as a side effect.
+        assumeTrue(
+            "Skipping store screenshots — run ./gradlew :app:generateScreenshots to record them.",
+            System.getProperty("roborazzi.test.record") != null ||
+                System.getProperty("roborazzi.test.verify") != null,
+        )
+        hiltRule.inject()
+        val app = RuntimeEnvironment.getApplication()
+        ScreenshotSeed.seedActiveState()
+        ScreenshotSeed.installFakeApps(app)
+        ScreenshotSeed.seedTodayUsageStats(app)
+        runBlocking { ScreenshotSeed.seedHistory(dailyAppUsageDao, dailyGrayscaleStatsDao) }
+    }
+
+    // ── 1 · Home ─────────────────────────────────────────────────────────────
+    @Test
+    fun screenshot_1_home() = captureApp(
+        index = 1,
+        titleRes = R.string.screenshot_1_title,
+        subtitleRes = R.string.screenshot_1_subtitle,
+        style = Slot.Hero,
+        icon = null, // the hero card carries the headline alone
+        shape = null,
+        navigate = { /* Home is the start destination — no navigation needed */ },
+    )
+
+    // ── 2 · A rule, as the group screen puts it ──────────────────────────────
+    @Test
+    fun screenshot_2_rule() = captureApp(
+        index = 2,
+        titleRes = R.string.screenshot_2_title,
+        subtitleRes = R.string.screenshot_2_subtitle,
+        style = Slot.Groups,
+        icon = { rememberVectorPainter(Icons.Outlined.Rule) },
+        // The sentence and the steps are the point; the schedule below carries on past the crop.
+        shape = CardShape.Bleed,
+        navigate = { navVm -> navVm.openRoute(NavigationRoutes.RuleGroup(ScreenshotSeed.feedsGroupId)) },
+    )
+
+    // ── 3 · Grayscale ────────────────────────────────────────────────────────
+    @Test
+    fun screenshot_3_grayscale() = captureScene(
+        index = 3,
+        titleRes = R.string.screenshot_3_title,
+        subtitleRes = R.string.screenshot_3_subtitle,
+        style = Slot.Grayscale,
+        icon = { painterResource(R.drawable.ic_contrast) },
+        // Framed, so the wipe edge sits at the panel's own centre.
+        shape = CardShape.CaptionOver,
+    ) { MockGrayscaleSplit() }
+
+    // ── 4 · App exceptions (kept in colour) ──────────────────────────────────
+    @Test
+    fun screenshot_4_exceptions() = captureScene(
+        index = 4,
+        titleRes = R.string.screenshot_4_title,
+        subtitleRes = R.string.screenshot_4_subtitle,
+        style = Slot.Exceptions,
+        icon = { painterResource(R.drawable.ic_app_exceptions) },
+        shape = CardShape.CaptionUnder,
+    ) { MockExceptionsScene() }
+
+    // ── 5 · Wait before opening ──────────────────────────────────────────────
+    @Test
+    fun screenshot_5_waitBeforeOpening() {
+        // The bar drains over the wait, and a clock left to run finishes it before the capture.
+        // Stopped after a few frames, the screenshot shows the bar partway down and the app not
+        // yet open.
+        composeRule.mainClock.autoAdvance = false
+        captureScene(
+            index = 5,
+            titleRes = R.string.screenshot_5_title,
+            subtitleRes = R.string.screenshot_5_subtitle,
+            style = Slot.Wait,
+            icon = { rememberVectorPainter(Icons.Outlined.HourglassTop) },
+            // Caption on top and laid out at phone height, cut below the buttons: the break screen
+            // right after it runs edge to edge with the caption below, and two dark screens framed
+            // the same way back to back would read as one. The cut also keeps the screen's own
+            // spacing, which a panel of the card's height squeezes out.
+            shape = CardShape.Bleed,
+            afterCompose = {
+                shadowOf(Looper.getMainLooper()).idle()
+                repeat(5) { composeRule.mainClock.advanceTimeByFrame() }
+            },
+        ) {
+            WaitBeforeOpeningScreen(
+                appLabel = "Instagram",
+                waitMs = 30_000L,
+                opensAtMs = SystemClock.elapsedRealtime() + 18_000L,
+                onOpen = {},
+                onLeave = {},
+            )
+        }
+    }
+
+    // ── 6 · Break doomscrolling ──────────────────────────────────────────────
+    @Test
+    fun screenshot_6_doomscrolling() = captureScene(
+        index = 6,
+        titleRes = R.string.screenshot_6_title,
+        subtitleRes = R.string.screenshot_6_subtitle,
+        style = Slot.Doomscroll,
+        icon = { painterResource(R.drawable.ic_scroll) },
+        // Framed like the grayscale shot before it: the dark break screen stays a panel in the
+        // card instead of swallowing it.
+        shape = CardShape.CaptionOver,
+    ) {
+        Box(Modifier.fillMaxSize()) {
+            MockSocialFeed(Modifier.grayscale())
+            BreakDoomScrollingOverlay()
+        }
+    }
+
+    // ── 7 · Usage stats — In Perspective ─────────────────────────────────────
+    @Test
+    fun screenshot_7_usageStats() = captureApp(
+        index = 7,
+        titleRes = R.string.screenshot_7_title,
+        subtitleRes = R.string.screenshot_7_subtitle,
+        style = Slot.UsageStats,
+        icon = { rememberVectorPainter(Icons.Outlined.QueryStats) },
+        // The top-apps list carries on past the crop, which is the point of the screen.
+        shape = CardShape.Bleed,
+        navigate = { navVm -> navVm.openRoute(NavigationRoutes.UsageStats()) },
+        interact = {
+            // Switch to the 7-day timeframe (premium is unlocked in the seed) so the weekly history
+            // backed by the seeded Room data is shown instead of today's summary.
+            composeRule.onNodeWithText(
+                composeRule.activity.getString(R.string.usageStats_timeframe_last7Days)
+            ).performClick()
+            settle()
+            // Advance the trends carousel to its "In Perspective" page — scroll distance reframed as
+            // a physical distance against a landmark, a far stronger visual than the raw summary.
+            // Swipe the carousel node itself, not the root: a root swipe lands at the screen's
+            // vertical centre (below the carousel) and scrolls nothing.
+            composeRule.onNodeWithTag(TrendsCarouselTestTag).performTouchInput { swipeLeft() }
+        },
+    )
+
+    // ── 8 · Minimal launcher (text-only home screen) ─────────────────────────
+    @Test
+    fun screenshot_8_minimalLauncher() = captureScene(
+        index = 8,
+        titleRes = R.string.screenshot_8_title,
+        subtitleRes = R.string.screenshot_8_subtitle,
+        style = Slot.Launcher,
+        icon = { rememberVectorPainter(Icons.Outlined.Widgets) },
+        // Framed with the caption underneath, like the exceptions shot: the last card closes the
+        // set the way the others are built.
+        shape = CardShape.CaptionUnder,
+    ) { MockMinimalLauncher() }
+
+    // ── Helpers ──────────────────────────────────────────────────────────────
+
+    /** Captures a static mock scene wrapped in the marketing card. */
+    private fun captureScene(
+        index: Int,
+        @StringRes titleRes: Int,
+        @StringRes subtitleRes: Int,
+        style: MarketingStyle,
+        icon: @Composable () -> Painter,
+        shape: CardShape,
+        afterCompose: () -> Unit = {},
+        scene: @Composable () -> Unit,
+    ) = capture(index, titleRes, subtitleRes, afterCompose) { title, subtitle ->
+        MarketingCard(title, subtitle, style, icon, shape) { scene() }
+    }
+
+    /**
+     * Renders the real app (NavHostScreen) in the marketing card, then runs [navigate].
+     *
+     * A null [icon]/[shape] pair asks for [HeroCard] instead, which has no caption icon.
+     */
+    private fun captureApp(
+        index: Int,
+        @StringRes titleRes: Int,
+        @StringRes subtitleRes: Int,
+        style: MarketingStyle,
+        icon: (@Composable () -> Painter)?,
+        shape: CardShape?,
+        navigate: (NavViewModel) -> Unit,
+        interact: () -> Unit = {},
+    ) = capture(
+        index = index,
+        titleRes = titleRes,
+        subtitleRes = subtitleRes,
+        card = { title, subtitle ->
+            if (icon != null && shape != null) {
+                MarketingCard(title, subtitle, style, icon, shape) { NavHostScreen() }
+            } else {
+                HeroCard(title, subtitle, style) { NavHostScreen() }
+            }
+        },
+        afterCompose = {
+            val navVm = ViewModelProvider(composeRule.activity)[NavViewModel::class.java]
+            composeRule.activity.runOnUiThread { navigate(navVm) }
+            settle()
+            interact()
+        },
+    )
+
+    /** Sets [card] as the activity content once per locale, then captures it. */
+    private fun capture(
+        index: Int,
+        @StringRes titleRes: Int,
+        @StringRes subtitleRes: Int,
+        afterCompose: () -> Unit = {},
+        card: @Composable (title: String, subtitle: String) -> Unit,
+    ) = forEachLocale { locale ->
+        val activity = composeRule.activity
+        val title = activity.getString(titleRes)
+        val subtitle = activity.getString(subtitleRes)
+        activity.runOnUiThread {
+            activity.setContent {
+                DetoxDroidTheme(darkTheme = false, dynamicColor = false) { card(title, subtitle) }
+            }
+        }
+        afterCompose()
+        settleAndCapture(index, locale)
+    }
+
+    private inline fun forEachLocale(block: (MarketingLocale) -> Unit) {
+        val originalLocale = Locale.getDefault()
+        try {
+            MARKETING_LOCALES.forEach { locale ->
+                RuntimeEnvironment.setQualifiers("${locale.qualifier}-$PHONE_QUALIFIERS")
+                // setQualifiers only swaps resource resolution. Code that formats numbers against
+                // Locale.getDefault() (e.g. the "≈ 1,2 ×" landmark multiplier) would still render
+                // en-US and put an English decimal point into a translated screenshot.
+                Locale.setDefault(Locale.forLanguageTag(locale.bcp47))
+                block(locale)
+            }
+        } finally {
+            Locale.setDefault(originalLocale)
+        }
+    }
+
+    private fun settleAndCapture(index: Int, locale: MarketingLocale) {
+        settle()
+        composeRule.activity.window.decorView.rootView.captureRoboImage(
+            screenshotPath(locale.bcp47, index)
+        )
+    }
+
+    /**
+     * Drains both Compose and the main looper, with short real sleeps so background
+     * `viewModelScope.launch { withContext(Dispatchers.IO) { … } }` loads (e.g. the usage-stats
+     * screen) resume on the main looper and repopulate the UI before capture.
+     */
+    private fun settle() {
+        repeat(20) {
+            composeRule.waitForIdle()
+            shadowOf(Looper.getMainLooper()).idle()
+            Thread.sleep(50)
+        }
+        composeRule.waitForIdle()
+        shadowOf(Looper.getMainLooper()).idle()
+    }
+}

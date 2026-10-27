@@ -1,0 +1,89 @@
+package com.flx_apps.digitaldetox.screenshot
+
+import java.io.File
+
+/**
+ * Locale configuration for a marketing screenshot set.
+ *
+ * @param bcp47     fastlane listing directory name (e.g. "en-US", "de-DE").
+ * @param qualifier Android resource qualifier string (e.g. "en-rUS", "de-rDE").
+ */
+data class MarketingLocale(val bcp47: String, val qualifier: String)
+
+private const val STRINGS_SCREENSHOT = "strings_screenshot.xml"
+
+/**
+ * Marketing locales auto-discovered at runtime by scanning the debug resource directory for
+ * [STRINGS_SCREENSHOT] files. The default `values/` folder maps to en-US. Additional locales in
+ * `values-XX(-rYY)/` subdirectories are added in alphabetical order.
+ *
+ * **To add a new marketing locale**, create `src/debug/res/values-XX/strings_screenshot.xml` with
+ * translated captions — no code changes required. The next test run generates screenshots for it.
+ *
+ * The captions sit in the debug source set (the one the test builds against) so that they never
+ * reach a release build.
+ */
+val MARKETING_LOCALES: List<MarketingLocale> by lazy {
+    marketingLocalesIn(resDirectory("src/debug/res"), STRINGS_SCREENSHOT)
+}
+
+/** Resolves a module-relative `res/` path whether gradle runs from the module or the project root. */
+fun resDirectory(moduleRelative: String): File {
+    val candidates = listOf(File(moduleRelative), File("app/$moduleRelative"))
+    return candidates.firstOrNull { it.exists() && it.isDirectory }
+        ?: error("Could not find res/ directory in: ${candidates.map { it.absolutePath }}")
+}
+
+/**
+ * The locales a marketing asset is rendered in: every `values(-XX)/` folder under [resDir] that
+ * holds a [markerFile]. The unqualified `values/` folder is en-US and comes first, the rest follow
+ * in alphabetical order.
+ */
+fun marketingLocalesIn(resDir: File, markerFile: String): List<MarketingLocale> = buildList {
+    if (File(resDir, "values/$markerFile").exists()) {
+        add(MarketingLocale("en-US", "en-rUS"))
+    }
+
+    resDir.listFiles()
+        ?.filter { dir ->
+            dir.isDirectory &&
+                    dir.name.startsWith("values-") &&
+                    File(dir, markerFile).exists()
+        }
+        ?.sortedBy { it.name }
+        ?.forEach { dir ->
+            val q = dir.name.removePrefix("values-").trim()
+            val baseLang = q.substringBefore("-")
+            val bcp47 = when (baseLang) {
+                "cs" -> "cs-CZ"
+                "de" -> "de-DE"
+                "es" -> "es-ES"
+                "fr" -> "fr-FR"
+                "hu" -> "hu-HU"
+                "id", "in" -> "id"
+                "it" -> "it-IT"
+                "ja" -> "ja-JP"
+                "nl" -> "nl-NL"
+                "pl" -> "pl-PL"
+                "pt" -> if (q.contains("rBR")) "pt-BR" else "pt-PT"
+                "ru" -> "ru-RU"
+                "tr" -> "tr-TR"
+                "ko" -> "ko-KR"
+                "zh" -> "zh-CN"
+                else -> if (q.contains("-r")) q.replace("-r", "-") else q
+            }
+            add(MarketingLocale(bcp47 = bcp47, qualifier = q))
+        }
+}
+
+/** Device qualifiers for phone-size screenshots (440×800 dp at xxhdpi = 1320×2400 px). */
+const val PHONE_QUALIFIERS = "w440dp-h800dp-xxhdpi"
+
+/**
+ * Output path for screenshot [index] of [locale], in the fastlane metadata tree consumed by both
+ * F-Droid and the Gradle Play Publisher.
+ */
+fun screenshotPath(locale: String, index: Int): String {
+    val root = if (File("src/main/res").exists()) "." else "app"
+    return "$root/../fastlane/metadata/android/$locale/images/phoneScreenshots/$index.png"
+}

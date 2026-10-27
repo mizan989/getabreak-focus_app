@@ -1,0 +1,27 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+/.idea/
+/.kotlin/
+
+# Google Play private overlay — the public repo stays a clean FOSS tree;
+# keep a backup of these outside the repo
+/app/googlePlay.gradle
+/app/src/googlePlay/
+/app/src/testGooglePlay/
+/app/play-account.json
+/app/upload-keystore.properties
+/private-plugins.txt
+.agents/

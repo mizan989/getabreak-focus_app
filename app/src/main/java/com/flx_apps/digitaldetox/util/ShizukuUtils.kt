@@ -1,0 +1,233 @@
+package com.flx_apps.digitaldetox.util
+
+import android.content.pm.PackageManager
+import android.os.Handler
+import android.os.Looper
+import android.os.ParcelFileDescriptor
+import com.flx_apps.digitaldetox.DetoxDroidApplication
+import moe.shizuku.server.IShizukuService
+import rikka.shizuku.Shizuku
+import timber.log.Timber
+
+/**
+ * Utility class for working with Shizuku service to execute privileged commands without root.
+ *
+ * This implementation provides a simpler approach that focuses on permission checking
+ * rather than complex command execution, as command execution through Shizuku requires
+ * more advanced integration that may vary across different Shizuku versions.
+ */
+object ShizukuUtils {
+    private const val SHIZUKU_PERMISSION_REQUEST_CODE = 1001
+    const val SHIZUKU_PACKAGE_NAME = "moe.shizuku.privileged.api"
+
+    /** The legacy "Shizuku Manager" package name some installs still use. */
+    const val SHIZUKU_MANAGER_PACKAGE_NAME = "moe.shizuku.manager"
+
+    /**
+     * A valid Android package name and nothing else. Every caller that interpolates a package name
+     * into a shell command runs it through here first.
+     */
+    private val PACKAGE_NAME_REGEX =
+        Regex("^[a-zA-Z][a-zA-Z0-9_]*(\\.[a-zA-Z][a-zA-Z0-9_]*)+$")
+
+    /** @see PACKAGE_NAME_REGEX */
+    fun isSafePackageName(packageName: String) = PACKAGE_NAME_REGEX.matches(packageName)
+
+    /**
+     * Whether a Shizuku app is installed, whether or not its server is running.
+     *
+     * Shizuku is also distributed under other package names (forks, and builds that rename
+     * themselves so banking apps do not find them), so the package lookup is only one half: a
+     * server that answers is proof of an install under whatever name. The lookup still matters
+     * for the other half, an installed Shizuku whose server is not running, which cannot be told
+     * apart from no Shizuku at all for a renamed one.
+     */
+    fun isShizukuInstalled(): Boolean = isShizukuServerRunning() || runCatching {
+        val packageManager = DetoxDroidApplication.appContext.packageManager
+        listOf(SHIZUKU_PACKAGE_NAME, SHIZUKU_MANAGER_PACKAGE_NAME).any { packageName ->
+            runCatching { packageManager.getPackageInfo(packageName, 0) }.isSuccess
+        }
+    }.getOrDefault(false)
+
+    /**
+     * Whether a Shizuku server is running and reachable. The binder arrives through this app's own
+     * provider, so it does not depend on the name the Shizuku app is installed under.
+     */
+    private fun isShizukuServerRunning(): Boolean = try {
+        Shizuku.pingBinder()
+    } catch (e: Exception) {
+        Timber.w("Shizuku binder not available: ${e.message}")
+        false
+    }
+
+    /**
+     * Checks if Shizuku is running and can be talked to (permission not considered).
+     * @return true if Shizuku can be used to execute commands once permission is granted
+     */
+    fun isShizukuAvailable(): Boolean = isShizukuServerRunning()
+
+    /**
+     * Checks if Shizuku service is running but permission is not granted.
+     * @return true if Shizuku is running but we don't have permission
+     */
+    fun isShizukuRunningButNotGranted(): Boolean {
+        return isShizukuAvailable() && !hasShizukuPermission()
+    }
+
+    /**
+     * True when Shizuku is running *and* permission is already granted, i.e. [executeCommand]
+     * will run without prompting the user with a permission dialog.
+     */
+    fun canExecuteCommandsSilently(): Boolean {
+        return isShizukuAvailable() && hasShizukuPermission()
+    }
+
+    /**
+     * Checks if we have permission to use Shizuku.
+     * @return true if permission is granted
+     */
+    fun hasShizukuPermission(): Boolean {
+        return try {
+            val permissionResult = Shizuku.checkSelfPermission()
+            val hasPermission = permissionResult == PackageManager.PERMISSION_GRANTED
+            Timber.d("Shizuku permission check result: $permissionResult (granted: $hasPermission)")
+            hasPermission
+        } catch (e: Exception) {
+            Timber.w("Exception checking Shizuku permission: ${e.message}")
+            false
+        }
+    }
+
+    /**
+     * Requests Shizuku permission from the user.
+     * This will show a system dialog asking for permission.
+     */
+    fun requestShizukuPermission() {
+        try {
+            if (Shizuku.isPreV11()) {
+                // Shizuku pre-v11 doesn't support runtime permission
+                Timber.d("Shizuku is pre-v11, cannot request permission")
+                return
+            }
+            if (hasShizukuPermission()) {
+                Timber.d("Shizuku permission already granted")
+                return
+            }
+            Timber.d("Requesting Shizuku permission")
+            Shizuku.requestPermission(SHIZUKU_PERMISSION_REQUEST_CODE)
+        } catch (e: Exception) {
+            Timber.w("Exception requesting Shizuku permission: ${e.message}")
+        }
+    }
+
+
+    /**
+     * Executes a shell command using Shizuku with elevated privileges.
+     * Based on the implementation pattern from successful Shizuku apps.
+     *
+     * @param command The shell command to execute
+     * @param onCompleted Callback with success status and output, always on the main thread: the
+     * command runs on a thread of its own, and callers update UI state and records from it that
+     * the main thread writes as well
+     */
+    fun executeCommand(command: String, onCompleted: ((Boolean, String) -> Unit)?) {
+        Timber.d("Executing command via Shizuku: $command")
+        try {
+            // Try to request permission if Shizuku is running but permission not granted
+            if (isShizukuRunningButNotGranted()) {
+                requestShizukuPermission()
+
+                // Wait for permission to be granted, then re-call the command once. The listener
+                // removes itself so repeated calls don't accumulate listeners.
+                val listener = object : Shizuku.OnRequestPermissionResultListener {
+                    override fun onRequestPermissionResult(requestCode: Int, grantResult: Int) {
+                        if (requestCode != SHIZUKU_PERMISSION_REQUEST_CODE) return
+                        Shizuku.removeRequestPermissionResultListener(this)
+                        if (grantResult == PackageManager.PERMISSION_GRANTED) {
+                            Timber.d("Shizuku permission granted, re-executing command")
+                            executeCommand(command, onCompleted)
+                        }
+                    }
+                }
+                Shizuku.addRequestPermissionResultListener(listener)
+
+                onCompleted.deliver(
+                    false,
+                    "Shizuku permission not granted yet. Please grant permission and try again."
+                )
+                return
+            }
+
+            Thread {
+                try {
+                    // Use the proper IShizukuService interface like in the example
+                    val result = executeShizukuCommand(command)
+                    val success = result.first == 0
+                    val output = result.second ?: "Command completed"
+
+                    Timber.d("Command execution completed with exit code: ${result.first}")
+                    onCompleted.deliver(success, output)
+
+                } catch (e: Exception) {
+                    Timber.e(e, "Failed to execute command via Shizuku")
+                    onCompleted.deliver(false, "Failed to execute command: ${e.message}")
+                }
+            }.start()
+
+        } catch (e: Exception) {
+            Timber.e(e, "Shizuku execution setup failed")
+            onCompleted.deliver(false, "Shizuku execution failed: ${e.message}")
+        }
+    }
+
+    private val mainHandler = Handler(Looper.getMainLooper())
+
+    private fun ((Boolean, String) -> Unit)?.deliver(success: Boolean, output: String) {
+        val callback = this ?: return
+        mainHandler.post { callback(success, output) }
+    }
+
+    /**
+     * Execute a command using the Shizuku service interface.
+     * Based on the pattern from the provided example code.
+     *
+     * @param command The shell command to execute
+     * @return Pair of exit code and output
+     */
+    private fun executeShizukuCommand(command: String): Pair<Int, String?> = runCatching {
+        // Get the Shizuku service interface
+        val service = IShizukuService.Stub.asInterface(Shizuku.getBinder())
+
+        // Create a new process (using sh instead of su since we don't need root)
+        val process = service.newProcess(arrayOf("sh"), null, null)
+
+        process.run {
+            // Write the command to the process input stream
+            ParcelFileDescriptor.AutoCloseOutputStream(outputStream).use { outputStream ->
+                outputStream.write(command.toByteArray())
+            }
+
+            // Wait for completion and read results
+            val exitCode = waitFor()
+            val output = inputStream.readText.ifBlank { errorStream.readText }
+
+            // Clean up
+            destroy()
+
+            exitCode to output
+        }
+    }.getOrElse {
+        Timber.e(it, "Error executing Shizuku command")
+        1 to it.stackTraceToString()
+    }
+
+    /**
+     * Extension function to read text from a ParcelFileDescriptor
+     */
+    private val ParcelFileDescriptor.readText: String
+        get() = ParcelFileDescriptor.AutoCloseInputStream(this).use { inputStream ->
+            inputStream.bufferedReader().readText()
+        }
+
+
+}

@@ -1,0 +1,70 @@
+package com.flx_apps.digitaldetox.ui.widgets
+
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.flx_apps.digitaldetox.ui.screens.feature.LocalSettingsLocked
+
+/**
+ * Displays a set of mutually exclusive options as [OptionChip]s in a [ChipFlowRow].
+ * @param options A map of text resources to option values
+ * @param selectedOption The currently selected option
+ * @param onOptionSelected A callback that is called when an option is selected
+ * @param enabled Whether the options can be changed. Like [SimpleListTile], the row is also
+ * disabled while the settings are locked (see [LocalSettingsLocked]).
+ */
+@Composable
+fun OptionsRow(
+    options: Map<Int, Any>,
+    selectedOption: Any,
+    onOptionSelected: (Any) -> Unit,
+    enabled: Boolean = true,
+) {
+    val effectivelyEnabled = enabled && !LocalSettingsLocked.current
+    ChipFlowRow {
+        options.forEach { (textRes, option) ->
+            OptionChip(
+                label = stringResource(id = textRes),
+                selected = option == selectedOption,
+                enabled = effectivelyEnabled,
+                onClick = { onOptionSelected(option) },
+            )
+        }
+    }
+}
+
+/**
+ * One choice out of several. The selected chip is rendered in full primary color with a check
+ * mark — the default secondaryContainer is too close to card backgrounds to read at a glance.
+ */
+@Composable
+fun OptionChip(label: String, selected: Boolean, enabled: Boolean = true, onClick: () -> Unit) {
+    FilterChip(
+        selected = selected,
+        onClick = onClick,
+        enabled = enabled,
+        label = { Text(text = label) },
+        leadingIcon = if (selected) {
+            {
+                Icon(
+                    imageVector = Icons.Default.Check,
+                    contentDescription = null,
+                    modifier = Modifier.size(FilterChipDefaults.IconSize)
+                )
+            }
+        } else null,
+        colors = FilterChipDefaults.filterChipColors(
+            selectedContainerColor = MaterialTheme.colorScheme.primary,
+            selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
+            selectedLeadingIconColor = MaterialTheme.colorScheme.onPrimary,
+        ),
+    )
+}

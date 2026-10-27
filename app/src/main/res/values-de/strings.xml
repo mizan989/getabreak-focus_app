@@ -1,0 +1,1113 @@
+<resources>
+    <!-- German translation. Informal "du" throughout, „“ quotes, "Handy" rather than "Telefon".
+         Translate the intent, not the words. See AGENTS.md § Localization. -->
+
+    <!-- region App & Services -->
+    <string name="app_quickSettingsTile">Break pausieren</string>
+    <string name="app_quickSettingsTile_paused">Break ist für %d Minuten pausiert.</string>
+    <string name="app_quickSettingsTile_noPause">Nächste Pause erst in %d Minuten.</string>
+    <string name="app_brakeTile_until">Bis %s</string>
+    <string name="app_accessibilityService_name">Break-Bedienungshilfe</string>
+    <string name="app_accessibilityService_description">Setzt deine Regeln in Echtzeit um, je nachdem, welche App gerade offen ist.</string>
+    <string name="app_notification_action_pause">Pause</string>
+    <string name="app_notification_action_resume">Fortsetzen</string>
+    <string name="app_notification_channelName">Break-Dienst</string>
+    <string name="app_notification_channelDescription">Hält Break im Hintergrund aktiv</string>
+    <string name="app_notification_alertChannelName">Break-Hinweise</string>
+    <string name="app_notification_alertChannelDescription">Meldet sich, wenn dein Handy Break gestoppt hat</string>
+    <string name="app_notification_screenTime">%s Bildschirmzeit heute</string>
+    <string name="app_notification_budget">%1$s: %2$s</string>
+    <string name="reliability_serviceDown_title">Break wurde gestoppt</string>
+    <string name="reliability_serviceDown_message">Dein Handy hat Break im Hintergrund gestoppt. Tippe, um es wieder zu starten.</string>
+    <string name="reliability_keepAlive_title">Break aktiv halten</string>
+    <string name="reliability_keepAlive_subtitle">Zeigt eine dauerhafte Benachrichtigung mit deiner Bildschirmzeit von heute, damit das System Break im Hintergrund seltener stoppt.</string>
+    <string name="reliability_keepAlive_locked_subtitle">Gesperrt, solange dein Commitment-Passwort gilt. Ohne die Benachrichtigung ließe sich Break einfach wegwischen.</string>
+    <string name="reliability_battery_title">Uneingeschränkte Akkunutzung erlauben</string>
+    <string name="reliability_battery_subtitle">Verhindert, dass das System Break schlafen legt. Empfohlen, wenn dein Handy Hintergrund-Apps aggressiv schließt.</string>
+    <string name="reliability_onboarding_title">Zuverlässig bleiben</string>
+    <string name="reliability_onboarding_message">Manche Handys stoppen Hintergrund-Apps, um Akku zu sparen. Dabei geht Break schon mal unbemerkt mit aus. Diese optionalen Einstellungen helfen, dass es weiterläuft.</string>
+    <string name="reliability_forceStopped_title">Dein Handy hat Break ausgeschaltet</string>
+    <string name="reliability_forceStopped_message">Android schaltet die Bedienungshilfe einer App ab, sobald sie zwangsweise beendet wird, und das passiert schon mal beim Schließen aller Apps oder durch den Akku-Manager. Fixier Break in den laufenden Apps, lass es im Hintergrund laufen und starte es dann wieder.</string>
+    <string name="reliability_forceStopped_howTo">Zeig mir, wie</string>
+    <string name="reliability_forceStopped_dismiss">Aus lassen</string>
+    <!-- endregion -->
+
+    <!-- region Common Actions & States -->
+    <string name="action_go">Los</string>
+    <string name="action_save">Speichern</string>
+    <string name="action_delete">Löschen</string>
+    <string name="action_back">Zurück</string>
+    <string name="action_cancel">Abbrechen</string>
+    <string name="action_ok">OK</string>
+    <string name="action_close">Schließen</string>
+    <string name="action_done">Fertig</string>
+    <string name="action_grantPermission">Berechtigung erteilen</string>
+    <string name="action_openAppInfo">App-Info öffnen</string>
+    <string name="action_requestPermissions">Für diese Funktion fehlen noch Berechtigungen.</string>
+    <string name="action_requestOverlayPermission">Dafür fehlt die Berechtigung „Über anderen Apps anzeigen“.</string>
+    <string name="action_search">Suchen</string>
+    <string name="action_search_close">Suche schließen</string>
+    <string name="action_filter">Filtern</string>
+    <string name="state_on">An</string>
+    <string name="state_off">Aus</string>
+    <!-- endregion -->
+
+    <!-- region Common Formats -->
+    <string name="duration_minutes">%d Min.</string>
+    <string name="duration_hoursMinutes">%1$d Std. %2$d Min.</string>
+    <string name="duration_hours">%d Std.</string>
+    <string name="duration_hours_short">%dh</string>
+    <string name="duration_minutes_short">%dmin</string>
+    <string name="duration_hoursCompact">%1$dh%2$dmin</string>
+    <string name="duration_hoursMinutes_short">%1$dh %2$dmin</string>
+    <string name="duration_minutesSeconds_short">%1$dmin %2$ds</string>
+    <string name="duration_seconds_short">%ds</string>
+    <string name="distance_meters">%d m</string>
+    <string name="distance_kilometers">%.1f km</string>
+    <!-- endregion -->
+
+    <!-- region Navigation -->
+    <string name="navigation_reportIssue">Problem melden</string>
+    <string name="navigation_about">Über &amp; Einstellungen</string>
+    <string name="navigation_premium">Break Premium</string>
+    <!-- endregion -->
+
+    <!-- region Home -->
+    <string name="home_start">Break starten</string>
+    <string name="home_stop">Break stoppen</string>
+    <string name="home_state_active">Läuft</string>
+    <string name="home_state_paused">Pausiert bis %s</string>
+    <string name="home_state_braking">Notbremse bis %s</string>
+    <string name="home_state_inactive">Gestoppt</string>
+    <string name="home_screenTime_today">Bildschirmzeit heute</string>
+    <string name="home_screenTime_unavailable">Bildschirmzeit nicht verfügbar</string>
+    <string name="home_screenTime_allLeftOut">Alles, was du heute benutzt hast, zählt gerade nicht mit.</string>
+    <string name="home_screenTime_allLeftOut_action">Ändern, was zählt</string>
+    <string name="home_uninstall">Break deinstallieren</string>
+    <string name="home_uninstall_hint">Weil Break erweiterte Berechtigungen hat, schlägt das Deinstallieren oft fehl. Tippe hier, um sie vorher zu entziehen.</string>
+    <string name="home_uninstall_blocked_hint">Deaktiviert, solange das Commitment-Passwort aktiv ist.</string>
+    <string name="home_uninstall_dialog_title">Bist du sicher?</string>
+    <string name="home_uninstall_dialog_message">Break gibt seine Berechtigungen ab, danach kannst du es ganz normal deinstallieren.\n\nBei einer Neuinstallation musst du sie erneut erteilen.</string>
+    <string name="home_finishSetup_title">Einrichtung abschließen</string>
+    <string name="home_finishSetup_message">Eine Gruppe macht Apps grau und wartet nur noch auf eine Berechtigung.</string>
+    <string name="home_finishSetup_message_overlay">Warten, Sperren und Scroll-Pausen brauchen noch die Berechtigung „Über anderen Apps anzeigen“.</string>
+    <string name="home_finishSetup_action">Abschließen</string>
+    <string name="home_batteryOptimization_title">Break aktiv halten</string>
+    <string name="home_batteryOptimization_message">Dein Handy stoppt Break womöglich im Hintergrund. Lass es ohne Akku-Einschränkungen laufen, damit deine Regeln weiter greifen.</string>
+    <string name="home_batteryOptimization_action">Erlauben</string>
+    <string name="home_batteryOptimization_why">Warum?</string>
+    <string name="home_batteryOptimization_dismiss">Nicht jetzt</string>
+
+    <string name="home_droid_asleep">Ich schlafe. Solltest du eigentlich auch.</string>
+    <string name="home_droid_caught_message">Sieht aus, als hättest du dich festgetippt.</string>
+    <plurals name="home_droid_caught_context">
+        <item quantity="one">Du hast in %2$d Sekunde %1$d-mal auf ein Logo getippt.</item>
+        <item quantity="other">Du hast in %2$d Sekunden %1$d-mal auf ein Logo getippt.</item>
+    </plurals>
+    <!-- endregion -->
+
+    <!-- region App Lists & Categories -->
+    <string name="appList_section_selected">Ausgewählte Apps</string>
+    <string name="appList_section_available">Verfügbare Apps</string>
+    <string name="appList_selected_empty">Noch keine Apps ausgewählt.</string>
+    <string name="appList_badge_system">System</string>
+    <string name="appList_filter_launchable">Apps, die du öffnen kannst</string>
+    <string name="appList_filter_background">Apps ohne Symbol</string>
+    <string name="appList_tab_apps">Apps</string>
+    <string name="appList_tab_websites">Websites</string>
+    <string name="appList_browser_websites_all">Auf jeder Website darin aktiv</string>
+    <string name="appList_browser_websites_only">Darin nur auf den ausgewählten Websites aktiv</string>
+    <string name="appList_browser_websites_allExcept">Auf jeder Website darin aktiv, außer den ausgewählten</string>
+    <string name="appList_browser_websites_unreadable">Die Websites darin kann Break nicht lesen</string>
+    <plurals name="websites_coveredBrowsers">
+        <item quantity="one">In %s sowieso auf jeder Website aktiv, weil der Browser selbst bei den Apps mit drin ist.</item>
+        <item quantity="other">In %s sowieso auf jeder Website aktiv, weil die Browser selbst bei den Apps mit drin sind.</item>
+    </plurals>
+    <string name="websites_showApps">Zu den Apps</string>
+    <string name="appCategories_video">Video</string>
+    <string name="appCategories_music">Musik</string>
+    <string name="appCategories_audio">Audio</string>
+    <string name="appCategories_shopping">Shopping</string>
+    <string name="appCategories_travel">Reisen</string>
+    <string name="appCategories_workout">Fitness</string>
+    <string name="appCategories_dating">Dating</string>
+    <string name="appCategories_news">Nachrichten</string>
+    <string name="appCategories_maps">Karten</string>
+    <string name="appCategories_social">Social Media</string>
+    <string name="appCategories_productivity">Produktivität</string>
+    <string name="appCategories_games">Spiele</string>
+    <string name="appCategories_image">Bilder</string>
+    <string name="appCategories_other">Sonstige</string>
+    <!-- endregion -->
+
+    <!-- region Websites in app lists -->
+    <string name="websites_add_label">Website hinzufügen</string>
+    <string name="websites_add_placeholder">youtube.com oder youtube.com/shorts</string>
+    <string name="websites_add_action">Hinzufügen</string>
+    <string name="websites_add_invalid">Das sieht nicht nach einer Webadresse aus.</string>
+    <string name="websites_section_yours">Deine Websites</string>
+    <string name="websites_section_yours_empty">Noch keine. Eine Website zählt mit allem, was dazugehört, auch mit ihren Subdomains. Mit Pfad, etwa youtube.com/shorts, zählt nur dieser Teil.</string>
+    <string name="websites_section_collections">Fertige Listen</string>
+    <string name="websites_collection_social">Soziale Medien</string>
+    <string name="websites_collection_video">Video und Streaming</string>
+    <string name="websites_collection_shopping">Shopping</string>
+    <string name="websites_collection_dating">Dating</string>
+    <string name="websites_collection_adult">Pornoseiten</string>
+    <string name="websites_collection_gambling">Glücksspiel</string>
+    <string name="websites_collection_sample">%1$s und %2$d weitere</string>
+    <string name="websites_collection_size">%1$s Websites, %2$s</string>
+    <string name="websites_source_stevenBlack">aus den StevenBlack-Hosts-Listen</string>
+    <string name="websites_source_ut1">aus den UT1-Blacklists der Université Toulouse Capitole</string>
+    <string name="websites_source_stevenBlackAndUt1">aus den StevenBlack-Hosts-Listen und den UT1-Blacklists</string>
+    <string name="websites_browsers_readable">Funktioniert in %s.</string>
+    <string name="websites_browsers_unreadable">%s kann Break nicht lesen, Websites bleiben dort also unbemerkt. Nimm stattdessen die App selbst in die Liste.</string>
+    <string name="websites_browsers_none">Keinen deiner Browser kann Break lesen. Chrome, Firefox, Samsung Internet, Brave, Edge und viele mehr gehen.</string>
+    <string name="websites_inAppBrowsers">Links, die sich in einer anderen App öffnen, etwa im eingebauten Browser von Instagram, sind nicht abgedeckt.</string>
+    <!-- endregion -->
+
+    <!-- region Shared Feature Settings -->
+    <string name="feature_settings_exceptions">Apps und Websites</string>
+    <plurals name="feature_settings_exceptions_notListed">
+        <item quantity="one">Aktiv in allen Apps außer der %d ausgewählten.</item>
+        <item quantity="other">Aktiv in allen Apps außer den %d ausgewählten.</item>
+    </plurals>
+    <plurals name="feature_settings_exceptions_onlyListed">
+        <item quantity="one">Nur in %d ausgewählten App aktiv.</item>
+        <item quantity="other">Nur in %d ausgewählten Apps aktiv.</item>
+    </plurals>
+    <string name="feature_settings_exceptions_allApps">Aktiv in allen Apps.</string>
+    <string name="feature_settings_exceptions_empty">Keine Apps gefunden.</string>
+    <string name="feature_settings_exceptions_filterByAppType">Nach App-Typ filtern</string>
+    <string name="feature_settings_exceptions_filterByCategory">Nach App-Kategorie filtern</string>
+    <string name="feature_settings_exceptions_listType">Gilt für</string>
+    <string name="feature_settings_exceptions_listType_notList">Alle Apps außer den ausgewählten</string>
+    <string name="feature_settings_exceptions_listType_onlyList">Nur ausgewählte Apps</string>
+    <string name="feature_settings_exceptions_copyFrom">Übernehmen von …</string>
+    <string name="feature_settings_exceptions_copyFrom_dialogTitle">Auswahl übernehmen von</string>
+    <string name="feature_settings_exceptions_copyFrom_dialogHint">Kopiert die Apps und Websites einer anderen Gruppe in diese Liste. Die aktuelle Auswahl ist damit weg.</string>
+    <string name="feature_settings_exceptions_copyFrom_appCount">%d Apps</string>
+    <string name="feature_settings_exceptions_switchListType_title">Ausgewählte Apps behalten?</string>
+    <string name="feature_settings_exceptions_switchListType_toNotList">Bisher gilt das nur für deine %d ausgewählten Apps. Nach dem Wechsel wären genau die ausgenommen, und alle anderen betroffen.</string>
+    <string name="feature_settings_exceptions_switchListType_toOnlyList">Bisher sind deine %d ausgewählten Apps ausgenommen. Nach dem Wechsel wären nur noch die betroffen, und alle anderen nicht.</string>
+    <string name="feature_settings_exceptions_switchListType_keep">Auswahl behalten</string>
+    <string name="feature_settings_exceptions_switchListType_clear">Liste vorher leeren</string>
+    <string name="feature_settings_exceptions_notListed_websites">Aktiv auf allen Websites außer den ausgewählten (%s).</string>
+    <string name="feature_settings_exceptions_onlyListed_websites">Nur auf ausgewählten Websites aktiv (%s).</string>
+    <string name="feature_settings_exceptions_noWebsites">Keine Websites ausgewählt.</string>
+    <plurals name="websites_count_sites">
+        <item quantity="one">%d Website</item>
+        <item quantity="other">%d Websites</item>
+    </plurals>
+    <plurals name="websites_count_collections">
+        <item quantity="one">%d Liste</item>
+        <item quantity="other">%d Listen</item>
+    </plurals>
+    <string name="feature_settings_exceptions_allWebsites">Aktiv auf allen Websites.</string>
+    <string name="feature_settings_exceptions_listType_notList_websites">Alle Websites außer den ausgewählten</string>
+    <string name="feature_settings_exceptions_listType_onlyList_websites">Nur ausgewählte Websites</string>
+    <string name="feature_settings_exceptions_copyFrom_appAndWebsiteCount">%1$d Apps, %2$d Websites</string>
+    <string name="feature_settings_exceptions_switchListType_title_websites">Ausgewählte Websites behalten?</string>
+    <string name="feature_settings_exceptions_switchListType_toNotList_websites">Bisher gilt das nur für die Websites, die du ausgewählt hast (%s). Nach dem Wechsel wären genau die ausgenommen, und alle anderen betroffen.</string>
+    <string name="feature_settings_exceptions_switchListType_toOnlyList_websites">Bisher sind die Websites, die du ausgewählt hast (%s), ausgenommen. Nach dem Wechsel wären nur noch die betroffen, und alle anderen nicht.</string>
+    <string name="feature_settings_advanced">Erweitert</string>
+
+    <string name="feature_settings_schedule">Zeitplan</string>
+    <string name="feature_settings_schedule_hint">%d Zeitfenster</string>
+    <string name="feature_settings_schedule_hint_activeAllTheTime">Durchgehend aktiv</string>
+    <string name="feature_settings_schedule_description">Mit einem Zeitfenster gilt das nur an bestimmten Tagen und zu bestimmten Uhrzeiten.</string>
+    <string name="feature_settings_schedule_everyDay">Täglich</string>
+    <string name="feature_settings_schedule_allDay">ganztägig</string>
+    <string name="feature_settings_schedule_nextDay">Folgetag</string>
+    <string name="feature_settings_schedule_weekdays">Tage</string>
+    <string name="feature_settings_schedule_add">Zeitfenster hinzufügen</string>
+    <string name="feature_settings_schedule_newRule">Neues Zeitfenster</string>
+    <string name="feature_settings_schedule_editRule">Zeitfenster bearbeiten</string>
+    <string name="feature_settings_schedule_start">Start</string>
+    <string name="feature_settings_schedule_end">Ende</string>
+    <string name="feature_settings_schedule_status_activeUntil">Gerade aktiv, bis %s</string>
+    <string name="feature_settings_schedule_status_inactiveUntil">Gerade aus, aktiv ab %s</string>
+    <!-- endregion -->
+
+    <!-- region Rule groups -->
+    <string name="ruleGroups_title">Deine Gruppen</string>
+    <string name="ruleGroups_new">Neue Gruppe</string>
+    <string name="ruleGroups_unnamed">Gruppe</string>
+    <string name="ruleGroups_quotedName">„%s“</string>
+    <string name="ruleGroups_name">Name</string>
+    <string name="ruleGroups_menu">Mehr</string>
+    <string name="ruleGroups_rename">Umbenennen</string>
+    <string name="ruleGroups_delete">Gruppe löschen</string>
+    <string name="ruleGroups_delete_title">„%s“ löschen?</string>
+    <string name="ruleGroups_delete_message">Apps, Websites, Zeitplan und Budget der Gruppe sind damit weg. Den Apps selbst passiert nichts.</string>
+    <string name="ruleGroups_empty_title">Noch keine Gruppen</string>
+    <string name="ruleGroups_empty_message">Eine Gruppe ist eine Handvoll Apps und Websites, wann sie zählen, wie viel Zeit sie bekommen, und was passiert, wenn die Zeit um ist: warten, grau, Scroll-Pause, Sperre.</string>
+    <string name="ruleGroups_migrated_gray">Grau</string>
+    <string name="ruleGroups_migrated_locked">Gesperrte Apps</string>
+    <string name="ruleGroups_migrated_scrollBreaks">Scroll-Pausen</string>
+    <string name="ruleGroups_onboarding_name">Ablenkende Apps</string>
+    <string name="ruleGroups_feature_unused">In keiner Gruppe</string>
+    <plurals name="ruleGroups_feature_usedBy">
+        <item quantity="one">In %d Gruppe</item>
+        <item quantity="other">In %d Gruppen</item>
+    </plurals>
+    <string name="home_section_more">Mehr</string>
+    <string name="home_finishSetup_message_grayEffects">Eine Gruppe macht Apps grau, aber alle Grau-Effekte sind aus.</string>
+    <string name="usageStats_inGroups">In diesen Gruppen</string>
+    <string name="usageStats_noGroups">Noch keine Gruppen. Leg eine auf dem Startbildschirm an.</string>
+
+    <string name="ruleGroups_card_usedOf">%1$s von %2$s</string>
+    <string name="ruleGroups_card_allExcept">Alle außer</string>
+    <string name="ruleGroups_status_offUntil">Aus bis %s</string>
+    <string name="ruleGroups_status_usedUp">Aufgebraucht</string>
+    <string name="ruleGroups_status_locked">Gesperrt</string>
+    <string name="ruleGroups_status_gray">Grau</string>
+    <string name="ruleGroups_status_wait">%s warten</string>
+    <string name="ruleGroups_status_scrollBreaks">Scroll-Pausen</string>
+    <string name="ruleGroups_status_noSteps">Keine Schritte</string>
+
+    <string name="ruleGroups_scope_nothingYet">noch keine Apps oder Websites</string>
+    <string name="ruleGroups_scope_allApps">Alle Apps</string>
+    <string name="ruleGroups_scope_everything">Alle Apps und Websites</string>
+    <string name="ruleGroups_scope_allWebsites">Alle Websites</string>
+    <string name="ruleGroups_scope_allExcept">Alle Apps außer %s</string>
+    <string name="ruleGroups_scope_andAllWebsites">%s und jede Website</string>
+    <plurals name="ruleGroups_scope_andMore">
+        <item quantity="one">%1$s und %2$d weitere</item>
+        <item quantity="other">%1$s und %2$d weitere</item>
+    </plurals>
+    <plurals name="ruleGroups_scope_moreApps">
+        <item quantity="one">%1$s und %2$d weitere App</item>
+        <item quantity="other">%1$s und %2$d weitere Apps</item>
+    </plurals>
+    <string name="ruleGroups_scope_plusWebsites">%1$s, dazu %2$s</string>
+    <string name="ruleGroups_budget_perDay">%s pro Tag</string>
+    <string name="ruleGroups_budget_perHour">%s pro Stunde</string>
+    <string name="ruleGroups_schedule_always">Immer</string>
+    <string name="ruleGroups_schedule_everyDay">jeden Tag</string>
+    <string name="ruleGroups_schedule_weekdays">werktags</string>
+    <string name="ruleGroups_schedule_weekends">am Wochenende</string>
+    <string name="ruleGroups_schedule_onDays">am %s</string>
+    <string name="ruleGroups_schedule_window">%1$s von %2$s bis %3$s</string>
+    <string name="ruleGroups_schedule_windowShort">%1$s, %2$s bis %3$s</string>
+    <plurals name="ruleGroups_schedule_windows">
+        <item quantity="one">in %d Zeitfenster</item>
+        <item quantity="other">in %d Zeitfenstern</item>
+    </plurals>
+    <plurals name="ruleGroups_schedule_windowsShort">
+        <item quantity="one">%d Zeitfenster</item>
+        <item quantity="other">%d Zeitfenster</item>
+    </plurals>
+    <plurals name="ruleGroups_schedule_moreWindows">
+        <item quantity="one">und %d weiteres</item>
+        <item quantity="other">und %d weitere</item>
+    </plurals>
+
+    <plurals name="ruleGroups_sentence_budget">
+        <item quantity="one">{scope} bekommt {budget}{schedule}.</item>
+        <item quantity="other">{scope} bekommen {budget}{schedule}.</item>
+    </plurals>
+    <plurals name="ruleGroups_sentence_noBudget">
+        <item quantity="one">{scope} {steps}{schedule}.</item>
+        <item quantity="other">{scope} {steps}{schedule}.</item>
+    </plurals>
+    <string name="ruleGroups_sentence_scheduleJoin">", %s"</string>
+    <string name="ruleGroups_sentence_empty">Diese Gruppe umfasst {scope}.</string>
+    <plurals name="ruleGroups_steps_nothingYet">
+        <item quantity="one">hat noch keine Schritte</item>
+        <item quantity="other">haben noch keine Schritte</item>
+    </plurals>
+    <plurals name="ruleGroups_steps_wait">
+        <item quantity="one">wartet vor dem Öffnen {wait}</item>
+        <item quantity="other">warten vor dem Öffnen {wait}</item>
+    </plurals>
+    <plurals name="ruleGroups_steps_gray">
+        <item quantity="one">ist grau</item>
+        <item quantity="other">sind grau</item>
+    </plurals>
+    <plurals name="ruleGroups_steps_scroll">
+        <item quantity="one">bekommt nach {scroll} Scrollen eine Pause</item>
+        <item quantity="other">bekommen nach {scroll} Scrollen eine Pause</item>
+    </plurals>
+    <plurals name="ruleGroups_steps_lock">
+        <item quantity="one">ist gesperrt</item>
+        <item quantity="other">sind gesperrt</item>
+    </plurals>
+    <string name="ruleGroups_before_wait">Vor jedem Öffnen heißt es erst mal {wait} warten.</string>
+    <string name="ruleGroups_before_grayAlways">Die ganze Zeit grau.</string>
+    <string name="ruleGroups_before_scroll">Doomscrolling bekommt nach {scroll} eine Pause.</string>
+    <plurals name="ruleGroups_after_lock">
+        <item quantity="one">Danach ist es gesperrt.</item>
+        <item quantity="other">Danach sind sie gesperrt.</item>
+    </plurals>
+    <plurals name="ruleGroups_after_gray">
+        <item quantity="one">Danach wird es grau.</item>
+        <item quantity="other">Danach werden sie grau.</item>
+    </plurals>
+    <plurals name="ruleGroups_after_grayFrom">
+        <item quantity="one">Ab {gray} wird es grau.</item>
+        <item quantity="other">Ab {gray} werden sie grau.</item>
+    </plurals>
+    <plurals name="ruleGroups_after_grayFromThenLock">
+        <item quantity="one">Ab {gray} wird es grau, danach gesperrt.</item>
+        <item quantity="other">Ab {gray} werden sie grau, danach gesperrt.</item>
+    </plurals>
+    <string name="ruleGroups_after_nothing">Danach {steps}.</string>
+    <string name="ruleGroups_steps_nothingHappens">passiert noch nichts</string>
+    <string name="ruleGroups_noBudget_value">Kein Zeitbudget</string>
+    <string name="ruleGroups_noBudget_withSteps">{budget}, das gilt also ab der ersten Minute.</string>
+    <string name="ruleGroups_noBudget">{budget}.</string>
+    <string name="ruleGroups_overlap">%1$s gilt auch für %2$s.</string>
+    <plurals name="ruleGroups_permission_steps">
+        <item quantity="one">%s kann noch nichts tun.</item>
+        <item quantity="other">%s können noch nichts tun.</item>
+    </plurals>
+    <string name="ruleGroups_idle_noBudget_title">Ab der ersten Minute gesperrt</string>
+    <plurals name="ruleGroups_idle_noBudget_message">
+        <item quantity="one">%s kommt so nie zum Zug. Mit einem Zeitbudget würde die Sperre erst greifen, wenn es aufgebraucht ist.</item>
+        <item quantity="other">%s kommen so nie zum Zug. Mit einem Zeitbudget würde die Sperre erst greifen, wenn es aufgebraucht ist.</item>
+    </plurals>
+    <string name="ruleGroups_idle_setBudget">Budget festlegen</string>
+    <string name="ruleGroups_idle_grayAtLock_title">Grau fängt da an, wo die Sperre greift</string>
+    <string name="ruleGroups_idle_grayAtLock_message">Es wird also nie grau. Wähl einen früheren Zeitpunkt.</string>
+    <string name="ruleGroups_idle_grayAtLock_action">Früher</string>
+    <string name="ruleGroups_hint_tapToChange">Tipp auf einen unterstrichenen Teil, um ihn zu ändern.</string>
+    <string name="ruleGroups_hint_pastMidnight">Tipp auf einen unterstrichenen Teil, um ihn zu ändern. Das Zeitfenster geht über Mitternacht hinaus, und die %s gehen mit: Sie zählen, solange das Fenster offen ist, und fangen um Mitternacht nicht von vorn an.</string>
+
+    <string name="ruleGroups_today">Heute</string>
+    <string name="ruleGroups_thisHour">Diese Stunde</string>
+    <string name="ruleGroups_today_left">übrig</string>
+    <string name="ruleGroups_today_groupOff">Die Gruppe ist aus</string>
+    <string name="ruleGroups_today_freshBudget">Das Budget fängt neu an, wenn das Zeitfenster aufgeht.</string>
+    <string name="ruleGroups_today_grayFrom">Grau ab %s</string>
+    <string name="ruleGroups_today_grayAt">Grau ab %s</string>
+    <string name="ruleGroups_today_lockedAt">Gesperrt ab %s</string>
+
+    <string name="ruleGroups_steps_title">Was passiert</string>
+    <string name="ruleGroups_step_wait">Vor dem Öffnen warten</string>
+    <string name="ruleGroups_step_wait_on">%s bei jedem Öffnen</string>
+    <string name="ruleGroups_step_wait_off">Ein Moment, um es dir anders zu überlegen</string>
+    <string name="ruleGroups_step_gray">Grau werden</string>
+    <string name="ruleGroups_step_gray_on">Ab %s</string>
+    <string name="ruleGroups_step_gray_always">Die ganze Zeit</string>
+    <string name="ruleGroups_step_gray_off">Nimmt die Farbe raus, und damit den halben Reiz</string>
+    <string name="ruleGroups_step_gray_from">Grau ab</string>
+    <string name="ruleGroups_step_gray_fromStart">der ersten Minute</string>
+    <string name="ruleGroups_step_gray_fromMinutes">%d Min.</string>
+    <string name="ruleGroups_step_scrollBreak">Doomscrolling unterbrechen</string>
+    <string name="ruleGroups_step_scrollBreak_on">Nach %s Scrollen</string>
+    <string name="ruleGroups_step_scrollBreak_off">Eine Pause, wenn der Feed nicht aufhört</string>
+    <string name="ruleGroups_step_lock">Sperren</string>
+    <string name="ruleGroups_step_lock_on">Ab %s, bis zum nächsten Zeitfenster</string>
+    <string name="ruleGroups_step_lock_on_day">Ab %s, für den Rest des Tages</string>
+    <string name="ruleGroups_step_lock_on_hour">Ab %s, bis zur nächsten vollen Stunde</string>
+    <string name="ruleGroups_step_lock_always">Die ganze Zeit</string>
+    <string name="ruleGroups_step_lock_off">Hält sie außer Reichweite</string>
+    <string name="ruleGroups_step_onlySelectedApps">Nur bei einer Gruppe aus ausgewählten Apps</string>
+    <string name="ruleGroups_step_tune">Wie es funktioniert</string>
+    <string name="ruleGroups_steps_featureSettings">Funktionseinstellungen</string>
+    <string name="ruleGroups_steps_featureSettings_subtitle">Grau-Look, Sperrmodus, Scroll-Pausen. Für alle Gruppen gleich.</string>
+    <string name="ruleGroups_steps_featureSettings_description">Gelten fürs ganze Handy, also für alle Gruppen gleich.</string>
+    <string name="ruleGroups_steps_featureSettings_lock">Mit Bildschirm sperren, einfrieren oder deaktivieren</string>
+    <string name="ruleGroups_steps_featureSettings_gray">Echte Graustufen oder Bildschirmfilter, und wie stark</string>
+    <string name="ruleGroups_steps_featureSettings_scroll">Wie schnell eine Pause kommt und wie lange sie hält</string>
+    <string name="ruleGroups_when_title">Wann aktiv</string>
+
+    <string name="ruleGroups_budget_title">Wie viel</string>
+    <string name="ruleGroups_budget_use">%s nutzen</string>
+    <string name="ruleGroups_budget_noLimit">Kein Limit</string>
+    <string name="ruleGroups_budget_less">Weniger</string>
+    <string name="ruleGroups_budget_more">Mehr</string>
+    <string name="ruleGroups_budget_period_day">pro Tag</string>
+    <string name="ruleGroups_budget_period_hour">pro Stunde</string>
+    <string name="ruleGroups_budget_perHour_hint">Fängt zu jeder vollen Stunde von vorn an, auch wenn du gerade in einer App bist.</string>
+    <string name="ruleGroups_budget_perDay_pastMidnight_hint">Das Zeitfenster geht über Mitternacht hinaus, das Budget auch: Es zählt, solange das Fenster offen ist, und fängt um Mitternacht nicht von vorn an.</string>
+    <string name="ruleGroups_budget_lastDays">Letzte 7 Tage in dieser Gruppe</string>
+    <string name="ruleGroups_budget_lastDays_average">%s am Tag</string>
+    <string name="ruleGroups_budget_lastDays_empty">In den letzten 7 Tagen ist für diese Apps nichts zusammengekommen.</string>
+    <string name="ruleGroups_budget_compare_less">%1$s sind %2$s weniger als ein durchschnittlicher Tag letzte Woche.</string>
+    <string name="ruleGroups_budget_compare_more">%1$s sind %2$s mehr als ein durchschnittlicher Tag letzte Woche.</string>
+    <string name="ruleGroups_budget_compare_same">Das ist genau ein durchschnittlicher Tag letzte Woche.</string>
+    <string name="ruleGroups_budget_compare_everyDayOver">Jeder Tag lag drüber.</string>
+    <string name="ruleGroups_budget_compare_noDayOver">Kein Tag lag drüber.</string>
+    <plurals name="ruleGroups_budget_compare_daysOver">
+        <item quantity="one">%1$d von %2$d Tagen lag drüber.</item>
+        <item quantity="other">%1$d von %2$d Tagen lagen drüber.</item>
+    </plurals>
+
+    <string name="ruleGroups_setup_what">Was zählt</string>
+    <string name="ruleGroups_setup_how">Wie streng</string>
+    <string name="ruleGroups_setup_create">Gruppe anlegen</string>
+    <string name="ruleGroups_template_intro">Nimm die Vorlage, die am ehesten passt. Alles darin lässt sich hinterher ändern.</string>
+    <string name="ruleGroups_templates_what">Was dir die Zeit frisst</string>
+    <string name="ruleGroups_templates_when">Zu bestimmten Zeiten</string>
+    <string name="ruleGroups_templates_phone">Das ganze Handy</string>
+    <string name="ruleGroups_template_feeds">Social Feeds</string>
+    <string name="ruleGroups_template_feeds_description">Instagram, Reddit, X, TikTok, News-Apps und Co. bekommen 30 Minuten am Tag, werden dann grau und schließlich gesperrt. Scrollen bekommt Pausen.</string>
+    <string name="ruleGroups_template_videosAndGames">Videos und Spiele</string>
+    <string name="ruleGroups_template_videosAndGames_description">Netflix, YouTube, Twitch und jedes Spiel bekommen eine Stunde am Tag, die letzten 15 Minuten in Grau, danach gesperrt.</string>
+    <string name="ruleGroups_template_shopping">Shopping</string>
+    <string name="ruleGroups_template_shopping_description">Jeder Shop wartet 10 Sekunden, bevor er aufgeht, und bekommt 30 Minuten am Tag.</string>
+    <string name="ruleGroups_template_gamblingAndPorn">Glücksspiel und Pornos</string>
+    <string name="ruleGroups_template_gamblingAndPorn_description">Wett-Apps, Glücksspiel- und Pornoseiten bleiben gesperrt, in jedem Browser.</string>
+    <string name="ruleGroups_template_nightsOff">Nachts Ruhe</string>
+    <string name="ruleGroups_template_nightsOff_description">Feeds, Videos und Spiele sind jeden Tag von %1$s bis %2$s gesperrt.</string>
+    <string name="ruleGroups_template_workHours">Arbeitszeit</string>
+    <string name="ruleGroups_template_workHours_description">Feeds, Videos, Spiele, Nachrichten und Shops sind werktags von %1$s bis %2$s gesperrt.</string>
+    <string name="ruleGroups_template_grayEssentials">Grau, bis auf das Nötigste</string>
+    <string name="ruleGroups_template_grayEssentials_description">Jede App und jede Website wird grau, außer Telefon, Kamera, Karten, Uhr, Kalender und deinen Messengern.</string>
+    <string name="ruleGroups_template_empty">Leer anfangen</string>
+    <string name="ruleGroups_template_empty_description">Nichts ausgewählt, nichts eingestellt.</string>
+    <string name="ruleGroups_setup_what_these">Diese Apps zählen. Die üblichen Verdächtigen stehen oben; nimm den Haken raus, wo keiner ist.</string>
+    <string name="ruleGroups_setup_what_except">Alles zählt, außer dem, was du hier abhakst. Setz einen Haken bei allem, was so bleiben soll, wie es ist.</string>
+    <string name="ruleGroups_setup_what_hint">Websites funktionieren in Chrome, Firefox und den meisten Browsern, die darauf aufbauen. Mehr Apps und Websites gibt\'s später auf dem Bildschirm der Gruppe.</string>
+    <string name="ruleGroups_setup_budget_description">Wie lange die Apps und Websites der Gruppe zusammen bekommen.</string>
+    <string name="ruleGroups_setup_schedule_hint">Genaue Tage und Uhrzeiten stellst du später auf dem Bildschirm der Gruppe ein.</string>
+    <string name="ruleGroups_schedulePreset_always">Immer</string>
+    <string name="ruleGroups_schedulePreset_weekdays">Werktags, 10:00 bis 22:00</string>
+    <string name="ruleGroups_schedulePreset_workHours">Werktags, 09:00 bis 17:00</string>
+    <string name="ruleGroups_schedulePreset_evenings">Abends, 18:00 bis 23:00</string>
+    <string name="ruleGroups_schedulePreset_nights">Nachts, 22:00 bis 07:00</string>
+    <string name="ruleGroups_schedulePreset_mornings">Morgens, bis 09:00</string>
+    <string name="ruleGroups_schedulePreset_weekends">Am Wochenende</string>
+    <!-- endregion -->
+
+    <!-- region Feature: Do Not Disturb -->
+    <string name="feature_doNotDisturb">Modus „Bitte nicht stören“</string>
+    <string name="feature_doNotDisturb_subtitle">Ruhe als Grundeinstellung</string>
+    <string name="feature_doNotDisturb_description">Schaltet „Bitte nicht stören“ automatisch ein, solange Break läuft. Ausnahmen legst du in den Systemeinstellungen fest.</string>
+    <string name="feature_doNotDisturb_systemSettings">Systemeinstellungen</string>
+    <string name="feature_doNotDisturb_systemSettings_description">In den Android-Einstellungen kannst du „Bitte nicht stören“ genauer einstellen.</string>
+    <!-- endregion -->
+
+    <!-- region Feature: Grayscale -->
+    <string name="feature_grayscale">Grau werden</string>
+    <string name="feature_grayscale_subtitle">Wie das Grau aussieht</string>
+    <string name="feature_grayscale_description">Nimmt allem die Farbe, was eine Gruppe grau macht, und damit den halben Reiz. Welche Apps, wann und nach wie viel Nutzung, das stellst du in der Gruppe ein.</string>
+    <string name="feature_grayscale_extraDim">Extradunkel</string>
+    <string name="feature_grayscale_extraDim_description">Dunkler, als der Helligkeitsregler hergibt, solange eine erfasste App offen ist. Lange drücken, um einzustellen, wie dunkel.</string>
+    <string name="feature_grayscale_ignoreNonFullScreen">Pop-ups und Leisten ignorieren</string>
+    <string name="feature_grayscale_ignoreNonFullScreen_description">Lautstärkeregler oder Statusleiste schalten die Farbe dann nicht mehr hin und her.</string>
+    <string name="feature_grayscale_noEffects">Schalte erst Graustufen, Extradunkel oder den Bildschirmfilter ein.</string>
+    <string name="feature_grayscale_noEffects_noPermission">Schalte erst den Bildschirmfilter ein oder richte echte Graustufen ein.</string>
+    <string name="feature_grayscale_systemGrayscale">Graustufen</string>
+    <string name="feature_grayscale_systemGrayscale_description">Der Farbfilter des Systems, solange eine erfasste App offen ist. Kostet keinen Akku.</string>
+    <string name="feature_grayscale_screenFilter">Bildschirmfilter</string>
+    <string name="feature_grayscale_screenFilter_description">Zieht die Farbe ab und macht unscharf, ganz ohne Einrichtung. Echte Graustufen brauchen einmal einen Computer oder Shizuku.</string>
+    <string name="feature_grayscale_screenFilter_description_granted">Zusätzlich zu den echten Graustufen, falls dich Grau allein zu wenig stört.</string>
+    <string name="feature_grayscale_screenFilter_intensity">Filterstärke</string>
+    <string name="feature_grayscale_screenFilter_intensity_description">Wie weit er geht. Zu stark, und Text wird schwer lesbar.</string>
+    <string name="feature_grayscale_screenFilter_effects">Was der Filter macht</string>
+    <string name="feature_grayscale_screenFilter_effects_description">Der Schleier zieht Farbe und Kontrast ab. Die Unschärfe braucht Android 12 und pausiert im Energiesparmodus.</string>
+    <string name="feature_grayscale_screenFilter_effects_shade">Schleier</string>
+    <string name="feature_grayscale_screenFilter_effects_blur">Unschärfe</string>
+    <string name="feature_grayscale_screenFilter_effects_both">Beides</string>
+    <string name="feature_grayscale_screenFilter_percent">%d %%</string>
+    <string name="feature_grayscale_screenFilter_summary_shade">Schleier, %d %%</string>
+    <string name="feature_grayscale_screenFilter_summary_blur">Unschärfe, %d %%</string>
+    <string name="feature_grayscale_screenFilter_summary_both">Schleier und Unschärfe, %d %%</string>
+    <string name="feature_grayscale_preview_normal">Normal</string>
+    <string name="feature_grayscale_preview_gray">Grau</string>
+    <!-- endregion -->
+
+    <!-- region Feature: Pause -->
+    <string name="feature_pause">Pause-Taste</string>
+    <string name="feature_pause_subtitle">Pausen, die du selbst wählst</string>
+    <string name="feature_pause_description">Pausiert Break für ein paar Minuten, wenn du dein Handy halt wirklich brauchst.</string>
+    <string name="feature_pause_duration">Pausendauer</string>
+    <string name="feature_pause_duration_description">Nach Ablauf der Pause läuft Break automatisch weiter.</string>
+    <string name="feature_pause_minimumTimeBetween">Mindestabstand zwischen Pausen</string>
+    <string name="feature_pause_minimumTimeBetween_description">Damit das Pausieren nicht selbst zur Gewohnheit wird.</string>
+    <string name="feature_pause_fromAssistant">Assistent</string>
+    <string name="feature_pause_fromAssistant_description">Lege Break als Standard-Assistenten fest, um eine Pause zu starten. (Den Assistenten öffnest du meist mit langem Druck auf die Home-Taste.)</string>
+    <string name="feature_pause_fromHardwareButton">Hardware-Taste</string>
+    <string name="feature_pause_fromHardwareButton_description">Wähle eine Taste, die Break pausiert, wenn du sie 2 Sekunden gedrückt hältst.</string>
+    <string name="feature_pause_fromHardwareButton_press">Drücke eine beliebige Taste an deinem Handy</string>
+    <string name="feature_pause_fromHardwareButton_noButtonPressed">Noch keine Taste gedrückt</string>
+    <string name="feature_pause_fromHardwareButton_selected">Gewählte Taste: %s</string>
+    <string name="feature_pause_fromHardwareButton_appNotRunning">Break muss laufen, um eine Hardware-Taste zuzuweisen.</string>
+    <string name="feature_pause_ways">So pausierst du</string>
+    <string name="feature_pause_fromQuickSettings">Schnelleinstellungen</string>
+    <string name="feature_pause_fromQuickSettings_description">Tippe hier, und die Pausen-Kachel landet in deinen Schnelleinstellungen.</string>
+    <string name="feature_pause_fromQuickSettings_alreadyAdded">Die Pausen-Kachel ist schon in deinen Schnelleinstellungen.</string>
+    <string name="feature_pause_fromNotification">Benachrichtigung</string>
+    <string name="feature_pause_fromNotification_description">In der Benachrichtigung von Break gibt\'s einen Pause-Knopf.</string>
+    <string name="feature_pause_fromNotification_blocked">Erlaube Benachrichtigungen, dann bekommt die von Break einen Pause-Knopf.</string>
+    <string name="feature_pause_affectedFeatures">Betroffene Funktionen</string>
+    <string name="feature_pause_affectedFeatures_all">Alle Funktionen</string>
+    <string name="feature_pause_affectedFeatures_count">%1$d von %2$d Funktionen</string>
+    <string name="feature_pause_affectedFeatures_dialogHint">Lege fest, welche Funktionen eine Pause abschaltet. Nicht markierte laufen einfach weiter.</string>
+    <!-- endregion -->
+
+    <!-- region Feature: Emergency Brake -->
+    <string name="feature_brake">Notbremse</string>
+    <string name="feature_brake_subtitle">Alle Regeln auf Anschlag, sofort</string>
+    <string name="feature_brake_description">Für den Moment, in dem du merkst, dass du gerade abdriftest. Eine Zeit lang läuft dann alles, was du eingeschaltet hast, auf der strengsten Stufe: Der ganze Bildschirm wird grau, gesperrte Apps bleiben gesperrt, egal wie viel Zeit noch übrig wäre, Zeitpläne gelten nicht, und pausieren kannst du auch nicht.</string>
+    <string name="feature_brake_status_off">Wähl aus, wie lange, und los geht\'s.</string>
+    <string name="feature_brake_status_notActivated">Schalte die Notbremse erst oben ein.</string>
+    <string name="feature_brake_status_notRunning">Break läuft nicht, da gibt es nichts zu bremsen.</string>
+    <string name="feature_brake_status_on">Die Notbremse läuft bis %s. So lange sind die Einstellungen gesperrt.</string>
+    <string name="feature_brake_status_ending">Du wolltest früher raus. Um %s ist die Notbremse vorbei.</string>
+    <string name="feature_brake_duration">Wie lange</string>
+    <string name="feature_brake_duration_other">Andere…</string>
+    <string name="feature_brake_pull">Notbremse ziehen</string>
+    <string name="feature_brake_extendBy">Um %s verlängern</string>
+    <string name="feature_brake_undo">Zurücknehmen</string>
+    <string name="feature_brake_endEarly">Früher beenden</string>
+    <string name="feature_brake_endEarly_message">Nach dem Tippen dauert es noch %d Minuten, bis die Notbremse vorbei ist. Bis dahin bleibt alles gesperrt, und du kannst es dir noch anders überlegen.</string>
+    <string name="feature_brake_endEarly_confirm">Wartezeit starten</string>
+    <string name="feature_brake_keepOn">Doch anlassen</string>
+    <string name="feature_brake_noPause">Keine Pause, solange die Notbremse läuft. Sie geht bis %s.</string>
+    <string name="feature_brake_stop_locked">Die Notbremse läuft bis %s. So lange lässt sich Break nicht stoppen.</string>
+    <string name="feature_brake_ways">So löst du sie aus</string>
+    <string name="feature_brake_fromQuickSettings_description">Tippe hier, und die Notbremse landet in deinen Schnelleinstellungen. Einmal antippen, und sie läuft so lange wie beim letzten Mal.</string>
+    <string name="feature_brake_fromQuickSettings_alreadyAdded">Die Notbremse ist schon in deinen Schnelleinstellungen.</string>
+    <string name="feature_brake_fromHomeScreen">Startbildschirm</string>
+    <string name="feature_brake_fromHomeScreen_description">Tippe hier, und die Notbremse bekommt ein eigenes Symbol auf deinem Startbildschirm. Halte das Break-Symbol gedrückt, dann findest du sie da auch.</string>
+    <string name="feature_brake_fromHomeScreen_unsupported">Dein Launcher nimmt keine Symbole von Apps an. Halte stattdessen das Break-Symbol gedrückt.</string>
+    <string name="feature_brake_shortcut">Notbremse</string>
+    <string name="feature_brake_autoPull_header">Von selbst auslösen</string>
+    <string name="feature_brake_autoPull">Automatisch auslösen</string>
+    <string name="feature_brake_autoPull_description">Wirst du %1$d-mal in %2$d Min. beim Doomscrolling erwischt, löst die Notbremse von selbst aus, für %3$s. Zählt nur, solange „Doomscrolling unterbrechen“ an ist.</string>
+    <string name="feature_brake_autoPull_breaks">Wie oft erwischt</string>
+    <string name="feature_brake_autoPull_breaks_description">So oft muss es passieren, über alle Apps gezählt.</string>
+    <string name="feature_brake_autoPull_window">Innerhalb von</string>
+    <string name="feature_brake_autoPull_window_description">Liegt mehr Zeit dazwischen, zählt es nicht zusammen.</string>
+    <string name="feature_brake_autoPull_duration">Dauer der Notbremse</string>
+    <string name="feature_brake_autoPull_duration_description">Hat sie von selbst ausgelöst, lässt sie sich nicht zurücknehmen, nur früher beenden.</string>
+    <!-- endregion -->
+
+    <!-- region Feature: Break Doom Scrolling -->
+    <string name="feature_doomScrolling">Doomscrolling unterbrechen</string>
+    <string name="feature_doomScrolling_subtitle">Empfindlichkeit und Abklingzeit</string>
+    <string name="feature_doomScrolling_description">Experimentell. Erkennt langes, schnelles Scrollen in den Apps einer Gruppe und bietet dir einen Ausstieg an. Welche Apps und ab wann, das stellst du in der Gruppe ein.</string>
+    <string name="feature_doomScrolling_timeUntilWarning">Zeit bis zur Warnung</string>
+    <string name="feature_doomScrolling_cooldownTime">Abklingzeit</string>
+    <string name="feature_doomScrolling_cooldownTime_description">So lange bleibt die App zu, oder nur der Feed, der es ausgelöst hat.</string>
+    <string name="feature_doomScrolling_sensitivity">Empfindlichkeit</string>
+    <string name="feature_doomScrolling_sensitivity_description">Wie schnell du scrollen musst, bis eine Pause kommt. Endlose Feeds werden so oder so erkannt.</string>
+    <string name="feature_doomScrolling_sensitivity_relaxed">Entspannt</string>
+    <string name="feature_doomScrolling_sensitivity_balanced">Ausgewogen</string>
+    <string name="feature_doomScrolling_sensitivity_strict">Streng</string>
+    <string name="feature_doomScrolling_sensitivity_screensPerMinute">Ab etwa %d Bildschirmen pro Minute</string>
+
+    <!-- overlay shown when a doomscrolling session is detected -->
+    <string name="feature_doomScrolling_warning_title">Aufwachen!</string>
+    <string name="feature_doomScrolling_warning_message">Sieht aus, als hättest du dich festgescrollt.</string>
+    <string name="feature_doomScrolling_warning_exit">Hol mich hier raus</string>
+    <string name="feature_doomScrolling_warning_finishFirst">Nur noch das hier, dann hör ich auf</string>
+    <string name="feature_doomScrolling_warning_pullBrake">Für %s die Notbremse ziehen</string>
+    <string name="feature_doomScrolling_warning_context_intensity">In den letzten %2$d Minuten sind rund %1$d Bildschirme an dir vorbeigezogen.</string>
+    <string name="feature_doomScrolling_warning_context_endless">Der Feed lädt immer weiter nach. Du bist schon %1$d Minuten dabei.</string>
+    <string name="feature_doomScrolling_warning_context_shortVideos">In den letzten %2$d Minuten hast du %1$d Kurzvideos weggewischt.</string>
+    <string name="feature_doomScrolling_warning_context_probation">Direkt nach der Pause schon wieder dabei. Diesmal pausiert die ganze App.</string>
+    <string name="feature_doomScrolling_warning_context_brakePulled">Das war Nummer %1$d in kurzer Zeit. Die Notbremse läuft jetzt bis %2$s.</string>
+    <string name="feature_doomScrolling_warning_context_braking">Die Notbremse läuft, also bleibt die App bis %s zu.</string>
+    <string name="feature_doomScrolling_guideOut_title">Abgemacht ist abgemacht</string>
+    <string name="feature_doomScrolling_guideOut_message">Hoffentlich hat sich\'s gelohnt. Zurück zum Startbildschirm.</string>
+    <string name="feature_doomScrolling_cooldown_title">Abklingzeit läuft noch</string>
+    <string name="feature_doomScrolling_cooldown_message">Hier läuft dir nichts weg. Genieß noch ein paar Minuten für dich.</string>
+    <string name="feature_doomScrolling_cooldown_context_app">%1$s ist in %2$d Min. wieder da.</string>
+    <string name="feature_doomScrolling_cooldown_context_surface">Dieser Feed in %1$s ist in %2$d Min. wieder da.</string>
+    <!-- endregion -->
+
+    <!-- region Feature: Disable Apps -->
+    <string name="feature_disableApps">Warten und sperren</string>
+    <string name="feature_disableApps_subtitle">Wie eine Sperre aussieht</string>
+    <string name="feature_disableApps_description">Was eine Sperre mit einer App macht, sobald sie greift. Welche Apps, wann und wie lange, das stellst du in der Gruppe ein. Fürs Warten gibt es hier nichts einzustellen.</string>
+    <string name="feature_disableApps_operationMode">Was eine Sperre macht</string>
+    <string name="feature_disableApps_operationMode_block">Sperren</string>
+    <string name="feature_disableApps_operationMode_block_description">Ein Bildschirm vor der App, mit Weg zurück</string>
+    <string name="feature_disableApps_operationMode_suspend">Einfrieren</string>
+    <string name="feature_disableApps_operationMode_suspend_needsShizuku">Zum Einfrieren von Apps muss Shizuku laufen.</string>
+    <string name="feature_disableApps_operationMode_suspend_description">Im Launcher ausgegraut, startet nicht</string>
+    <string name="feature_disableApps_operationMode_suspend_requirement">Braucht Shizuku</string>
+    <string name="feature_disableApps_operationMode_deactivate">Deaktivieren</string>
+    <string name="feature_disableApps_operationMode_deactivate_description">Weg aus dem Launcher, Benachrichtigungen auch</string>
+    <string name="feature_disableApps_operationMode_deactivate_requirement">Braucht Device-Owner-Rechte, die die meisten Handys nicht hergeben</string>
+    <string name="feature_disableApps_overlay_title">Zeit ist um!</string>
+    <string name="feature_disableApps_overlay_message">Deine tägliche Bildschirmzeit für diese App ist aufgebraucht.</string>
+    <string name="feature_disableApps_overlay_message2">Mach eine Pause und komm morgen wieder.</string>
+    <string name="feature_disableApps_overlay_message_website">Deine tägliche Bildschirmzeit für diese Website ist aufgebraucht.</string>
+    <string name="feature_disableApps_overlay_goBack">Zurück</string>
+
+    <!-- screen that holds an app back before it opens -->
+    <string name="feature_disableApps_wait_title">Moment mal</string>
+    <string name="feature_disableApps_wait_message">%1$s ist gleich so weit. Genug Zeit, es dir doch noch anders zu überlegen.</string>
+    <string name="feature_disableApps_wait_leave">Doch nicht</string>
+    <string name="feature_disableApps_wait_open">%1$s öffnen</string>
+    <!-- endregion -->
+
+    <!-- region Feature: Commitment Password -->
+    <string name="feature_commitmentPassword">Commitment-Passwort</string>
+    <string name="feature_commitmentPassword_subtitle">Einstellungen mit einer Passphrase sperren</string>
+    <string name="feature_commitmentPassword_description">Schütze ausgewählte Einstellungen mit einer Passphrase, damit du sie nicht impulsiv änderst. Benötigt Geräteadministrator-Rechte.</string>
+    <string name="feature_commitmentPassword_requiresDeviceAdmin_message">Erteile Geräteadministrator-Rechte, um das Commitment-Passwort zu aktivieren.</string>
+    <string name="feature_commitmentPassword_walkthrough_title">Bevor du das einschaltest</string>
+    <string name="feature_commitmentPassword_walkthrough_lock">Sperrt die Einstellungen, die du auswählst</string>
+    <string name="feature_commitmentPassword_walkthrough_passphrase">Ändern kannst du sie nur mit deiner Passphrase</string>
+    <string name="feature_commitmentPassword_walkthrough_stop">Solange sie gesperrt sind, lässt sich Break nicht stoppen</string>
+    <string name="feature_commitmentPassword_walkthrough_attempts">Nach 3 falschen Versuchen ist die Eingabe 5 Minuten gesperrt</string>
+    <string name="feature_commitmentPassword_walkthrough_recovery">Vergessen? Die Wiederherstellung dauert 24 Stunden</string>
+    <string name="feature_commitmentPassword_walkthrough_next">Deine Passphrase bekommst du im nächsten Schritt. Leg sie dir irgendwo sicher ab.</string>
+    <string name="feature_commitmentPassword_walkthrough_proceed">Verstanden</string>
+    <string name="feature_commitmentPassword_generated_title">Deine Passphrase</string>
+    <string name="feature_commitmentPassword_generated_message">Sichere diese Passphrase jetzt. Ohne sie kannst du geschützte Einstellungen nicht mehr ändern.</string>
+    <string name="feature_commitmentPassword_generated_hint">Schreib sie auf oder leg sie an einem sicheren Ort ab, bevor du weitermachst.</string>
+    <string name="feature_commitmentPassword_generated_copied">Passphrase in die Zwischenablage kopiert</string>
+    <string name="feature_commitmentPassword_generated_confirm">Ich habe die Passphrase gesichert</string>
+    <string name="feature_commitmentPassword_copy">Passphrase kopieren</string>
+    <string name="feature_commitmentPassword_unlock">Einstellungen entsperren</string>
+    <string name="feature_commitmentPassword_unlock_description">Gib deine Passphrase ein, um die Einstellungen für diese Sitzung zu entsperren.</string>
+    <string name="feature_commitmentPassword_enter">Passphrase eingeben</string>
+    <string name="feature_commitmentPassword_verify">Bestätigen</string>
+    <string name="feature_commitmentPassword_incorrect">Falsche Passphrase</string>
+    <plurals name="feature_commitmentPassword_attemptsRemaining">
+        <item quantity="one">Noch %d Versuch</item>
+        <item quantity="other">Noch %d Versuche</item>
+    </plurals>
+    <string name="feature_commitmentPassword_show">Passphrase anzeigen</string>
+    <string name="feature_commitmentPassword_hide">Passphrase verbergen</string>
+    <string name="feature_commitmentPassword_lockedOut">Zu viele Fehlversuche. Versuch\'s in %s noch mal.</string>
+    <string name="feature_commitmentPassword_forgot">Passphrase vergessen?</string>
+    <string name="feature_commitmentPassword_recovery_title">Passphrase-Wiederherstellung</string>
+    <string name="feature_commitmentPassword_recovery_message">Hast du deine Passphrase vergessen, kannst du einen 24-Stunden-Timer starten. Danach lässt sie sich zurücksetzen.\n\nBis dahin bleiben die Einstellungen gesperrt.</string>
+    <string name="feature_commitmentPassword_recovery_initiate">24-Stunden-Wiederherstellung starten</string>
+    <string name="feature_commitmentPassword_recovery_inProgress">Wiederherstellung läuft</string>
+    <string name="feature_commitmentPassword_recovery_timeRemaining">Verbleibende Zeit: %s</string>
+    <string name="feature_commitmentPassword_recovery_ready">Wiederherstellung bereit</string>
+    <string name="feature_commitmentPassword_recovery_ready_message">Die 24 Stunden sind um. Du kannst deine Passphrase jetzt zurücksetzen.</string>
+    <string name="feature_commitmentPassword_recovery_channelName">Passwort-Wiederherstellung</string>
+    <string name="feature_commitmentPassword_recovery_channelDescription">Benachrichtigungen zur Wiederherstellung des Commitment-Passworts</string>
+    <string name="feature_commitmentPassword_recovery_cancel">Wiederherstellung abbrechen</string>
+    <string name="feature_commitmentPassword_recovery_complete">Passphrase zurücksetzen</string>
+    <string name="feature_commitmentPassword_disable_title">Schutz deaktivieren?</string>
+    <string name="feature_commitmentPassword_disable_enterPassword">Gib deine Passphrase ein, um das Commitment-Passwort zu deaktivieren.</string>
+    <string name="feature_commitmentPassword_disable">Schutz deaktivieren</string>
+    <string name="feature_commitmentPassword_banner_locked">Einstellungen gesperrt. Zum Bearbeiten brauchst du deine Passphrase.</string>
+    <string name="feature_commitmentPassword_banner_unlocked">Einstellungen für diese Sitzung entsperrt.</string>
+    <string name="feature_commitmentPassword_lockAgain">Wieder sperren</string>
+    <string name="feature_commitmentPassword_lockedBadge">Durch dein Commitment-Passwort gesperrt</string>
+    <string name="feature_commitmentPassword_selectFeatures">Was gesperrt wird</string>
+    <string name="feature_commitmentPassword_selectAll">Alle</string>
+    <string name="feature_commitmentPassword_selectNone">Keine</string>
+    <string name="feature_commitmentPassword_featuresSelected">%1$d von %2$d ausgewählt</string>
+    <string name="feature_commitmentPassword_deviceOwner_hint_title">Optional: mit Device Owner verstärken</string>
+    <string name="feature_commitmentPassword_deviceOwner_hint_subtitle">Das Commitment-Passwort kommt mit Geräteadministrator-Rechten aus. Device Owner verhindert zusätzlich, dass sich Break deinstallieren lässt. Tippe für den ADB-Befehl.</string>
+    <string name="feature_commitmentPassword_stop_locked">Stoppen ist durch das Commitment-Passwort gesperrt. Entsperre zuerst die Einstellungen.</string>
+    <string name="feature_commitmentPassword_tamper_overlay_title">Geht gerade nicht</string>
+    <string name="feature_commitmentPassword_tamper_overlay_message_uninstall">Solange deine Einstellungen gesperrt sind, lässt sich Break nicht deinstallieren.</string>
+    <string name="feature_commitmentPassword_tamper_overlay_message_deviceAdmin">Solange deine Einstellungen gesperrt sind, lässt sich der Geräteadministrator von Break nicht ausschalten.</string>
+    <string name="feature_commitmentPassword_tamper_overlay_message_accessibility">Solange deine Einstellungen gesperrt sind, lässt sich die Bedienungshilfe von Break nicht ausschalten.</string>
+    <string name="feature_commitmentPassword_tamper_overlay_reassurance">Du bist wieder auf dem Startbildschirm, und dein Schutz bleibt an.</string>
+    <string name="feature_commitmentPassword_tamper_overlay_action_backHome">Zurück zum Start</string>
+    <string name="feature_commitmentPassword_tamper_iconDescription">Warnsymbol</string>
+    <!-- endregion -->
+
+    <!-- region Device Admin & Accessibility Warnings -->
+    <string name="deviceAdminRevoked_title">Geräteadministrator wurde deaktiviert</string>
+    <string name="deviceAdminRevoked_message">Das Commitment-Passwort war aktiv, als die Geräteadministrator-Rechte entzogen wurden. Das schwächt den Schutz: Break lässt sich jetzt leichter deinstallieren oder umgehen.</string>
+    <string name="deviceAdminRevoked_prompt">Tippe zum Fortfahren genau diesen Satz ab:</string>
+    <string name="deviceAdminRevoked_requiredPhrase">Ich treffe gerade eine kurzfristige Entscheidung, die ich bereuen werde</string>
+    <string name="deviceAdminRevoked_inputLabel">Satz eingeben</string>
+    <string name="deviceAdminRevoked_continue">Verstanden, weiter</string>
+    <string name="deviceAdminRevoked_reenable_explanation">Mit Geräteadministrator-Rechten lässt sich dein Commitment schwerer umgehen. Aktiviere sie wieder, dann ist der Schutz wieder komplett.</string>
+    <string name="deviceAdminRevoked_disableRequestedWarning">Das Commitment-Passwort ist aktiv. Ohne Geräteadministrator lässt sich Break leichter deinstallieren und umgehen.</string>
+    <string name="accessibilityDisabledWarning_title">Bedienungshilfe wurde deaktiviert</string>
+    <string name="accessibilityDisabledWarning_message">Die Break-Bedienungshilfe wurde abgeschaltet, obwohl das Commitment-Passwort aktiv ist. Aktiviere sie wieder, damit deine Einstellungen weiter greifen.</string>
+    <!-- endregion -->
+
+    <!-- region Minimal Launcher Widget -->
+    <string name="widget_minimalLauncher_name">Break-Launcher-Widget</string>
+    <string name="widget_minimalLauncher_description">Launcher-Widget, das ausgewählte Apps nur als Text anzeigt.</string>
+    <string name="widget_minimalLauncher_empty">Tippe hier, um Apps auszuwählen</string>
+    <string name="widget_minimalLauncher_configure_title">Launcher-Widget einrichten</string>
+    <string name="widget_minimalLauncher_available_emptyFiltered">Keine App passt zu deinen Filtern.</string>
+    <string name="widget_minimalLauncher_search_clear">Suche löschen</string>
+    <string name="widget_minimalLauncher_filter_category_empty">Keine Kategorien verfügbar</string>
+    <string name="widget_minimalLauncher_label_display">Anzeigename</string>
+    <string name="widget_minimalLauncher_label_display_hint">Leer lassen, um den ursprünglichen App-Namen zu verwenden.</string>
+    <string name="widget_minimalLauncher_label_original">Original: %1$s</string>
+    <string name="widget_minimalLauncher_label_edit">Namen bearbeiten</string>
+    <string name="widget_minimalLauncher_reorder_drag">Zum Umsortieren ziehen</string>
+    <string name="widget_style_title">Widget anpassen</string>
+    <string name="widget_style_theme_description">Bei „System“ wird es zusammen mit deinem Handy dunkel.</string>
+    <string name="widget_style_background">Hintergrund</string>
+    <string name="widget_style_background_description">Ganz runtergedreht bleibt nur der Text auf deinem Hintergrundbild.</string>
+    <string name="widget_style_background_percent">%d %%</string>
+    <string name="widget_style_summary">%1$s, Hintergrund %2$s</string>
+    <string name="widget_today_name">Bildschirmzeit</string>
+    <string name="widget_today_description">Bildschirmzeit, Entsperrungen und Scroll-Strecke von heute. Zieh es größer, dann zeigt es auch deine meistgenutzten Apps und was von deinen Budgets noch übrig ist.</string>
+    <string name="widget_today_screenTime">Bildschirmzeit</string>
+    <string name="widget_today_scrolled">gescrollt</string>
+    <string name="widget_today_noApps">Heute noch keine App benutzt</string>
+    <string name="widget_today_allLeftOut">Die Apps von heute zählen alle nicht mit</string>
+    <string name="widget_parts_title">Anzeigen</string>
+    <string name="widget_today_parts_description">Neben deiner Bildschirmzeit, sobald das Widget groß genug dafür ist.</string>
+    <string name="widget_today_part_unlocks">Entsperrungen</string>
+    <string name="widget_today_part_scrolled">Scroll-Strecke</string>
+    <string name="widget_today_part_vsUsual">Vergleich mit einem normalen Tag</string>
+    <string name="widget_today_part_apps">Meistgenutzte Apps</string>
+    <string name="widget_today_part_budgets">Zeitbudgets</string>
+    <string name="widget_today_part_scrollComparison">Strecke im Vergleich</string>
+    <string name="widget_today_vsUsual_less">%s weniger als sonst um diese Zeit</string>
+    <string name="widget_today_vsUsual_more">%s mehr als sonst um diese Zeit</string>
+    <string name="widget_today_vsUsual_same">Etwa so viel wie sonst um diese Zeit</string>
+    <string name="widget_today_vsUsual_label">vs. sonst</string>
+    <string name="widget_today_off">Break ist aus</string>
+    <string name="widget_minimalLauncher_parts_description">Wie lange du jede App heute schon benutzt hast, und welche Apps deine Gruppen gerade sperren.</string>
+    <string name="widget_minimalLauncher_part_timeToday">Zeit heute</string>
+    <string name="widget_minimalLauncher_part_dimBlocked">Gesperrte ausgrauen</string>
+    <string name="widget_today_preview_screenTime">2 Std. 6 Min.</string>
+    <string name="today_budget_left">noch %s</string>
+    <string name="today_budget_usedUp">aufgebraucht</string>
+    <!-- endregion -->
+
+    <!-- region Usage Stats -->
+    <string name="usageStats_more">Mehr</string>
+    <string name="usageStats_title">App-Nutzung</string>
+    <string name="usageStats_usageAccessRequired">Break braucht Zugriff auf die Nutzungsdaten, um dir deine Bildschirmzeit zu zeigen.</string>
+    <string name="usageStats_usageAccess_restrictedSettingsHint">Wenn der Schalter ausgegraut ist, blockiert Android ihn, weil Break nicht aus einem App-Store kommt. Öffne die App-Info, tippe auf das Drei-Punkte-Menü und erlaube dort zuerst die eingeschränkten Einstellungen.</string>
+    <string name="usageStats_timeframe_today">Heute</string>
+    <string name="usageStats_timeframe_last7Days">7 Tage</string>
+    <string name="usageStats_timeframe_last30Days">30 Tage</string>
+    <string name="usageStats_timeframe_last90Days">90 Tage</string>
+    <string name="usageStats_timeframe_custom">Individuell</string>
+    <string name="usageStats_timeframe_custom_title">Zeitraum wählen</string>
+    <string name="usageStats_timeframe_custom_start">Startdatum</string>
+    <string name="usageStats_timeframe_custom_end">Enddatum</string>
+    <string name="usageStats_timeframe_custom_apply">Übernehmen</string>
+    <string name="usageStats_timeframe_custom_inputFormat">d.M.yyyy</string>
+    <string name="usageStats_timeframe_custom_switchToCalendar">Zur Kalenderauswahl wechseln</string>
+    <string name="usageStats_timeframe_custom_switchToInput">Zur Texteingabe wechseln</string>
+    <string name="usageStats_selfMeasured">Dein Handy lässt Break die Bildschirmzeit des Systems nicht lesen. Diese Zahlen misst Break deshalb selbst, und zwar nur, solange es läuft.</string>
+    <string name="usageStats_improvesOverTime">Je länger Break läuft, desto genauer wird die Statistik. Scroll-Daten gibt es nur, solange es aktiv ist.</string>
+    <string name="usageStats_dailyAverage">Ø pro Tag: %s</string>
+    <string name="usageStats_dailyAverage_short">Ø pro Tag</string>
+    <string name="usageStats_vsYesterday">vs. gestern</string>
+    <string name="usageStats_vsPreviousPeriod">vs. Vorzeitraum</string>
+    <string name="usageStats_timeOfDay">Öffnungen nach Uhrzeit</string>
+    <string name="usageStats_byDay">Nach Tag</string>
+    <string name="usageStats_weekdayAverages">Schnitt pro Wochentag</string>
+    <string name="usageStats_detoxImpact">Detox-Wirkung</string>
+    <string name="usageStats_grayscaleTime">In Graustufen</string>
+    <string name="usageStats_colorRemaining">In Farbe</string>
+    <string name="usageStats_scrollBreaks">Scroll-Pausen</string>
+    <string name="usageStats_blocks">Gesperrt</string>
+    <string name="usageStats_launches">%d Öffnungen</string>
+    <string name="usageStats_opens_short">Öffnungen</string>
+    <string name="usageStats_sessions_short">Sitzungen</string>
+    <string name="usageStats_avgSession">Ø Sitzung</string>
+    <string name="usageStats_unlocks_short">Entsperrungen</string>
+    <string name="usageStats_appDetails">Details</string>
+    <string name="usageStats_quickActions">Schnellaktionen</string>
+    <string name="usageStats_noActiveFeatures">Nichts zu verwalten, es ist keine Funktion an</string>
+    <string name="usageStats_lockedByBrake">Nichts zu verwalten, solange die Notbremse läuft, also bis %s</string>
+    <string name="usageStats_lockedByPassword">Nichts zu verwalten, solange dein Commitment-Passwort diese Einstellungen sperrt</string>
+    <string name="usageStats_addGrayscale">Zu Graustufen hinzufügen</string>
+    <string name="usageStats_removeGrayscale">Aus Graustufen entfernen</string>
+    <string name="usageStats_addScrollGuard">Scroll-Schutz hinzufügen</string>
+    <string name="usageStats_removeScrollGuard">Scroll-Schutz entfernen</string>
+    <string name="usageStats_disableApp">App deaktivieren</string>
+    <string name="usageStats_enableApp">App aktivieren</string>
+    <string name="usageStats_noData">Keine Daten für diesen Zeitraum</string>
+    <string name="usageStats_screenTime">Bildschirmzeit</string>
+    <string name="usageStats_trend7d">7-Tage-Trend</string>
+    <string name="usageStats_screenUnlocks">Entsperrungen</string>
+    <string name="usageStats_appCategories">App-Kategorien</string>
+    <string name="usageStats_scrollIntensity">Scroll-Intensität</string>
+    <string name="usageStats_scrollIntensity_subtitle">Verbindet Scroll-Menge mit Scroll-Tempo</string>
+    <string name="usageStats_scrollIntensity_score">Scroll-Intensität</string>
+    <string name="usageStats_scrollIntensity_detail">%1$d Scrolls · %2$.1f/Min.</string>
+    <string name="usageStats_scrollIntensity_info">Verbindet die Gesamtzahl der Scrolls mit dem Tempo pro Minute (mit Wurzelgewichtung), damit ein kurzer Ausreißer nicht über anhaltendem Doomscrolling landet. Höher heißt mehr Doomscrolling.</string>
+    <string name="usageStats_exclusions_title">Nicht mitgezählt</string>
+    <string name="usageStats_exclusions_description">Die Bildschirmzeit misst, wie lange eine App zu sehen war, nicht, was du damit gemacht hast. Ein Schlaftracker, der die ganze Nacht läuft, sieht genauso aus wie ein Feed, durch den du die ganze Nacht gescrollt hast. Solche Apps kannst du hier rauslassen.</string>
+    <string name="usageStats_exclusions_categories">Ganze Kategorien</string>
+    <string name="usageStats_exclusions_leftOut">Zählt gerade nicht mit</string>
+    <string name="usageStats_exclusions_counted">Zählt gerade mit</string>
+    <string name="usageStats_showMore">Mehr anzeigen</string>
+    <string name="usageStats_showLess">Weniger anzeigen</string>
+    <string name="usageStats_sort">Sortieren nach</string>
+    <string name="usageStats_sort_screenTime">Nach Bildschirmzeit</string>
+    <string name="usageStats_sort_opens">Nach Öffnungen</string>
+    <string name="usageStats_sort_scrollIntensity">Nach Scroll-Intensität</string>
+    <string name="usageStats_websites_title">Zeit auf Websites</string>
+    <string name="usageStats_websites_optIn">Break kann zählen, wie lange du in %s auf welcher Website bist. Es merkt sich nur die Website, nie die einzelne Seite, und nichts davon verlässt dein Handy.</string>
+    <string name="usageStats_websites_optIn_action">Zeit auf Websites zählen</string>
+    <string name="usageStats_websites_empty">Noch nichts gezählt. Die Zeit auf Websites zählt ab dem Moment, in dem du das eingeschaltet hast.</string>
+    <string name="usageStats_websites_partOf">Steckt schon in der Bildschirmzeit deiner Browser.</string>
+    <string name="usageStats_websites_turnOff">Ausschalten</string>
+    <string name="usageStats_websites_turnOff_title">Websites nicht mehr zählen?</string>
+    <string name="usageStats_websites_turnOff_message">Was bisher gezählt wurde, wird dabei auch gelöscht.</string>
+    <plurals name="usageStats_visits">
+        <item quantity="one">%d Besuch</item>
+        <item quantity="other">%d Besuche</item>
+    </plurals>
+    <string name="usageStats_visits_short">Besuche</string>
+    <string name="usageStats_avgVisit">Ø Besuch</string>
+    <string name="usageStats_sort_visits">Nach Besuchen</string>
+    <string name="usageStats_blockSite">Website sperren</string>
+    <string name="usageStats_unblockSite">Website freigeben</string>
+    <string name="usageStats_perspective">Zum Vergleich</string>
+    <string name="usageStats_perspective_subtitle">Dieselben Zahlen, greifbar gemacht</string>
+    <string name="usageStats_perspective_footer">Ohne Wertung. So lässt sich Zeit halt leichter greifen.</string>
+    <string name="usageStats_odometer_label">an Inhalten vorbeigescrollt</string>
+    <string name="usageStats_odometer_comparison">≈ %1$s × %2$s</string>
+    <string name="usageStats_odometer_floors">≈ %1$d Stockwerke</string>
+    <string name="usageStats_timeValue_setup">Was ist dir eine Stunde deiner Zeit wert?</string>
+    <string name="usageStats_timeValue_hint">Tippe, um zu sehen, was deine Bildschirmzeit wert ist</string>
+    <string name="usageStats_timeValue_label">deine Bildschirmzeit, gerechnet mit %1$s</string>
+    <string name="usageStats_timeValue_off">aus</string>
+    <string name="usageStats_ratePerHour">%1$s/Std.</string>
+
+    <!-- landmarks used by the "Zum Vergleich" scroll-distance comparisons -->
+    <!-- rendered as "≈ 1,2 × <name>", so no article -->
+    <string name="landmark_statueOfLiberty">Freiheitsstatue</string>
+    <string name="landmark_eiffelTower">Eiffelturm</string>
+    <string name="landmark_empireState">Empire State Building</string>
+    <string name="landmark_burjKhalifa">Burj Khalifa</string>
+    <string name="landmark_mountEverest">Mount Everest</string>
+    <string name="landmark_marathon">Marathon</string>
+
+    <string name="chart_tooltip_opens">%1$02d:00 · %2$d Öffnungen</string>
+    <string name="chart_tooltip_unlocks">%1$02d:00 · %2$d Entsperrungen</string>
+    <string name="chart_percent">%1$s %2$d%%</string>
+    <!-- endregion -->
+
+    <!-- region Onboarding -->
+    <string name="onboarding_action_getStarted">Los geht\'s</string>
+    <string name="onboarding_action_next">Weiter</string>
+    <string name="onboarding_action_skipSetup">Einrichtung überspringen</string>
+    <string name="onboarding_skipSetup_dialog_title">Einrichtung überspringen?</string>
+    <string name="onboarding_skipSetup_dialog_message">Dann wird nichts eingerichtet. Jede Funktion lässt sich später einzeln einstellen, oder du startest die Einrichtung unter „Über &amp; Einstellungen“ noch einmal.</string>
+    <string name="onboarding_skipSetup_dialog_confirm">Überspringen</string>
+    <string name="onboarding_progress_stepOf">Schritt %1$d von %2$d</string>
+    <string name="onboarding_welcome_title">Hol dir deine Aufmerksamkeit zurück</string>
+    <string name="onboarding_welcome_message">Break hilft dir, aus dem Autopiloten auszusteigen: Es färbt ablenkende Apps grau, unterbricht endloses Scrollen und sperrt Apps, sobald dein Tagesbudget aufgebraucht ist. In den nächsten Schritten richten wir es so ein, wie du dein Handy wirklich benutzt.</string>
+    <string name="onboarding_welcome_privacy">Alles bleibt auf deinem Gerät. Break ist Open Source, zeigt keine Werbung und sammelt nichts.</string>
+    <string name="onboarding_usageAccess_title">Finde heraus, wie du deine Zeit nutzt</string>
+    <string name="onboarding_usageAccess_message">Damit Break dir die richtigen Apps und ein Tagesbudget vorschlagen kann, das du auch einhältst, braucht es die Berechtigung „Nutzungsdaten“. Daraus entstehen auch deine Statistiken. Die Daten bleiben auf deinem Handy.</string>
+    <string name="onboarding_usageAccess_grant">Nutzungsdaten-Zugriff erlauben</string>
+    <string name="onboarding_usageAccess_granted">Erteilt. Jetzt können wir dir konkrete Apps vorschlagen.</string>
+    <string name="onboarding_usageAccess_skipHint">Du kannst das überspringen. Dann gehen wir nach App-Kategorien.</string>
+    <string name="onboarding_apps_title">Deine ablenkenden Apps</string>
+    <string name="onboarding_apps_message">Das sind vermutlich deine größten Zeitfresser, abgeleitet aus deiner Nutzung und den App-Kategorien. Passt das nicht, ändere die Auswahl. Die nächsten Schritte beziehen sich auf das, was hier ausgewählt bleibt.</string>
+    <string name="onboarding_apps_loading">Wir schauen uns deine App-Nutzung an …</string>
+    <string name="onboarding_apps_empty">Auf diesem Gerät haben wir keine passenden Apps gefunden. Du kannst sie später für jede Funktion einzeln auswählen.</string>
+    <string name="onboarding_apps_avgUsage">%s / Tag</string>
+    <plurals name="onboarding_apps_selectedCount">
+        <item quantity="one">%d App ausgewählt</item>
+        <item quantity="other">%d Apps ausgewählt</item>
+    </plurals>
+    <string name="onboarding_preset_title">Wie streng soll es sein?</string>
+    <string name="onboarding_preset_message">Wähle einen Startpunkt. Jedes Detail lässt sich später ändern.</string>
+    <string name="onboarding_preset_gentle">Sanft</string>
+    <string name="onboarding_preset_gentle_description">Unterbricht endloses Scrollen in den ausgewählten Apps mit einem Pausenbildschirm.</string>
+    <string name="onboarding_preset_balanced">Ausgewogen</string>
+    <string name="onboarding_preset_balanced_badge">Empfohlen</string>
+    <string name="onboarding_preset_balanced_description">Sanft, plus Graustufen für die ausgewählten Apps, sobald das Tagesbudget aufgebraucht ist. Ohne Farbe ziehen sie deutlich weniger.</string>
+    <string name="onboarding_preset_strict">Streng</string>
+    <string name="onboarding_preset_strict_description">Ausgewogen, plus harte Sperre, sobald das Tagesbudget aufgebraucht ist. Die Graustufen warnen dich kurz vorher.</string>
+    <string name="onboarding_preset_budget">Tagesbudget</string>
+    <string name="onboarding_preset_budget_description">So viel Zeit hast du täglich für die ausgewählten Apps, bevor Break eingreift.</string>
+    <string name="onboarding_preset_budget_suggested">Vorgeschlagen anhand deiner letzten 7 Tage</string>
+    <string name="onboarding_permissions_title">Ein paar Berechtigungen</string>
+    <string name="onboarding_permissions_message">Deine Einrichtung braucht die Berechtigungen hier unten. Erteil, was du magst, den Rest kannst du später auf den Funktionsseiten nachholen.</string>
+    <string name="onboarding_permissions_overlay">Über anderen Apps anzeigen</string>
+    <string name="onboarding_permissions_overlay_description">Nötig, um Pausenbildschirme anzuzeigen und Apps zu sperren.</string>
+    <string name="onboarding_permissions_notifications">Benachrichtigungen</string>
+    <string name="onboarding_permissions_notifications_description">Status und Erinnerungen, während eine Detox-Funktion läuft.</string>
+    <string name="onboarding_permissions_secureSettings">Graustufen-Berechtigung</string>
+    <string name="onboarding_permissions_secureSettings_description">Eine spezielle Berechtigung, mit der Break die Farbfilter des Systems steuern darf.</string>
+    <string name="onboarding_permissions_secureSettings_oneTap">Tippe zum Erteilen. Shizuku oder Root wurde auf deinem Handy erkannt.</string>
+    <string name="onboarding_permissions_secureSettings_later">Tippe für eine geführte Einrichtung. Oder lass es erst mal, wir erinnern dich auf dem Startbildschirm.</string>
+    <string name="onboarding_permissions_accessibility">Bedienungshilfe</string>
+    <string name="onboarding_permissions_accessibility_description">Das Herzstück von Break: Die Bedienungshilfe erkennt, welche App gerade offen ist, und setzt deine Regeln um. Dabei verlassen keine Daten dein Gerät.</string>
+    <string name="onboarding_permissions_accessibility_auto">Tippe, um sie automatisch zu aktivieren.</string>
+    <string name="onboarding_permissions_accessibility_manual">Tippe, um die Bedienungshilfen zu öffnen und Break dort zu aktivieren.</string>
+    <string name="onboarding_permissions_state_granted">Erteilt</string>
+    <string name="onboarding_done_title">Alles bereit</string>
+    <string name="onboarding_done_message">Break ist eingerichtet. Deine Auswahl ist jetzt eine Gruppe auf dem Startbildschirm. Apps, Zeitplan, Budget und Schritte kannst du dort jederzeit ändern.</string>
+    <plurals name="onboarding_done_summary_scrollBreaks">
+        <item quantity="one">Scroll-Pausen in %d App</item>
+        <item quantity="other">Scroll-Pausen in %d Apps</item>
+    </plurals>
+    <string name="onboarding_done_summary_scrollBreaksPending">Scroll-Pausen sind eingerichtet. Es fehlt nur noch die Berechtigung „Über anderen Apps anzeigen“.</string>
+    <string name="onboarding_done_summary_grayscale">Graustufen nach %s täglicher Nutzung</string>
+    <string name="onboarding_done_summary_grayscaleFilter">Ablenkende Apps werden nach %s täglicher Nutzung stumpf und unscharf. Echte Graustufen brauchen noch einen einmaligen Schritt.</string>
+    <string name="onboarding_done_summary_blocking">Apps gesperrt nach %s täglicher Nutzung</string>
+    <string name="onboarding_done_summary_blockingPending">Die App-Sperre ist eingerichtet. Ihr fehlt nur noch die Berechtigung „Über anderen Apps anzeigen“.</string>
+    <string name="onboarding_done_summary_accessibilityPending">Die Bedienungshilfe von Break läuft noch nicht. Du kannst sie über den Startbildschirm starten.</string>
+    <string name="onboarding_done_summary_nothing">Du hast keine Apps ausgewählt, deshalb wurde nichts eingerichtet. Schau dich in Ruhe auf dem Startbildschirm um.</string>
+    <string name="onboarding_done_summary_rerunHint">Beim Abschließen kommt eine neue Gruppe zu deinen bisherigen dazu.</string>
+    <string name="onboarding_done_summary_permissionsHint">Erteile die fehlenden Berechtigungen, um das anzuschalten. Später geht auch, wir erinnern dich auf dem Startbildschirm.</string>
+    <!-- endregion -->
+
+    <!-- region Shizuku Setup Wizard -->
+    <string name="shizukuSetup_title">Graustufen einrichten</string>
+    <string name="shizukuSetup_intro">Graustufen brauchen einmalig eine Sonderberechtigung. Ohne Computer geht das am einfachsten mit Shizuku, einer kostenlosen Helfer-App. Dauert etwa fünf Minuten, und die Berechtigung übersteht auch Neustarts.</string>
+    <string name="shizukuSetup_rooted">Dein Gerät scheint gerootet zu sein. Dann kannst du Shizuku überspringen und die Berechtigung direkt erteilen.</string>
+    <string name="shizukuSetup_step1_title">Shizuku installieren</string>
+    <string name="shizukuSetup_step1_description">Hol dir die kostenlose Shizuku-App bei Google Play.</string>
+    <string name="shizukuSetup_step1_go">Play Store öffnen</string>
+    <string name="shizukuSetup_step2_title">Shizuku-Dienst starten</string>
+    <string name="shizukuSetup_step2_description">Öffne Shizuku und folge „Über Wireless-Debugging starten“. Sind die Entwickleroptionen noch nicht aktiv: Suche in den Handy-Einstellungen die „Build-Nummer“ (meist unter „Über das Telefon“) und tippe sie sieben Mal an, aktiviere dann „Wireless-Debugging“ in den Entwickleroptionen. Durch die Kopplung führt dich Shizuku.</string>
+    <string name="shizukuSetup_step2_openShizuku">Shizuku öffnen</string>
+    <string name="shizukuSetup_step2_openDeveloperSettings">Entwickleroptionen</string>
+    <string name="shizukuSetup_step2_rebootHint">Nach jedem Neustart musst du Shizuku wieder starten. Die erteilte Berechtigung bleibt aber.</string>
+    <string name="shizukuSetup_step3_title">Break den Zugriff auf Shizuku erlauben</string>
+    <string name="shizukuSetup_step3_description">Shizuku fragt dich in einem Dialog um Bestätigung.</string>
+    <string name="shizukuSetup_step3_go">Zugriff anfragen</string>
+    <string name="shizukuSetup_step4_title">Graustufen-Berechtigung erteilen</string>
+    <string name="shizukuSetup_step4_description">Ein Fingertipp, und Break erteilt sich die Farbfilter-Berechtigung über Shizuku selbst.</string>
+    <string name="shizukuSetup_completed_title">Fertig!</string>
+    <string name="shizukuSetup_completed_message">Die Berechtigung steht, die Graustufen sind bereit. Falls sie seit deiner Einrichtung gewartet haben, laufen sie jetzt.</string>
+    <string name="shizukuSetup_suspend_title">Shizuku einrichten</string>
+    <string name="shizukuSetup_suspend_intro">Apps einfrieren geht nur über Shizuku, eine kostenlose Helfer-App. Die Einrichtung dauert etwa fünf Minuten. Ein Haken: Shizuku muss laufen, damit eine Sperre eine App einfrieren kann, und nach jedem Neustart ist es erst mal aus.</string>
+    <string name="shizukuSetup_suspend_step2_rebootHint">Nach jedem Neustart musst du Shizuku wieder starten. Bis dahin greift bei gesperrten Apps stattdessen „Sperren“, also der Bildschirm davor.</string>
+    <string name="shizukuSetup_suspend_completed_message">Shizuku läuft und Break darf es nutzen. Geh zurück und wähle „Einfrieren“.</string>
+    <!-- endregion -->
+
+    <!-- region Elevated Permissions -->
+    <string name="noPermissions_title">Berechtigungen erforderlich</string>
+    <string name="noPermissions_message">Für diese Funktion brauchst du erweiterte Berechtigungen. Die erteilst du einmalig von einem Computer aus per ADB:</string>
+    <string name="noPermissions_command">adb shell \"%s\"</string>
+    <string name="noPermissions_visitGitHub">Die Einrichtungsschritte findest du auf <annotation type="GITHUB">GitHub</annotation>.</string>
+    <string name="noPermissions_rooted">Dein Gerät scheint gerootet zu sein. Du kannst die Berechtigungen per Root erteilen.</string>
+    <string name="noPermissions_rooted_go">Per Root erteilen</string>
+    <string name="noPermissions_shizuku">Shizuku ist verfügbar. Du kannst die Berechtigungen darüber erteilen.</string>
+    <string name="noPermissions_shizuku_go">Per Shizuku erteilen</string>
+    <string name="noPermissions_shizukuWizard">Kein Computer zur Hand? Richte Shizuku Schritt für Schritt direkt auf diesem Handy ein.</string>
+    <string name="noPermissions_shizukuWizard_go">Geführte Einrichtung</string>
+    <!-- endregion -->
+
+    <!-- region Premium -->
+    <string name="premium_tile_subtitle">Unterstütze das Projekt &amp; schalte Extras für Power-User frei</string>
+    <string name="premium_sheet_title_generic">Break unterstützen</string>
+    <string name="premium_sheet_title_nudge">Holst du viel aus Break raus?</string>
+    <string name="premium_sheet_title_locked">%1$s freischalten</string>
+    <string name="premium_sheet_subtitle">Kostenlos, quelloffen, keine Werbung. Gepflegt von einer einzigen Person.</string>
+    <string name="premium_impact_title">Dein Detox bisher</string>
+    <string name="premium_impact_interventions">hat Break eingegriffen</string>
+    <string name="premium_impact_grayscale">in Graustufen verbracht</string>
+    <string name="premium_impact_days">Tage Statistik</string>
+    <string name="premium_impact_count">%d×</string>
+    <string name="premium_extras_title">Weniger als ein Kaffee, nur einmal</string>
+    <string name="premium_extras_body">Die Extras für Power-User gibt es für einen einmaligen Beitrag in die Kaffeekasse. Wenn es gerade knapp ist, nimm sie unten einfach kostenlos. Passt schon.</string>
+    <string name="premium_unlocked_title">Premium freigeschaltet</string>
+    <string name="premium_unlocked_subtitle">Danke, dass du Break unterstützt 💚</string>
+    <string name="premium_unlocked_body">Alle Extras sind an. Und falls sich Break seinen Platz auf deinem Handy weiter verdient: Die Kaffeekasse steht gleich darunter.</string>
+    <string name="premium_action_donatedUnlock">Schon gespendet</string>
+    <string name="premium_action_freeUnlock">Ohne Spende freischalten</string>
+    <string name="premium_action_relock">Zurücksetzen</string>
+    <string name="premium_locked_footer">Die Sperre ist nur ein Schubs. Kein Tracking, keine Verpflichtung.</string>
+    <string name="premium_feature_usageHistory">längere Statistik-Historie</string>
+    <string name="premium_chip_lockedLabel">Premium</string>
+    <!-- endregion -->
+
+    <!-- region About -->
+    <string name="about_summary">Mach Digital Detox zu deinem Normalzustand.</string>
+    <string name="about_tile_subtitle">Einstellungen, Projektinfos und die Kaffeekasse.</string>
+    <string name="about_section_settings">Einstellungen</string>
+    <string name="about_theme">Design</string>
+    <string name="about_theme_system">System</string>
+    <string name="about_theme_light">Hell</string>
+    <string name="about_theme_dark">Dunkel</string>
+    <string name="about_onboarding">Break neu einrichten</string>
+    <string name="about_onboarding_subtitle">Willkommenstour und Voreinstellungen noch einmal durchlaufen</string>
+    <string name="about_onboarding_locked_subtitle">Das würde an deinen gesperrten Gruppen etwas ändern. Entsperre sie zuerst.</string>
+    <string name="about_debugLog_subtitle">Hält fest, was Break so macht, für Fehlerberichte. Bleibt auf dem Handy und wird beim Ausschalten gelöscht.</string>
+    <string name="about_debugLog_open">Debug-Log öffnen</string>
+    <string name="about_section_backup">Sicherung</string>
+    <string name="about_backup_export">Einstellungen in eine Datei sichern</string>
+    <string name="about_backup_export_subtitle">Alles, was du eingestellt hast, als Datei zum Aufheben. Der Bildschirmzeit-Verlauf ist nicht dabei.</string>
+    <string name="about_backup_export_saved">Gesichert als %s</string>
+    <string name="about_backup_export_failed">Die Datei konnte nicht geschrieben werden.</string>
+    <string name="about_backup_restore">Einstellungen aus einer Datei laden</string>
+    <string name="about_backup_restore_subtitle">Zeigt erst, was in der Datei steckt, und startet Break dann neu.</string>
+    <string name="about_backup_restore_locked_subtitle">Gesperrt, solange dein Commitment-Passwort gilt.</string>
+    <string name="settings_lockedByBrake_subtitle">Gesperrt, solange die Notbremse läuft.</string>
+    <string name="about_backup_restore_failed">In dieser Datei stehen keine Break-Einstellungen.</string>
+    <string name="about_backup_restore_readFailed">Die Datei ließ sich nicht lesen.</string>
+    <string name="about_backup_restore_nothingApplies">Nichts in dieser Datei passt zu dieser Break-Version.</string>
+    <string name="about_backup_preview_title">Diese Einstellungen laden?</string>
+    <string name="about_backup_preview_saved">Gesichert am %1$s mit Break %2$s</string>
+    <string name="about_backup_preview_savedUnknownVersion">Gesichert am %s</string>
+    <string name="about_backup_preview_newerVersion">Stammt von einer neueren Break-Version. Was diese Version nicht kennt, bleibt halt draußen.</string>
+    <plurals name="about_backup_preview_apps">
+        <item quantity="one">%d App</item>
+        <item quantity="other">%d Apps</item>
+    </plurals>
+    <plurals name="about_backup_preview_websites">
+        <item quantity="one">%d Website</item>
+        <item quantity="other">%d Websites</item>
+    </plurals>
+    <plurals name="about_backup_preview_otherSettings">
+        <item quantity="one">%d weitere Einstellung</item>
+        <item quantity="other">%d weitere Einstellungen</item>
+    </plurals>
+    <plurals name="about_backup_preview_changes">
+        <item quantity="one">%d Einstellung ist anders als aktuell eingestellt.</item>
+        <item quantity="other">%d Einstellungen sind anders als aktuell eingestellt.</item>
+    </plurals>
+    <string name="about_backup_preview_noChanges">Alles darin ist so eingestellt wie jetzt schon.</string>
+    <string name="about_backup_preview_excluded">Nicht in der Datei: dein Commitment-Passwort, eine laufende Notbremse, der Bildschirmzeit-Verlauf.</string>
+    <string name="about_backup_preview_confirm">Laden und neu starten</string>
+    <string name="about_section_support">Projekt unterstützen</string>
+    <string name="about_coffee">Spendier mir einen Kaffee</string>
+    <string name="about_coffee_subtitle">Jeder Kaffee hilft, Break weiterzuentwickeln.</string>
+    <string name="about_patron">Förderer werden</string>
+    <string name="about_patron_subtitle">Ein kleiner monatlicher Beitrag hilft mehr als eine einmalige Spende.</string>
+    <string name="about_bitcoin">Bitcoin schicken</string>
+    <string name="about_bitcoin_subtitle">Direkt in meine Wallet. Wegen der Netzwerkgebühr eher was für größere Beträge ;)</string>
+    <string name="about_bitcoin_message">Schick einen beliebigen Betrag aus deiner Bitcoin-Wallet an diese Adresse.</string>
+    <string name="about_bitcoin_copy">Adresse kopieren</string>
+    <string name="about_bitcoin_copied">Adresse kopiert</string>
+    <string name="about_bitcoin_openWallet">Wallet öffnen</string>
+    <string name="about_bitcoin_noWallet">Auf diesem Handy ist keine Bitcoin-Wallet. Kopier einfach die Adresse.</string>
+    <string name="about_section_project">Projekt &amp; Kontakt</string>
+    <string name="about_version">Version %1$s</string>
+    <plurals name="about_version_tapsLeft">
+        <item quantity="one">Noch %d Fingertipp, dann legst du dein Handy weg.</item>
+        <item quantity="other">Noch %d Fingertipps, dann legst du dein Handy weg.</item>
+    </plurals>
+    <string name="about_version_putItDown">Jetzt leg es aber auch weg.</string>
+    <string name="about_contact">Kontakt aufnehmen</string>
+    <string name="about_contact_subtitle">Feature-Wünsche und Ideen sind willkommen. Ich lese alles, antworte aber nicht immer.</string>
+    <string name="about_github">Auf GitHub mitwirken</string>
+    <!-- endregion -->
+
+    <!-- region Debug Log -->
+    <string name="debugLog_title">Debug-Log</string>
+    <plurals name="debugLog_entries">
+        <item quantity="one">%1$s Eintrag</item>
+        <item quantity="other">%1$s Einträge</item>
+    </plurals>
+    <plurals name="debugLog_entriesShown">
+        <item quantity="one">%1$s von %2$s Eintrag</item>
+        <item quantity="other">%1$s von %2$s Einträgen</item>
+    </plurals>
+    <string name="debugLog_level_all">Alle</string>
+    <string name="debugLog_level_info">Info</string>
+    <string name="debugLog_level_warnings">Warnungen</string>
+    <string name="debugLog_level_errors">Fehler</string>
+    <string name="debugLog_tag_remove">Alle Tags zeigen</string>
+    <string name="debugLog_share">Log teilen</string>
+    <string name="debugLog_clear">Log leeren</string>
+    <string name="debugLog_clear_title">Debug-Log leeren?</string>
+    <string name="debugLog_clear_message">Alles, was bisher aufgezeichnet wurde, wird gelöscht. Solange das Log an ist, kommen neue Einträge dazu.</string>
+    <string name="debugLog_clear_confirm">Leeren</string>
+    <string name="debugLog_empty_title">Noch nichts aufgezeichnet</string>
+    <string name="debugLog_empty_message">Sobald Break was tut, tauchen hier Einträge auf.</string>
+    <string name="debugLog_noMatch_title">Keine passenden Einträge</string>
+    <string name="debugLog_noMatch_reset">Filter zurücksetzen</string>
+    <string name="debugLog_run_current">Läuft seit %1$s</string>
+    <string name="debugLog_run_past">%1$s bis %2$s</string>
+    <plurals name="debugLog_moreLines">
+        <item quantity="one">%1$d weitere Zeile</item>
+        <item quantity="other">%1$d weitere Zeilen</item>
+    </plurals>
+    <string name="debugLog_copied">Eintrag kopiert</string>
+    <string name="debugLog_newest">Zu den neuesten Einträgen</string>
+    <string name="debugLog_hint">Tipp auf einen Eintrag, um ihn aufzuklappen, halt ihn gedrückt, um ihn zu kopieren, und tipp auf sein Tag, um nur dieses Tag zu sehen.</string>
+    <!-- endregion -->
+</resources>
