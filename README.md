@@ -202,7 +202,7 @@ getabreak requires key Android permissions to enforce digital wellbeing at the O
 To grant getabreak access to the system hardware color matrix without root or Shizuku:
 
 ```bash
-adb shell pm grant com.flx_apps.digitaldetox android.permission.WRITE_SECURE_SETTINGS
+adb shell pm grant com.mizan989.getabreak android.permission.WRITE_SECURE_SETTINGS
 ```
 
 ---
