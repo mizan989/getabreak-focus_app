@@ -125,7 +125,7 @@ object GrayscaleAppsFeature : Feature(), OnAppOpenedSubscriptionFeature,
      * configured on them, and a washed-out, blurred settings screen is both hard to read and hard
      * to get back out of.
      */
-    private const val OwnPackage = "com.flx_apps.digitaldetox"
+    private const val OwnPackage = "com.getabreak.app"
 
     /**
      * We use this for people who use a color filter for color blindness. If the user has a color

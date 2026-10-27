@@ -61,11 +61,11 @@ echo Installing getabreak on your device...
 %cd%\platform-tools\adb.exe install -r -t "!APK_FILE!"
 
 echo Granting Permissions
-%cd%\platform-tools\adb.exe shell pm grant com.flx_apps.digitaldetox android.permission.WRITE_SECURE_SETTINGS
-%cd%\platform-tools\adb.exe shell "dpm set-device-owner com.flx_apps.digitaldetox/.system_integration.DetoxDroidDeviceAdminReceiver"
+%cd%\platform-tools\adb.exe shell pm grant com.getabreak.app android.permission.WRITE_SECURE_SETTINGS
+%cd%\platform-tools\adb.exe shell "dpm set-device-owner com.getabreak.app/.system_integration.DetoxDroidDeviceAdminReceiver"
 
 echo Starting App
-%cd%\platform-tools\adb.exe shell monkey -p com.flx_apps.digitaldetox 1
+%cd%\platform-tools\adb.exe shell monkey -p com.getabreak.app 1
 
 echo Done.
 pause

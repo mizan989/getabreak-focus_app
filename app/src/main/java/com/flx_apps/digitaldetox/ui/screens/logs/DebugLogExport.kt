@@ -50,7 +50,7 @@ suspend fun shareDebugLog(context: Context, state: LogViewerState, filter: LogFi
         File(directory, "break-log-${now.format(fileTimeFormat)}.txt").apply {
             bufferedWriter().use { out ->
                 out.appendLine(
-                    "Break ${BuildConfig.VERSION_NAME} (${BuildConfig.FLAVOR}, " +
+                    "getabreak ${BuildConfig.VERSION_NAME} (${BuildConfig.FLAVOR}, " +
                             "${BuildConfig.VERSION_CODE})"
                 )
                 out.appendLine(

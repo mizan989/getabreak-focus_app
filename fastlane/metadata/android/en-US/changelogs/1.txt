@@ -1,0 +1,4 @@
+### Release v1.0.0
+
+- Initial release of getabreak
+- Digital wellbeing rules, friction pauses, doomscroll breaks, Emergency Brake, and Commitment Password

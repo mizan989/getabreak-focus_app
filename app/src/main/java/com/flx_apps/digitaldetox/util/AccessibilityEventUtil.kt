@@ -16,7 +16,7 @@ class AccessibilityEventUtil {
                     AccessibilityEvent.obtain(eventType)
                 }.apply {
                     if (packageName == null) {
-                        packageName = "com.flx_apps.digitaldetox"
+                        packageName = "com.getabreak.app"
                     }
                     this.isFullScreen = isFullScreen
                 }

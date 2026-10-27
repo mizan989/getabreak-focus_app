@@ -1005,8 +1005,8 @@
     <string name="noPermissions_shizuku_go">Grant via Shizuku</string>
     <string name="noPermissions_shizukuWizard">No computer at hand? Set up Shizuku directly on this phone, step by step.</string>
     <string name="noPermissions_shizukuWizard_go">Guided setup</string>
-    <string name="rootCommand_grantWriteSecuritySettingsPermission" translatable="false">pm grant com.flx_apps.digitaldetox android.permission.WRITE_SECURE_SETTINGS</string>
-    <string name="rootCommand_grantDeviceAdminPermission" translatable="false">dpm set-device-owner com.flx_apps.digitaldetox/.system_integration.DetoxDroidDeviceAdminReceiver</string>
+    <string name="rootCommand_grantWriteSecuritySettingsPermission" translatable="false">pm grant com.getabreak.app android.permission.WRITE_SECURE_SETTINGS</string>
+    <string name="rootCommand_grantDeviceAdminPermission" translatable="false">dpm set-device-owner com.getabreak.app/.system_integration.DetoxDroidDeviceAdminReceiver</string>
     <!-- endregion -->
 
     <!-- region Premium -->

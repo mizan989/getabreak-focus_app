@@ -22,7 +22,8 @@ import com.flx_apps.digitaldetox.features.EmergencyBrakeFeature
  */
 class PullBrakeActivity : Activity() {
     companion object {
-        const val ACTION_PULL_BRAKE = "com.flx_apps.digitaldetox.ACTION_PULL_BRAKE"
+        const val ACTION_PULL_BRAKE = "com.getabreak.app.ACTION_PULL_BRAKE"
+        const val LEGACY_ACTION_PULL_BRAKE = "com.flx_apps.digitaldetox.ACTION_PULL_BRAKE"
 
         /** The id the static shortcut in `res/xml/shortcuts.xml` carries. */
         private const val SHORTCUT_ID = "pullBrake"

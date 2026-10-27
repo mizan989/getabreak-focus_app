@@ -17,6 +17,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.flx_apps.digitaldetox", appContext.packageName)
+        assertEquals("com.getabreak.app", appContext.packageName)
     }
 }

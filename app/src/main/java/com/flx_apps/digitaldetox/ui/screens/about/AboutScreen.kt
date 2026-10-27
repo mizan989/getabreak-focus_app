@@ -101,6 +101,21 @@ fun AboutScreen(navViewModel: NavViewModel = NavViewModel.navViewModel()) {
     var debugLog by remember { mutableStateOf(DebugLog.isEnabled) }
     val versionTaps = remember(activity) { VersionTapCountdown(activity) }
 
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val appVersion = remember(context) {
+        runCatching {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                context.packageManager.getPackageInfo(
+                    context.packageName,
+                    android.content.pm.PackageManager.PackageInfoFlags.of(0)
+                ).versionName
+            } else {
+                @Suppress("DEPRECATION")
+                context.packageManager.getPackageInfo(context.packageName, 0).versionName
+            }
+        }.getOrNull() ?: BuildConfig.VERSION_NAME
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -143,7 +158,7 @@ fun AboutScreen(navViewModel: NavViewModel = NavViewModel.navViewModel()) {
                     Text(
                         text = stringResource(
                             id = R.string.about_version,
-                            BuildConfig.VERSION_NAME
+                            appVersion
                         ),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,

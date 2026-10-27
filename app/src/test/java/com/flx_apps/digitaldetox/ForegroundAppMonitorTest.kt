@@ -13,7 +13,7 @@ import org.junit.Test
  * hundred milliseconds, and acting on each one in turn is what makes the screen filter flicker.
  */
 class ForegroundAppMonitorTest {
-    private val own = "com.flx_apps.digitaldetox"
+    private val own = "com.getabreak.app"
 
     private fun window(
         packageName: String, className: String = "$packageName.MainActivity",
