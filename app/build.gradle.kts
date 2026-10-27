@@ -13,11 +13,11 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.flx_apps.digitaldetox"
+        applicationId = "com.mizan989.getabreak"
         minSdk = 26
         targetSdk = 36
-        versionCode = 30001
-        versionName = "3.0.1"
+        versionCode = 100
+        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -49,7 +49,7 @@ android {
         }
     }
     // Generates locales_config.xml from the res/values-* folders and wires it into the manifest,
-    // so Android 13+ offers DetoxDroid in the system per-app language picker. New translations are
+    // so Android 13+ offers getabreak in the system per-app language picker. New translations are
     // picked up automatically — the default locale is declared in res/resources.properties.
     androidResources {
         generateLocaleConfig = true
