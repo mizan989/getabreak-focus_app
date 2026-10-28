@@ -9,9 +9,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.flx_apps.digitaldetox.feature_types.FeatureId
 import com.flx_apps.digitaldetox.features.FeaturesProvider
@@ -20,6 +25,7 @@ import com.flx_apps.digitaldetox.rules.RuleGroups
 import com.flx_apps.digitaldetox.ui.screens.nav_host.NavHostScreen
 import com.flx_apps.digitaldetox.ui.screens.nav_host.NavViewModel
 import com.flx_apps.digitaldetox.ui.screens.nav_host.NavigationRoutes
+import com.flx_apps.digitaldetox.ui.screens.splash.SplashScreen
 import com.flx_apps.digitaldetox.ui.theme.DetoxDroidTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,12 +39,28 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val isColdLaunch = savedInstanceState == null &&
+                (intent == null || intent.action == null || intent.action == Intent.ACTION_MAIN)
+        val stayOnSplash = intent?.getBooleanExtra("stay_on_splash", false) == true
+        val initialShowSplash = stayOnSplash || isColdLaunch
+
         setContent {
+            var showSplash by remember { mutableStateOf(initialShowSplash) }
+
             DetoxDroidTheme { // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
-                    NavHostScreen()
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        NavHostScreen()
+                        if (showSplash) {
+                            SplashScreen(
+                                stayOnSplash = stayOnSplash,
+                                onDismiss = { showSplash = false }
+                            )
+                        }
+                    }
                 }
             }
         }
