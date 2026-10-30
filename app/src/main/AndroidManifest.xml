@@ -90,7 +90,6 @@
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
                 <action android:name="com.getabreak.app.ACTION_PULL_BRAKE" />
-                <action android:name="com.flx_apps.digitaldetox.ACTION_PULL_BRAKE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -161,7 +160,7 @@
         <service android:name=".ui.screens.feature.commitment_password.CommitmentPasswordTamperWarningOverlayService" />
 
         <receiver
-            android:name="com.flx_apps.digitaldetox.system_integration.DetoxDroidDeviceAdminReceiver"
+            android:name="com.getabreak.app.system_integration.DetoxDroidDeviceAdminReceiver"
             android:exported="true"
             android:label="getabreak Device Admin"
             android:permission="android.permission.BIND_DEVICE_ADMIN">

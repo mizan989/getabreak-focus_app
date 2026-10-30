@@ -1,0 +1,383 @@
+package com.getabreak.app.ui.screens.feature.pause_button
+
+import android.os.Build
+import android.view.KeyEvent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccessTime
+import androidx.compose.material.icons.filled.Accessibility
+import androidx.compose.material.icons.filled.AppShortcut
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Timelapse
+import androidx.compose.material.icons.filled.Tune
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.getabreak.app.R
+import com.getabreak.app.features.PauseButtonFeature
+import com.getabreak.app.system_integration.PauseInteractionService
+import com.getabreak.app.ui.widgets.AdvancedSettings
+import com.getabreak.app.ui.widgets.NumberPickerDialog
+import com.getabreak.app.ui.widgets.SectionHeader
+import com.getabreak.app.ui.widgets.SettingsGroup
+import com.getabreak.app.ui.screens.feature.AddQuickSettingsTile
+import com.getabreak.app.ui.widgets.SimpleListTile
+import com.getabreak.app.util.KeyEventUtil
+import com.getabreak.app.util.NotificationHelper
+import com.getabreak.app.util.observeAsState
+
+/**
+ * The settings section for the pause button feature.
+ */
+@Composable
+fun PauseButtonFeatureSettingsSection(
+    viewModel: PauseButtonFeatureSettingsViewModel = viewModel()
+) {
+    // determine whether and which dialog should be shown
+    when (viewModel.showPauseDurationNumberPickerDialog.collectAsState().value) {
+        PauseButtonFeatureSettingsViewModelDialog.PAUSE_DURATION -> PauseDurationDialog()
+        PauseButtonFeatureSettingsViewModelDialog.TIME_BETWEEN_PAUSES_DURATION -> TimeBetweenPausesDialog()
+        PauseButtonFeatureSettingsViewModelDialog.PICK_HARDWARE_KEY -> PickHardwareKeyDialog()
+        PauseButtonFeatureSettingsViewModelDialog.AFFECTED_FEATURES -> AffectedFeaturesDialog()
+        else -> {} // No dialog is shown
+    }
+    SettingsGroup {
+        PauseDurationTile()
+        MinimumTimeBetweenPausesTile()
+    }
+    SectionHeader(title = stringResource(id = R.string.feature_pause_ways))
+    SettingsGroup {
+        // before Android 13 an app cannot offer its tile, it can only be dragged in by hand
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) AddQuickSettingsTile(
+            subtitleRes = R.string.feature_pause_fromQuickSettings_description,
+            onClick = { viewModel.requestAddQuickSettingsTile() })
+        PauseFromNotificationTile()
+        PauseFromAssistantTile()
+        PauseFromHardwareButtonTile()
+    }
+    AdvancedSettings(
+        summary = stringResource(id = R.string.feature_pause_affectedFeatures),
+        initiallyExpanded = viewModel.pauseExemptFeatureIds.collectAsState().value.isNotEmpty()
+    ) {
+        AffectedFeaturesTile()
+    }
+}
+
+/**
+ * A tile that opens a dialog for choosing which features a pause affects.
+ * @see PauseButtonFeature.pauseExemptFeatureIds
+ */
+@Composable
+private fun AffectedFeaturesTile(viewModel: PauseButtonFeatureSettingsViewModel = viewModel()) {
+    val exempt = viewModel.pauseExemptFeatureIds.collectAsState().value
+    val total = viewModel.pausableFeatures.size
+    val affected = total - viewModel.pausableFeatures.count { it.id in exempt }
+    SimpleListTile(
+        leadingIcon = Icons.Default.Tune,
+        titleText = stringResource(id = R.string.feature_pause_affectedFeatures),
+        subtitleText = if (affected == total) {
+            stringResource(id = R.string.feature_pause_affectedFeatures_all)
+        } else {
+            stringResource(id = R.string.feature_pause_affectedFeatures_count, affected, total)
+        },
+        onClick = {
+            viewModel.setVisibilityOfDialog(
+                PauseButtonFeatureSettingsViewModelDialog.AFFECTED_FEATURES
+            )
+        },
+    )
+}
+
+/**
+ * A dialog listing every pausable feature with a checkbox. Checked features are suspended during a
+ * pause; unchecked ones keep running.
+ */
+@Composable
+private fun AffectedFeaturesDialog(viewModel: PauseButtonFeatureSettingsViewModel = viewModel()) {
+    val exempt = viewModel.pauseExemptFeatureIds.collectAsState().value
+    AlertDialog(
+        onDismissRequest = {
+            viewModel.setVisibilityOfDialog(PauseButtonFeatureSettingsViewModelDialog.NONE)
+        },
+        title = { Text(text = stringResource(id = R.string.feature_pause_affectedFeatures)) },
+        text = {
+            Column {
+                Text(
+                    text = stringResource(id = R.string.feature_pause_affectedFeatures_dialogHint),
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+                viewModel.pausableFeatures.forEach { feature ->
+                    val affected = feature.id !in exempt
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                viewModel.setFeatureAffectedByPause(feature.id, !affected)
+                            }
+                            .padding(vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Checkbox(checked = affected, onCheckedChange = {
+                            viewModel.setFeatureAffectedByPause(feature.id, it)
+                        })
+                        Text(
+                            text = stringResource(id = feature.texts.title),
+                            modifier = Modifier.padding(start = 8.dp),
+                        )
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = {
+                viewModel.setVisibilityOfDialog(PauseButtonFeatureSettingsViewModelDialog.NONE)
+            }) {
+                Text(text = stringResource(id = R.string.action_close))
+            }
+        },
+    )
+}
+
+/**
+ * A tile to launch the Android Assistant settings. DetoxDroid can be used as Assistant in order to
+ * launch pauses.
+ * @see PauseInteractionService
+ */
+@Composable
+private fun PauseFromAssistantTile(viewModel: PauseButtonFeatureSettingsViewModel = viewModel()) {
+    SimpleListTile(
+        leadingIcon = Icons.Default.Accessibility,
+        titleText = stringResource(id = R.string.feature_pause_fromAssistant),
+        subtitleText = stringResource(
+            id = R.string.feature_pause_fromAssistant_description
+        ),
+        onClick = { viewModel.callAndroidAssistantSettings() })
+}
+
+/**
+ * @see PauseButtonFeature.hardwareKey
+ */
+@Composable
+private fun PauseFromHardwareButtonTile(viewModel: PauseButtonFeatureSettingsViewModel = viewModel()) {
+    SimpleListTile(
+        leadingIcon = Icons.Default.AppShortcut,
+        titleText = stringResource(id = R.string.feature_pause_fromHardwareButton),
+        subtitleText = stringResource(
+            id = R.string.feature_pause_fromHardwareButton_description
+        ),
+        trailing = viewModel.hardwareKey.collectAsState().value.takeIf {
+            it != KeyEvent.KEYCODE_UNKNOWN
+        }?.let {
+            { Text(text = KeyEventUtil.keyCodeToShortString(it)) }
+        } ?: {},
+        onClick = { viewModel.showHardwareKeyDialog() })
+}
+
+/**
+ * @see PauseButtonFeature.pauseDuration
+ */
+@Composable
+private fun PauseDurationTile(viewModel: PauseButtonFeatureSettingsViewModel = viewModel()) {
+    SimpleListTile(
+        leadingIcon = Icons.Default.AccessTime,
+        titleText = stringResource(id = R.string.feature_pause_duration),
+        subtitleText = stringResource(
+            id = R.string.feature_pause_duration_description
+        ),
+        trailing = {
+            Text(
+                stringResource(
+                    id = R.string.duration_minutes, viewModel.pauseDuration.collectAsState().value
+                )
+            )
+        },
+        onClick = {
+            viewModel.setVisibilityOfDialog(
+                PauseButtonFeatureSettingsViewModelDialog.PAUSE_DURATION
+            )
+        })
+}
+
+/**
+ * @see PauseButtonFeature.timeBetweenPausesDuration
+ */
+@Composable
+private fun MinimumTimeBetweenPausesTile(viewModel: PauseButtonFeatureSettingsViewModel = viewModel()) {
+    SimpleListTile(
+        leadingIcon = Icons.Default.Timelapse,
+        titleText = stringResource(id = R.string.feature_pause_minimumTimeBetween),
+        subtitleText = stringResource(
+            id = R.string.feature_pause_minimumTimeBetween_description
+        ),
+        trailing = {
+            Text(
+                stringResource(
+                    id = R.string.duration_minutes,
+                    viewModel.timeBetweenPausesDuration.collectAsState().value
+                )
+            )
+        },
+        onClick = {
+            viewModel.setVisibilityOfDialog(
+                PauseButtonFeatureSettingsViewModelDialog.TIME_BETWEEN_PAUSES_DURATION
+            )
+        },
+    )
+}
+
+/**
+ * The dialog for selecting the pause duration.
+ */
+@Composable
+fun PauseDurationDialog(
+    viewModel: PauseButtonFeatureSettingsViewModel = viewModel()
+) {
+    val context = LocalContext.current
+    NumberPickerDialog(
+        titleText = stringResource(id = R.string.feature_pause_duration),
+        initialValue = viewModel.pauseDuration.collectAsState().value,
+        onValueSelected = {
+            viewModel.setPauseDuration(it)
+        },
+        onDismissRequest = {
+            viewModel.setVisibilityOfDialog(PauseButtonFeatureSettingsViewModelDialog.NONE)
+        },
+        label = {
+            context.getString(R.string.duration_minutes, it)
+        },
+        range = 1..15
+    )
+}
+
+/**
+ * The dialog for selecting the time between pauses.
+ */
+@Composable
+fun TimeBetweenPausesDialog(
+    viewModel: PauseButtonFeatureSettingsViewModel = viewModel()
+) {
+    val context = LocalContext.current
+    NumberPickerDialog(
+        titleText = stringResource(id = R.string.feature_pause_minimumTimeBetween),
+        initialValue = viewModel.timeBetweenPausesDuration.collectAsState().value,
+        onValueSelected = {
+            viewModel.setTimeBetweenPausesDuration(it)
+        },
+        onDismissRequest = {
+            viewModel.setVisibilityOfDialog(PauseButtonFeatureSettingsViewModelDialog.NONE)
+        },
+        label = {
+            context.getString(R.string.duration_minutes, it)
+        },
+        range = 0..120
+    )
+}
+
+@Composable
+fun PickHardwareKeyDialog(
+    viewModel: PauseButtonFeatureSettingsViewModel = viewModel()
+) {
+    val selectedKey = viewModel.newHardwareKeySelection.collectAsState().value
+    val dialogText = selectedKey.takeIf { it != KeyEvent.KEYCODE_UNKNOWN }?.let {
+        stringResource(
+            id = R.string.feature_pause_fromHardwareButton_selected,
+            KeyEventUtil.keyCodeToShortString(it)
+        )
+    } ?: stringResource(id = R.string.feature_pause_fromHardwareButton_noButtonPressed)
+    AlertDialog(
+        // dismissing (tap outside/back) must go through hideHardwareKeyDialog: it removes the
+        // service's key-event listener, which otherwise keeps swallowing every hardware key
+        onDismissRequest = { viewModel.hideHardwareKeyDialog(null) },
+        title = { Text(text = stringResource(id = R.string.feature_pause_fromHardwareButton_press)) },
+        text = { Text(text = dialogText) },
+        confirmButton = {
+            TextButton(onClick = {
+                viewModel.hideHardwareKeyDialog(selectedKey)
+            }) {
+                Text(text = stringResource(id = R.string.action_save))
+            }
+        },
+        dismissButton = {
+            Row {
+                if (viewModel.hardwareKey.collectAsState().value != KeyEvent.KEYCODE_UNKNOWN) {
+                    // un-assign the configured key (the only way to get rid of it)
+                    TextButton(onClick = {
+                        viewModel.hideHardwareKeyDialog(KeyEvent.KEYCODE_UNKNOWN)
+                    }) {
+                        Text(text = stringResource(id = R.string.action_delete))
+                    }
+                }
+                // null = keep the previously configured key (cancel must not clear it)
+                TextButton(onClick = {
+                    viewModel.hideHardwareKeyDialog(null)
+                }) {
+                    Text(text = stringResource(id = R.string.action_cancel))
+                }
+            }
+        })
+}
+
+/**
+ * The pause button in DetoxDroid's own notification. There is nothing to switch, the notification
+ * comes with the feature, so the tile only has something to do while notifications are blocked:
+ * it asks for them, and otherwise leads to the notification settings.
+ */
+@Composable
+private fun PauseFromNotificationTile(viewModel: PauseButtonFeatureSettingsViewModel = viewModel()) {
+    val context = LocalContext.current
+    var notificationsEnabled by remember { mutableStateOf(false) }
+    fun readNotificationsEnabled() {
+        notificationsEnabled = NotificationHelper.areNotificationsEnabled(context)
+    }
+    // read again whenever the screen comes back, e.g. from the notification settings
+    val lifecycleEvent = LocalLifecycleOwner.current.lifecycle.observeAsState().value
+    LaunchedEffect(lifecycleEvent) { readNotificationsEnabled() }
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        readNotificationsEnabled()
+        if (isGranted) viewModel.openNotificationSettings()
+    }
+
+    SimpleListTile(
+        leadingIcon = Icons.Default.Notifications,
+        titleText = stringResource(id = R.string.feature_pause_fromNotification),
+        subtitleText = stringResource(
+            id = if (notificationsEnabled) {
+                R.string.feature_pause_fromNotification_description
+            } else {
+                R.string.feature_pause_fromNotification_blocked
+            }
+        ),
+        onClick = {
+            // below Android 13 there is no permission to ask for, it always counts as granted
+            if (NotificationHelper.hasNotificationPermission(context)) {
+                viewModel.openNotificationSettings()
+            } else {
+                permissionLauncher.launch(NotificationHelper.getNotificationPermission())
+            }
+        })
+}

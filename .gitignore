@@ -27,3 +27,4 @@ local.properties
 .agents/
 qa_evidence/
 getabreak-emulator-qa-report.md
+*.apk

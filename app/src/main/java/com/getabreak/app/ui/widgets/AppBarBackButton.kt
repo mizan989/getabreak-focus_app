@@ -1,0 +1,19 @@
+package com.getabreak.app.ui.widgets
+
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.runtime.Composable
+import com.getabreak.app.ui.screens.nav_host.NavViewModel
+
+@Composable
+fun AppBarBackButton(navViewModel: NavViewModel = NavViewModel.navViewModel()) {
+    IconButton(onClick = {
+        navViewModel.onBackPress()
+    }) {
+        Icon(
+            imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back"
+        )
+    }
+}

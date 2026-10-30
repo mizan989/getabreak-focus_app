@@ -1091,6 +1091,8 @@
         <item quantity="other">You\'re %d taps away from putting your phone down.</item>
     </plurals>
     <string name="about_version_putItDown">Now put it down.</string>
+    <string name="about_contact">Get in touch</string>
+    <string name="about_contact_subtitle">Feature requests and ideas are welcome. I read everything, but don\'t always reply.</string>
     <string name="about_github">Contribute on GitHub</string>
     <string name="about_github_link" translatable="false">https://github.com/mizan989/getabreak-focus_app</string>
     <string name="about_reportIssue_link" translatable="false">https://github.com/mizan989/getabreak-focus_app/issues/new</string>

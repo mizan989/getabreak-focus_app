@@ -210,7 +210,7 @@ adb shell pm grant com.getabreak.app android.permission.WRITE_SECURE_SETTINGS
 ## Technical Architecture
 
 ```
-app/src/main/java/com/flx_apps/digitaldetox/
+app/src/main/java/com/getabreak/app/
 ├── data/                    # Room Database, DAOs, and DataStore delegates
 ├── features/                # Core feature modules (Brake, Doomscroll, CommitmentPassword, etc.)
 ├── rules/                   # Rule groups, thresholds, steps, and scheduling logic

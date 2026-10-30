@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.flx_apps.digitaldetox"
+    namespace = "com.getabreak.app"
     compileSdk = 36
 
     defaultConfig {

@@ -1,0 +1,239 @@
+package com.getabreak.app.ui.screens.feature
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LargeTopAppBar
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.getabreak.app.R
+import com.getabreak.app.feature_types.Feature
+import com.getabreak.app.feature_types.FeatureId
+import com.getabreak.app.feature_types.NeedsPermissionsFeature
+import com.getabreak.app.features.CommitmentPasswordFeature
+import com.getabreak.app.features.EmergencyBrakeFeature
+import com.getabreak.app.features.CommitmentPasswordFeatureId
+import com.getabreak.app.features.FeaturesProvider
+import com.getabreak.app.rules.RuleGroups
+import com.getabreak.app.rules.Step
+import com.getabreak.app.ui.screens.feature.commitment_password.CommitmentPasswordViewModel
+import com.getabreak.app.ui.screens.feature.commitment_password.PasswordLockGate
+import com.getabreak.app.ui.screens.nav_host.NavViewModel
+import com.getabreak.app.ui.widgets.AppBarBackButton
+
+/**
+ * A singleton that provides the snackbar host state for the feature screen and its children.
+ */
+object FeatureScreenSnackbarStateProvider {
+    val snackbarState: SnackbarHostState by lazy { SnackbarHostState() }
+}
+
+/**
+ * The screen that shows the details of a feature. It contains a top app bar with a back button and
+ * a switch to toggle the active state of the feature. The content of the screen is provided by the
+ * feature itself.
+ * @param featureId The id of the feature to show.
+ * @see [Feature.settingsContent]
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun FeatureScreen(
+    featureId: FeatureId,
+    featureViewModel: FeatureViewModel = FeatureViewModel.withFeatureId(featureId),
+) {
+    val feature = featureViewModel.feature
+    val snackbarHostState = FeatureScreenSnackbarStateProvider.snackbarState
+    val lockStateToken by CommitmentPasswordFeature.stateToken.collectAsState()
+    val brakeStateToken by EmergencyBrakeFeature.stateToken.collectAsState()
+    val isFeatureSettingsLocked = remember(lockStateToken, brakeStateToken, featureId) {
+        featureId != CommitmentPasswordFeatureId && FeaturesProvider.areSettingsLocked(featureId)
+    }
+    LaunchedEffect(lockStateToken, featureId) {
+        // Commitment Password can change its activation state from dialogs outside the switch toggle.
+        if (featureId == CommitmentPasswordFeatureId) {
+            featureViewModel.refreshActiveState()
+        }
+    }
+
+    // the large title folds into the bar once the settings scroll
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        topBar = {
+            LargeTopAppBar(navigationIcon = { AppBarBackButton() }, title = {
+                Column {
+                    Text(stringResource(id = feature.texts.title))
+                    Text(
+                        stringResource(id = feature.texts.subtitle),
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            }, actions = {
+                if (isStepFeature(feature)) {
+                    // the groups switch it on and off: this screen only tunes how it works
+                    val groupsChanged by RuleGroups.changes.collectAsState()
+                    val groupCount = remember(groupsChanged) {
+                        RuleGroups.enabled().count { it.usesFeature(feature) }
+                    }
+                    Text(
+                        text = if (groupCount == 0) {
+                            stringResource(id = R.string.ruleGroups_feature_unused)
+                        } else {
+                            pluralStringResource(
+                                id = R.plurals.ruleGroups_feature_usedBy, count = groupCount, groupCount
+                            )
+                        },
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        modifier = Modifier.padding(end = 16.dp)
+                    )
+                } else {
+                    FeatureActivationSwitch(isSettingsLocked = isFeatureSettingsLocked)
+                }
+            }, scrollBehavior = scrollBehavior)
+        }
+    ) {
+        LazyColumn(
+            contentPadding = PaddingValues(bottom = 16.dp),
+            modifier = Modifier.padding(it)
+        ) {
+            item {
+                PasswordLockGate(featureId = featureId) {
+                    FeatureScreenContent(feature)
+                }
+            }
+        }
+    }
+}
+
+/** Whether [feature] runs a step of the groups, which switch it on and off in its place. */
+private fun isStepFeature(feature: Feature): Boolean = Step.entries.any { it.feature == feature }
+
+/**
+ * A switch to toggle the active state of the feature. If the feature needs permissions to be
+ * activated, a snackbar is shown to request the permissions and the state is not toggled.
+ *
+ * For the Commitment Password feature, when it is currently active and locked, the switch triggers
+ * the "Unlock to Disable" dialog instead of immediately deactivating.
+ */
+@Composable
+fun FeatureActivationSwitch(
+    featureViewModel: FeatureViewModel = viewModel(),
+    navViewModel: NavViewModel = NavViewModel.navViewModel(),
+    isSettingsLocked: Boolean = false
+) {
+    val context = LocalContext.current
+
+    // For CommitmentPasswordFeature we need special handling
+    if (featureViewModel.feature.id == CommitmentPasswordFeatureId) {
+        val cpViewModel: CommitmentPasswordViewModel = viewModel()
+
+        Switch(
+            modifier = Modifier.padding(end = 8.dp),
+            checked = featureViewModel.featureIsActive.collectAsState().value,
+            onCheckedChange = {
+                if (it) {
+                    // Enabling: check permissions first, then show walkthrough
+                    if (featureViewModel.activationNeedsPermission()) {
+                        featureViewModel.showSnackbar(
+                            message = context.getString(R.string.action_requestPermissions),
+                            actionLabel = context.getString(R.string.action_go),
+                            onResult = { snackbarResult ->
+                                if (snackbarResult == SnackbarResult.ActionPerformed) {
+                                    (featureViewModel.feature as NeedsPermissionsFeature).requestPermissions(
+                                        context, navViewModel
+                                    )
+                                }
+                            }
+                        )
+                    } else {
+                        cpViewModel.showWalkthroughDialog()
+                    }
+                } else {
+                    // Disabling: require passphrase if currently locked. Asking for one that is
+                    // not stored would be a dead end, so this goes through the same check as the
+                    // settings below rather than off isActivated alone.
+                    if (CommitmentPasswordFeature.isFeatureLocked(CommitmentPasswordFeatureId)) {
+                        cpViewModel.showUnlockToDisableDialog()
+                    } else {
+                        // Unlocked – disable directly
+                        CommitmentPasswordFeature.clearPasswordData(context)
+                        CommitmentPasswordFeature.lockSession()
+                        CommitmentPasswordFeature.updateActivationState(
+                            false,
+                            dispatchLifecycle = true
+                        )
+                        featureViewModel.refreshActiveState()
+                    }
+                }
+            }
+        )
+    } else {
+        Switch(modifier = Modifier.padding(end = 8.dp),
+            enabled = !isSettingsLocked,
+            checked = featureViewModel.featureIsActive.collectAsState().value,
+            onCheckedChange = {
+                if (featureViewModel.toggleFeatureActive() == null) {
+                    val blockedFeature = featureViewModel.feature as NeedsPermissionsFeature
+                    val hasAction = blockedFeature.activationBlockedHasAction(context)
+                    featureViewModel.showSnackbar(
+                        message = context.getString(blockedFeature.activationBlockedMessage(context)),
+                        actionLabel = if (hasAction) context.getString(R.string.action_go) else null,
+                        // without an action to tap there is nothing to wait for, and an indefinite
+                        // snackbar would sit there until it is swiped away
+                        duration = if (hasAction) {
+                            SnackbarDuration.Indefinite
+                        } else {
+                            SnackbarDuration.Long
+                        },
+                        onResult = { snackbarResult ->
+                            if (snackbarResult == SnackbarResult.ActionPerformed) {
+                                blockedFeature.requestPermissions(context, navViewModel)
+                            }
+                        }
+                    )
+                }
+            }
+        )
+    }
+}
+
+/**
+ * The content of the feature screen. It contains a description of the feature and the settings
+ * content provided by the feature.
+ * @see [Feature.texts]
+ * @see [Feature.settingsContent]
+ */
+@Composable
+fun FeatureScreenContent(feature: Feature) {
+    Text(
+        text = stringResource(id = feature.texts.description),
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
+    )
+    feature.settingsContent()
+}

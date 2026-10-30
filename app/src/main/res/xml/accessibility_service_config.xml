@@ -6,4 +6,4 @@
     android:canRequestFilterKeyEvents="true"
     android:description="@string/app_accessibilityService_description"
     android:notificationTimeout="100"
-    android:settingsActivity="com.flx_apps.digitaldetox.MainActivity" />
+    android:settingsActivity="com.getabreak.app.MainActivity" />

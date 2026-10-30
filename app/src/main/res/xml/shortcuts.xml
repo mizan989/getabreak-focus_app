@@ -8,7 +8,7 @@
         android:shortcutShortLabel="@string/feature_brake_shortcut">
         <intent
             android:action="com.getabreak.app.ACTION_PULL_BRAKE"
-            android:targetClass="com.flx_apps.digitaldetox.system_integration.PullBrakeActivity"
+            android:targetClass="com.getabreak.app.system_integration.PullBrakeActivity"
             android:targetPackage="com.getabreak.app" />
     </shortcut>
 </shortcuts>

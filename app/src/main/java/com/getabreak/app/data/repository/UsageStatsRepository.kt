@@ -1,0 +1,515 @@
+package com.getabreak.app.data.repository
+
+import androidx.datastore.preferences.core.stringPreferencesKey
+import com.getabreak.app.data.DailyAppUsage
+import com.getabreak.app.data.DailyAppUsageDao
+import com.getabreak.app.data.DailyDeviceStats
+import com.getabreak.app.data.DailyDeviceStatsDao
+import com.getabreak.app.data.DailyGrayscaleStats
+import com.getabreak.app.data.DailyGrayscaleStatsDao
+import com.getabreak.app.data.DailyWebsiteUsage
+import com.getabreak.app.data.DailyWebsiteUsageDao
+import com.getabreak.app.data.DataStoreProperty
+import com.getabreak.app.data.SelfMeasuredAppUsage
+import com.getabreak.app.data.SelfMeasuredAppUsageDao
+import com.getabreak.app.features.BreakDoomScrollingFeature
+import com.getabreak.app.features.DisableAppsFeature
+import com.getabreak.app.features.GrayscaleAppsFeature
+import com.getabreak.app.features.UsageStatsTracker
+import com.getabreak.app.system_integration.UsageStatsProvider
+import com.getabreak.app.util.DailyAppCounter
+import com.getabreak.app.util.ForegroundTimeRecorder
+import com.getabreak.app.util.startOfDayMillis
+import com.getabreak.app.websites.Websites
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import java.time.LocalDate
+import java.time.ZoneId
+import javax.inject.Inject
+import javax.inject.Singleton
+
+/**
+ * Which instrument the per-day, per-app numbers come from. The OS keeps the better record and is
+ * used wherever it can be; [SELF_MEASURED] is what is left on a phone that will not grant usage
+ * access.
+ * @see ForegroundTimeRecorder
+ */
+enum class UsageSource { OS, SELF_MEASURED }
+
+/** Coordinates historical usage stats between the OS UsageStatsManager and the Room DAO. */
+@Singleton
+class UsageStatsRepository @Inject constructor(
+    private val dao: DailyAppUsageDao,
+    private val grayscaleDao: DailyGrayscaleStatsDao,
+    private val deviceStatsDao: DailyDeviceStatsDao,
+    private val selfMeasuredDao: SelfMeasuredAppUsageDao,
+    private val websiteDao: DailyWebsiteUsageDao
+) {
+    private val snapshotMutex = Mutex()
+
+    /**
+     * The day the last full snapshot was of. The first snapshot of a new day writes the day before
+     * down once more from the event log, which the snapshots before midnight could not finish.
+     * Read from the store on first use, not when the repository is made: the counters-only
+     * snapshots never need it.
+     */
+    private class LastSnapshotDay {
+        var value: String by DataStoreProperty(
+            stringPreferencesKey("UsageStatsRepository_lastSnapshotDay"), ""
+        )
+    }
+
+    private val lastSnapshotDay by lazy { LastSnapshotDay() }
+    private var counterBaselineDate: LocalDate? = null
+    private val scrollCounterBaselines = mutableMapOf<String, Int>()
+    private val scrollDistanceBaselines = mutableMapOf<String, Int>()
+    private val breakCounterBaselines = mutableMapOf<String, Int>()
+    private val blockCounterBaselines = mutableMapOf<String, Int>()
+
+    /**
+     * Merges the current OS usage stats and in-memory feature counters into today's Room rows.
+     * Safe to call from multiple places (worker, ViewModel, scroll debounce) — runs serialized.
+     */
+    suspend fun snapshotToday() = snapshotMutex.withLock {
+        val zone = ZoneId.systemDefault()
+        val today = LocalDate.now()
+        val startMs = today.startOfDayMillis(zone)
+        val endMs = System.currentTimeMillis()
+
+        val eventCounts = UsageStatsProvider.queryEventCounts(startMs, endMs)
+        val osStats = eventCounts.foregroundTimeByPackage()
+        val launchCounts = eventCounts.launchCounts
+        val groupedSessionCounts = UsageStatsProvider.groupSessionCounts(eventCounts.sessions)
+
+        val scrollCounts = UsageStatsTracker.scrollEventCounter.snapshot()
+        val scrollDistances = UsageStatsTracker.scrollDistanceCounter.snapshot()
+        val breakCounts = BreakDoomScrollingFeature.breakCounter.snapshot()
+        val blockCounts = DisableAppsFeature.blockCounter.snapshot()
+
+        resetCounterBaselinesIfNeeded(today)
+        val existing = dao.getForDate(today).associateBy { it.packageName }
+        // blocks and breaks on a website are counted under its entry ("web:youtube.com"), which is
+        // no app and has no place in the per-app rows
+        val packageNames = buildSet {
+            addAll(osStats.keys)
+            addAll(existing.keys)
+            addAll(scrollCounts.keys)
+            addAll(Websites.appsOf(breakCounts.keys))
+            addAll(Websites.appsOf(blockCounts.keys))
+        }
+
+        val rows = packageNames.map { pkg ->
+            val stat = osStats[pkg]
+            val prior = existing[pkg]
+
+            DailyAppUsage(
+                rowId = DailyAppUsage.createRowId(today, pkg),
+                date = today,
+                packageName = pkg,
+                totalTimeMs = stat ?: prior?.totalTimeMs ?: 0L,
+                sessionCount = groupedSessionCounts[pkg] ?: prior?.sessionCount ?: 0,
+                launchCount = launchCounts[pkg] ?: prior?.launchCount ?: 0,
+                scrollCount = mergeCounter(
+                    packageName = pkg,
+                    currentCount = scrollCounts[pkg] ?: 0,
+                    persistedCount = prior?.scrollCount ?: 0,
+                    baselines = scrollCounterBaselines
+                ),
+                scrollDistancePx = mergeCounter(
+                    packageName = pkg,
+                    currentCount = scrollDistances[pkg] ?: 0,
+                    persistedCount = prior?.scrollDistancePx ?: 0,
+                    baselines = scrollDistanceBaselines
+                ),
+                breakCount = mergeCounter(
+                    packageName = pkg,
+                    currentCount = breakCounts[pkg] ?: 0,
+                    persistedCount = prior?.breakCount ?: 0,
+                    baselines = breakCounterBaselines
+                ),
+                blockCount = mergeCounter(
+                    packageName = pkg,
+                    currentCount = blockCounts[pkg] ?: 0,
+                    persistedCount = prior?.blockCount ?: 0,
+                    baselines = blockCounterBaselines
+                )
+            )
+        }
+
+        if (rows.isNotEmpty()) {
+            dao.upsertAll(rows)
+        }
+
+        // Device-level stats are recomputed from the full-day event log on every snapshot, so a
+        // plain overwrite is correct (no baseline merging needed).
+        deviceStatsDao.upsert(
+            DailyDeviceStats(
+                date = today,
+                unlockCount = eventCounts.unlockCount,
+                unlockHourBuckets = eventCounts.unlockHourBuckets,
+                launchHourBuckets = eventCounts.hourBuckets
+            )
+        )
+
+        snapshotGrayscaleToday()
+        finishDayBefore(today)
+    }.also { snapshotSelfMeasuredToday() }.also { snapshotWebsitesToday() }
+
+    /**
+     * Completes the rows of the day before [today] from the event log, once, when the day has
+     * changed since the last snapshot: the last snapshot before midnight stopped at whatever
+     * minute it ran, and only the log has the rest. A day the log no longer reaches is left as it
+     * was.
+     */
+    private suspend fun finishDayBefore(today: LocalDate) {
+        val last = lastSnapshotDay.value.takeIf { it.isNotEmpty() }
+            ?.let { runCatching { LocalDate.parse(it) }.getOrNull() }
+        lastSnapshotDay.value = today.toString()
+        if (last == null || !last.isBefore(today)) return
+        val zone = ZoneId.systemDefault()
+        val events = UsageStatsProvider.queryEventCounts(
+            last.startOfDayMillis(zone), last.plusDays(1).startOfDayMillis(zone)
+        )
+        val totals = events.foregroundTimeByPackage()
+        if (totals.isEmpty()) return
+        val sessionCounts = UsageStatsProvider.groupSessionCounts(events.sessions)
+        val existing = dao.getForDate(last).associateBy { it.packageName }
+        val rows = (totals.keys + existing.keys).map { pkg ->
+            val prior = existing[pkg]
+            DailyAppUsage(
+                rowId = DailyAppUsage.createRowId(last, pkg),
+                date = last,
+                packageName = pkg,
+                totalTimeMs = totals[pkg] ?: prior?.totalTimeMs ?: 0L,
+                sessionCount = sessionCounts[pkg] ?: prior?.sessionCount ?: 0,
+                launchCount = events.launchCounts[pkg] ?: prior?.launchCount ?: 0,
+                scrollCount = prior?.scrollCount ?: 0,
+                scrollDistancePx = prior?.scrollDistancePx ?: 0,
+                breakCount = prior?.breakCount ?: 0,
+                blockCount = prior?.blockCount ?: 0,
+            )
+        }
+        dao.upsertAll(rows)
+    }
+
+    private suspend fun snapshotGrayscaleToday() {
+        val today = LocalDate.now()
+        val liveGrayscaleMs = GrayscaleAppsFeature.currentGrayscaleTimeMs()
+        val existingMs = grayscaleDao.getForDate(today) ?: 0L
+        val mergedMs = maxOf(liveGrayscaleMs, existingMs)
+        // don't litter the table with all-zero rows on days without grayscale usage
+        if (mergedMs == 0L) return
+        grayscaleDao.upsert(DailyGrayscaleStats(date = today, grayscaleTimeMs = mergedMs))
+    }
+
+    /**
+     * Persists only the live in-memory counters (scrolls, distance, breaks, blocks) into today's
+     * rows. Unlike [snapshotToday] this touches *no* OS APIs — no usage-stats query and no walk
+     * over the day's event log — so it is cheap enough for the scroll-debounce path and service
+     * shutdown, whose only job is making the counters survive a process kill. The full derivation
+     * stays with the periodic worker and screen refreshes.
+     */
+    suspend fun snapshotTodayCountersOnly() = snapshotCounters(
+        scrollCounts = UsageStatsTracker.scrollEventCounter.snapshot(),
+        scrollDistances = UsageStatsTracker.scrollDistanceCounter.snapshot(),
+        breakCounts = BreakDoomScrollingFeature.breakCounter.snapshot(),
+        blockCounts = DisableAppsFeature.blockCounter.snapshot()
+    )
+
+    internal suspend fun snapshotCounters(
+        scrollCounts: Map<String, Int>,
+        scrollDistances: Map<String, Int>,
+        breakCounts: Map<String, Int>,
+        blockCounts: Map<String, Int>
+    ) = snapshotMutex.withLock {
+        val today = LocalDate.now()
+        resetCounterBaselinesIfNeeded(today)
+        // only packages with live counter values need a write; everything else is already correct
+        val packageNames = buildSet {
+            addAll(scrollCounts.keys)
+            addAll(scrollDistances.keys)
+            addAll(Websites.appsOf(breakCounts.keys))
+            addAll(Websites.appsOf(blockCounts.keys))
+        }
+        if (packageNames.isEmpty()) return@withLock
+
+        val existing = dao.getForDate(today).associateBy { it.packageName }
+        val rows = packageNames.map { pkg ->
+            val prior = existing[pkg]
+            DailyAppUsage(
+                rowId = DailyAppUsage.createRowId(today, pkg),
+                date = today,
+                packageName = pkg,
+                totalTimeMs = prior?.totalTimeMs ?: 0L,
+                sessionCount = prior?.sessionCount ?: 0,
+                launchCount = prior?.launchCount ?: 0,
+                scrollCount = mergeCounter(
+                    packageName = pkg,
+                    currentCount = scrollCounts[pkg] ?: 0,
+                    persistedCount = prior?.scrollCount ?: 0,
+                    baselines = scrollCounterBaselines
+                ),
+                scrollDistancePx = mergeCounter(
+                    packageName = pkg,
+                    currentCount = scrollDistances[pkg] ?: 0,
+                    persistedCount = prior?.scrollDistancePx ?: 0,
+                    baselines = scrollDistanceBaselines
+                ),
+                breakCount = mergeCounter(
+                    packageName = pkg,
+                    currentCount = breakCounts[pkg] ?: 0,
+                    persistedCount = prior?.breakCount ?: 0,
+                    baselines = breakCounterBaselines
+                ),
+                blockCount = mergeCounter(
+                    packageName = pkg,
+                    currentCount = blockCounts[pkg] ?: 0,
+                    persistedCount = prior?.blockCount ?: 0,
+                    baselines = blockCounterBaselines
+                )
+            )
+        }
+        dao.upsertAll(rows)
+    }.also { snapshotSelfMeasuredToday() }.also { snapshotWebsitesToday() }
+
+    private fun resetCounterBaselinesIfNeeded(today: LocalDate) {
+        if (counterBaselineDate == today) return
+        counterBaselineDate = today
+        scrollCounterBaselines.clear()
+        scrollDistanceBaselines.clear()
+        breakCounterBaselines.clear()
+        blockCounterBaselines.clear()
+    }
+
+    /**
+     * Reconciles a live in-memory counter with its persisted value. The baseline remembers the
+     * live count at the previous snapshot, so only the delta since then is added on top of the
+     * persisted count (the live counters reset on process restart, the persisted ones don't).
+     */
+    private fun mergeCounter(
+        packageName: String,
+        currentCount: Int,
+        persistedCount: Int,
+        baselines: MutableMap<String, Int>
+    ): Int {
+        val previousLiveCount = baselines[packageName]
+        baselines[packageName] = currentCount
+        return if (previousLiveCount == null) {
+            persistedCount + currentCount
+        } else {
+            persistedCount + (currentCount - previousLiveCount).coerceAtLeast(0)
+        }
+    }
+
+    /** Returns the total grayscale time across all days in [start]..[end] (inclusive). */
+    suspend fun getTotalGrayscaleTimeInRange(start: LocalDate, end: LocalDate): Long {
+        return grayscaleDao.getTotalGrayscaleTimeInRange(start, end) ?: 0L
+    }
+
+    suspend fun getHistorical(
+        start: LocalDate, end: LocalDate, source: UsageSource = UsageSource.OS
+    ): List<DailyAppUsage> = when (source) {
+        UsageSource.OS -> dao.getRange(start, end)
+        UsageSource.SELF_MEASURED ->
+            selfMeasuredRows(selfMeasuredDao.getRange(start, end), dao.getRange(start, end))
+    }
+
+    suspend fun getHistoricalDayCount(
+        start: LocalDate, end: LocalDate, source: UsageSource = UsageSource.OS
+    ): Int = when (source) {
+        UsageSource.OS -> dao.getDayCountInRange(start, end)
+        UsageSource.SELF_MEASURED -> selfMeasuredDao.getDayCountInRange(start, end)
+    }
+
+    /** Returns the summed screen time of all Room rows in [start]..[end] (inclusive). */
+    suspend fun getTotalScreenTimeInRange(
+        start: LocalDate, end: LocalDate, source: UsageSource = UsageSource.OS
+    ): Long = when (source) {
+        UsageSource.OS -> dao.getTotalTimeInRange(start, end) ?: 0L
+        UsageSource.SELF_MEASURED -> selfMeasuredDao.getTotalTimeInRange(start, end) ?: 0L
+    }
+
+    suspend fun getAppHistorical(
+        packageName: String,
+        start: LocalDate,
+        end: LocalDate,
+        source: UsageSource = UsageSource.OS
+    ): List<DailyAppUsage> = when (source) {
+        UsageSource.OS -> dao.getForPackageInRange(packageName, start, end)
+        UsageSource.SELF_MEASURED -> selfMeasuredRows(
+            selfMeasuredDao.getForPackageInRange(packageName, start, end),
+            dao.getForPackageInRange(packageName, start, end)
+        )
+    }
+
+    suspend fun getEarliestHistoryDate(source: UsageSource = UsageSource.OS): LocalDate? =
+        when (source) {
+            UsageSource.OS -> dao.getEarliestDate()
+            UsageSource.SELF_MEASURED -> selfMeasuredDao.getEarliestDate()
+        }
+
+    suspend fun pruneOlderThan(cutoff: LocalDate): Int {
+        val prunedApps = dao.deleteOlderThan(cutoff)
+        val prunedGrayscale = grayscaleDao.deleteOlderThan(cutoff)
+        val prunedDeviceStats = deviceStatsDao.deleteOlderThan(cutoff)
+        val prunedSelfMeasured = selfMeasuredDao.deleteOlderThan(cutoff)
+        val prunedWebsites = websiteDao.deleteOlderThan(cutoff)
+        return prunedApps + prunedGrayscale + prunedDeviceStats + prunedSelfMeasured +
+                prunedWebsites
+    }
+
+    /**
+     * Self-measured rows in the shape everything downstream reads. The scroll, break and block
+     * counters are DetoxDroid's own whichever instrument measures the time, and they live in the
+     * OS table, so they are joined in from there by row id. What stays zero is what only the OS
+     * could have filled.
+     */
+    private fun selfMeasuredRows(
+        rows: List<SelfMeasuredAppUsage>, counters: List<DailyAppUsage>
+    ): List<DailyAppUsage> {
+        val countersByRow = counters.associateBy { it.rowId }
+        return rows.map { row ->
+            val counter = countersByRow[row.rowId]
+            DailyAppUsage(
+                rowId = row.rowId,
+                date = row.date,
+                packageName = row.packageName,
+                totalTimeMs = row.foregroundTimeMs,
+                // a self-measured launch is one stretch in front, which is what a session is
+                sessionCount = row.launchCount,
+                launchCount = row.launchCount,
+                scrollCount = counter?.scrollCount ?: 0,
+                scrollDistancePx = counter?.scrollDistancePx ?: 0,
+                breakCount = counter?.breakCount ?: 0,
+                blockCount = counter?.blockCount ?: 0
+            )
+        }
+    }
+
+    /**
+     * Writes today's self-measured foreground time to its own table. Once the persisted values are
+     * folded into the live ones ([restoreTodayCounters]) the live values only grow, so a plain
+     * overwrite is correct. Before that a snapshot holds seconds where the table holds the day,
+     * and is skipped.
+     */
+    suspend fun snapshotSelfMeasuredToday() = snapshotMutex.withLock {
+        val today = LocalDate.now()
+        val recorder = UsageStatsTracker.foregroundTimeRecorder
+        if (!recorder.isComplete(today)) return@withLock
+        val live = recorder.snapshot(today)
+        if (live.isEmpty()) return@withLock
+        selfMeasuredDao.upsertAll(live.map { (packageName, time) ->
+            SelfMeasuredAppUsage(
+                rowId = SelfMeasuredAppUsage.createRowId(today, packageName),
+                date = today,
+                packageName = packageName,
+                foregroundTimeMs = time.foregroundMs,
+                launchCount = time.launchCount
+            )
+        })
+    }
+
+    /**
+     * Writes today's time on websites to its own table, the way [snapshotSelfMeasuredToday] does
+     * for apps: a plain overwrite once the persisted values are folded in, nothing before.
+     */
+    suspend fun snapshotWebsitesToday() = snapshotMutex.withLock {
+        val today = LocalDate.now()
+        val recorder = UsageStatsTracker.websiteTimeRecorder
+        if (!recorder.isComplete(today)) return@withLock
+        val live = recorder.snapshot(today)
+        if (live.isEmpty()) return@withLock
+        websiteDao.upsertAll(live.map { (site, time) ->
+            DailyWebsiteUsage(
+                rowId = DailyWebsiteUsage.createRowId(today, site),
+                date = today,
+                site = site,
+                timeMs = time.foregroundMs,
+                visitCount = time.launchCount
+            )
+        })
+    }
+
+    /** The time on websites for [start]..[end], as persisted by [snapshotWebsitesToday]. */
+    suspend fun getWebsiteUsage(start: LocalDate, end: LocalDate): List<DailyWebsiteUsage> =
+        websiteDao.getRange(start, end)
+
+    /** One site's days in [start]..[end], for its trend. */
+    suspend fun getSiteHistorical(
+        site: String, start: LocalDate, end: LocalDate
+    ): List<DailyWebsiteUsage> = websiteDao.getForSiteInRange(site, start, end)
+
+    /**
+     * Deletes everything counted about websites, live and persisted, for when the user stops the
+     * counting. Under the snapshot mutex, so a snapshot running at that moment cannot write the
+     * live values back after they were cleared.
+     */
+    suspend fun deleteWebsiteUsage() = snapshotMutex.withLock {
+        UsageStatsTracker.websiteTimeRecorder.clear()
+        websiteDao.deleteAll()
+    }
+
+    /** Returns the persisted device stats (unlocks, hour histograms) for [start]..[end]. */
+    suspend fun getDeviceStats(start: LocalDate, end: LocalDate): List<DailyDeviceStats> {
+        return deviceStatsDao.getRange(start, end)
+    }
+
+    /** Returns the number of days in [start]..[end] with persisted device stats. */
+    suspend fun getDeviceStatsDayCount(start: LocalDate, end: LocalDate): Int {
+        return deviceStatsDao.getDayCountInRange(start, end)
+    }
+
+    /** Returns the summed unlock count of all persisted device stats in [start]..[end]. */
+    suspend fun getTotalUnlocksInRange(start: LocalDate, end: LocalDate): Int {
+        return deviceStatsDao.getTotalUnlocksInRange(start, end) ?: 0
+    }
+
+    /**
+     * Restores today's persisted per-app counts from Room into the live in-memory counters
+     * (scrolls, doom-scroll breaks, app blocks) after a process restart, and records matching
+     * baselines so the next [snapshotToday] doesn't double-count the restored values. Runs under
+     * the snapshot mutex so a concurrent snapshot can't interleave with the restore.
+     */
+    suspend fun restoreTodayCounters() = snapshotMutex.withLock {
+        val today = LocalDate.now()
+        resetCounterBaselinesIfNeeded(today)
+        val rows = dao.getForDate(today)
+        restoreCounter(rows, DailyAppUsage::scrollCount, UsageStatsTracker.scrollEventCounter, scrollCounterBaselines)
+        restoreCounter(rows, DailyAppUsage::scrollDistancePx, UsageStatsTracker.scrollDistanceCounter, scrollDistanceBaselines)
+        restoreCounter(rows, DailyAppUsage::breakCount, BreakDoomScrollingFeature.breakCounter, breakCounterBaselines)
+        restoreCounter(rows, DailyAppUsage::blockCount, DisableAppsFeature.blockCounter, blockCounterBaselines)
+        UsageStatsTracker.foregroundTimeRecorder.restore(
+            selfMeasuredDao.getForDate(today).associate {
+                it.packageName to ForegroundTimeRecorder.AppTime(it.foregroundTimeMs, it.launchCount)
+            },
+            today = today
+        )
+        UsageStatsTracker.websiteTimeRecorder.restore(
+            websiteDao.getForDate(today).associate {
+                it.site to ForegroundTimeRecorder.AppTime(it.timeMs, it.visitCount)
+            },
+            today = today
+        )
+    }
+
+    private fun restoreCounter(
+        rows: List<DailyAppUsage>,
+        persistedCount: (DailyAppUsage) -> Int,
+        counter: DailyAppCounter,
+        baselines: MutableMap<String, Int>
+    ) {
+        val counts = rows.associate { it.packageName to persistedCount(it) }.filterValues { it > 0 }
+        if (counts.isEmpty()) return
+        counter.restore(counts)
+        // baseline = live value after the (max-merging) restore, so the next snapshot only adds
+        // the delta of genuinely new events on top of the persisted count
+        for (pkg in counts.keys) {
+            baselines[pkg] = counter.countFor(pkg)
+        }
+    }
+
+    companion object {
+        /** How many months of historical usage snapshots are retained before pruning. */
+        const val HISTORY_RETENTION_MONTHS = 3L
+    }
+}

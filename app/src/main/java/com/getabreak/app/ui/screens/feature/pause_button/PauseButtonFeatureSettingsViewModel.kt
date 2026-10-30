@@ -1,0 +1,173 @@
+package com.getabreak.app.ui.screens.feature.pause_button
+
+import android.app.Application
+import android.os.Build
+import android.view.KeyEvent
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.AndroidViewModel
+import com.getabreak.app.R
+import com.getabreak.app.feature_types.Feature
+import com.getabreak.app.feature_types.FeatureId
+import com.getabreak.app.features.PauseButtonFeature
+import com.getabreak.app.system_integration.DetoxDroidAccessibilityService
+import com.getabreak.app.system_integration.PauseTileService
+import com.getabreak.app.util.offerQuickSettingsTile
+import com.getabreak.app.util.NotificationHelper
+import com.getabreak.app.util.NavigationUtil
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import java.util.concurrent.TimeUnit
+import javax.inject.Inject
+
+/**
+ * The possible dialogs that can be shown.
+ * We use an enum, as only one dialog can be shown at a time.
+ */
+enum class PauseButtonFeatureSettingsViewModelDialog {
+    NONE, PAUSE_DURATION, TIME_BETWEEN_PAUSES_DURATION, PICK_HARDWARE_KEY, AFFECTED_FEATURES
+}
+
+/**
+ * The view model for the pause button feature settings tile.
+ */
+@HiltViewModel
+class PauseButtonFeatureSettingsViewModel @Inject constructor(application: Application) :
+    AndroidViewModel(application) {
+    /**
+     * The duration of the pause in minutes.
+     */
+    private val _pauseDuration: MutableStateFlow<Int> =
+        MutableStateFlow(TimeUnit.MILLISECONDS.toMinutes(PauseButtonFeature.pauseDuration).toInt())
+    val pauseDuration = _pauseDuration.asStateFlow()
+
+    /**
+     * The duration between pauses in minutes.
+     */
+    private val _timeBetweenPausesDuration: MutableStateFlow<Int> = MutableStateFlow(
+        TimeUnit.MILLISECONDS.toMinutes(PauseButtonFeature.timeBetweenPausesDuration).toInt()
+    )
+    val timeBetweenPausesDuration = _timeBetweenPausesDuration.asStateFlow()
+
+    /**
+     * Whether to show the pause duration number picker dialog.
+     */
+    private val _visibleDialog: MutableStateFlow<PauseButtonFeatureSettingsViewModelDialog> =
+        MutableStateFlow(PauseButtonFeatureSettingsViewModelDialog.NONE)
+    val showPauseDurationNumberPickerDialog = _visibleDialog.asStateFlow()
+
+    private val _hardwareKey = MutableStateFlow(PauseButtonFeature.hardwareKey)
+    val hardwareKey = _hardwareKey.asStateFlow()
+
+    /** All features a pause can affect (every [com.getabreak.app.feature_types.PausableFeature]). */
+    val pausableFeatures: List<Feature> = PauseButtonFeature.pausableFeatures
+
+    /** The features a pause should NOT affect (kept running through a pause). */
+    private val _pauseExemptFeatureIds = MutableStateFlow(PauseButtonFeature.pauseExemptFeatureIds)
+    val pauseExemptFeatureIds = _pauseExemptFeatureIds.asStateFlow()
+
+    /**
+     * Sets whether a pause affects [featureId]. Affected features are suspended during a pause;
+     * unaffected ones keep running. Persisted as an exclusion set on [PauseButtonFeature].
+     */
+    fun setFeatureAffectedByPause(featureId: FeatureId, affected: Boolean) {
+        val newExempt = if (affected) {
+            _pauseExemptFeatureIds.value - featureId
+        } else {
+            _pauseExemptFeatureIds.value + featureId
+        }
+        PauseButtonFeature.pauseExemptFeatureIds = newExempt
+        _pauseExemptFeatureIds.value = newExempt
+    }
+
+    private val _newHardwareKeySelection = MutableStateFlow(KeyEvent.KEYCODE_UNKNOWN)
+    val newHardwareKeySelection = _newHardwareKeySelection.asStateFlow()
+
+    /**
+     * Sets the duration of the pause in minutes.
+     */
+    fun setPauseDuration(durationInMinutes: Int) {
+        PauseButtonFeature.pauseDuration = TimeUnit.MINUTES.toMillis(durationInMinutes.toLong())
+        _pauseDuration.value = durationInMinutes
+    }
+
+    /**
+     * Sets the minimum time that has to pass between two pauses in minutes.
+     */
+    fun setTimeBetweenPausesDuration(durationInMinutes: Int) {
+        PauseButtonFeature.timeBetweenPausesDuration =
+            TimeUnit.MINUTES.toMillis(durationInMinutes.toLong())
+        _timeBetweenPausesDuration.value = durationInMinutes
+    }
+
+    /**
+     * Sets which dialog should be visible.
+     */
+    fun setVisibilityOfDialog(dialog: PauseButtonFeatureSettingsViewModelDialog) {
+        _visibleDialog.value = dialog
+    }
+
+    /**
+     * Shows the hardware key dialog if the accessibility service is running and we can listen for
+     * key events.
+     */
+    fun showHardwareKeyDialog() {
+        if (DetoxDroidAccessibilityService.instance == null) {
+            // the accessibility service is not running, so we can't pick a hardware key
+            val context = getApplication<Application>()
+            Toast.makeText(
+                context,
+                context.getString(R.string.feature_pause_fromHardwareButton_appNotRunning),
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+        // we want to pick a hardware key, so we have to listen for key events
+        _newHardwareKeySelection.value = _hardwareKey.value
+        DetoxDroidAccessibilityService.instance?.onKeyEventListener = { event ->
+            _newHardwareKeySelection.value = event.keyCode
+            true
+        }
+        setVisibilityOfDialog(PauseButtonFeatureSettingsViewModelDialog.PICK_HARDWARE_KEY)
+    }
+
+    /**
+     * Hides the hardware key dialog and sets the new hardware key.
+     * @param newHardwareKeyCode The new hardware key code.
+     */
+    fun hideHardwareKeyDialog(newHardwareKeyCode: Int? = null) {
+        if (newHardwareKeyCode != null) {
+            _hardwareKey.value = newHardwareKeyCode
+            PauseButtonFeature.hardwareKey = newHardwareKeyCode
+        }
+        // clear the listener only after the key is persisted — its setter re-evaluates whether
+        // the service still needs to filter hardware key events at all
+        DetoxDroidAccessibilityService.instance?.onKeyEventListener = null
+        setVisibilityOfDialog(PauseButtonFeatureSettingsViewModelDialog.NONE)
+    }
+
+    /**
+     * Called when the user clicks on the "pause from assistant" tile.
+     * Opens the Android settings for setting the assistant app.
+     */
+    fun callAndroidAssistantSettings() {
+        NavigationUtil.openVoiceInputSettings(getApplication())
+    }
+
+    /**
+     * Opens the Android notification settings for the service channel.
+     */
+    fun openNotificationSettings() {
+        NotificationHelper.openNotificationSettings(getApplication())
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    fun requestAddQuickSettingsTile() = offerQuickSettingsTile(
+        getApplication(),
+        PauseTileService::class.java,
+        R.string.app_quickSettingsTile,
+        R.drawable.ic_stat_break,
+        R.string.feature_pause_fromQuickSettings_alreadyAdded
+    )
+}
