@@ -141,12 +141,12 @@ sequenceDiagram
 ## UI Showcase
 
 <p align="center">
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="16%" style="border-radius: 8px; margin: 4px;" />
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="16%" style="border-radius: 8px; margin: 4px;" />
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="16%" style="border-radius: 8px; margin: 4px;" />
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" width="16%" style="border-radius: 8px; margin: 4px;" />
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" width="16%" style="border-radius: 8px; margin: 4px;" />
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/6.png" width="16%" style="border-radius: 8px; margin: 4px;" />
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" alt="Break Minimal Launcher" width="16%" style="border-radius: 8px; margin: 4px;" />
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" alt="Break Main Dashboard" width="16%" style="border-radius: 8px; margin: 4px;" />
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" alt="Break Rule Configuration" width="16%" style="border-radius: 8px; margin: 4px;" />
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" alt="Break Friction Intervention" width="16%" style="border-radius: 8px; margin: 4px;" />
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" alt="Break Settings & Controls" width="16%" style="border-radius: 8px; margin: 4px;" />
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/6.png" alt="Break Screen Time & Stats" width="16%" style="border-radius: 8px; margin: 4px;" />
 </p>
 
 ---
