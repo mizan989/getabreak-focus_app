@@ -29,24 +29,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.getabreak.app.R
-import com.getabreak.app.system_integration.DetoxDroidAccessibilityService
+import com.getabreak.app.system_integration.GetabreakAccessibilityService
 import com.getabreak.app.system_integration.ForceStopRecovery
 import com.getabreak.app.util.BatteryOptimizationHelper
 import com.getabreak.app.util.observeAsState
 
 /**
- * Shown while the accessibility service is off because DetoxDroid was force-stopped rather than
+ * Shown while the accessibility service is off because getabreak was force-stopped rather than
  * stopped by the user ([ForceStopRecovery.wasForceStopped]). Without it the home screen only says
- * "Stopped", and the user is left to believe DetoxDroid keeps losing a permission. Goes away once
- * the service runs again, or for good when the user dismisses it and leaves DetoxDroid off.
+ * "Stopped", and the user is left to believe getabreak keeps losing a permission. Goes away once
+ * the service runs again, or for good when the user dismisses it and leaves getabreak off.
  */
 @Composable
 fun ForceStoppedCard() {
     val context = LocalContext.current
     val lifecycleState = LocalLifecycleOwner.current.lifecycle.observeAsState().value
-    val detoxDroidState = DetoxDroidAccessibilityService.state.collectAsState().value
+    val getabreakState = GetabreakAccessibilityService.state.collectAsState().value
     var visible by remember { mutableStateOf(false) }
-    LaunchedEffect(lifecycleState, detoxDroidState) {
+    LaunchedEffect(lifecycleState, getabreakState) {
         visible = ForceStopRecovery.wasForceStopped(context)
     }
     if (!visible) return

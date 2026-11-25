@@ -72,7 +72,7 @@
         <item name="android:autoSizeMaxTextSize">12sp</item>
     </style>
 
-    <!-- in place of the label under the screen time while DetoxDroid is not running -->
+    <!-- in place of the label under the screen time while getabreak is not running -->
     <style name="WidgetToday.Label.Off" parent="WidgetToday.Label.Stat">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">?attr/widgetError</item>

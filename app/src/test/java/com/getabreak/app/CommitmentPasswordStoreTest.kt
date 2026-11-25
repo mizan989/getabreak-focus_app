@@ -23,7 +23,7 @@ import org.robolectric.annotation.Config
 class CommitmentPasswordStoreTest {
     @Before
     fun setUp() {
-        DetoxDroidApplication.appContext = RuntimeEnvironment.getApplication()
+        GetabreakApplication.appContext = RuntimeEnvironment.getApplication()
     }
 
     @Test

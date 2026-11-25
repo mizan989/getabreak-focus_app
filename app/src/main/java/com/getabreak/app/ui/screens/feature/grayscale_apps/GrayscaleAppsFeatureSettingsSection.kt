@@ -150,7 +150,7 @@ fun GrayscaleAppsFeatureSettingsSection(
 }
 
 /**
- * Whether DetoxDroid may write secure settings, re-checked whenever the screen comes back so a
+ * Whether getabreak may write secure settings, re-checked whenever the screen comes back so a
  * permission granted in the meantime (Shizuku wizard, adb) is picked up without a restart.
  */
 @Composable

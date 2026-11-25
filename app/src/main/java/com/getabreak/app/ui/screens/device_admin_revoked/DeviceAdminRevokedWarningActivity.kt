@@ -46,8 +46,8 @@ import androidx.compose.ui.unit.dp
 import com.getabreak.app.R
 import com.getabreak.app.features.CommitmentPasswordFeature
 import com.getabreak.app.system_integration.AccessibilityServiceController
-import com.getabreak.app.system_integration.DetoxDroidDeviceAdminReceiver
-import com.getabreak.app.ui.theme.DetoxDroidTheme
+import com.getabreak.app.system_integration.GetabreakDeviceAdminReceiver
+import com.getabreak.app.ui.theme.GetabreakTheme
 import com.getabreak.app.ui.widgets.rememberAccessibilityConsent
 import com.getabreak.app.util.NavigationUtil
 import com.getabreak.app.util.hasWriteSecureSettings
@@ -118,7 +118,7 @@ class DeviceAdminRevokedWarningActivity : ComponentActivity() {
             if (!isWarningRequired(context) || !CommitmentPasswordFeature.isActivated) return false
             return when (reason) {
                 WarningReason.DEVICE_ADMIN_REVOKED ->
-                    !DetoxDroidDeviceAdminReceiver.hasDeviceAdminPermission(context)
+                    !GetabreakDeviceAdminReceiver.hasDeviceAdminPermission(context)
                 WarningReason.ACCESSIBILITY_DISABLED ->
                     !AccessibilityServiceController.isEnabledInSettings(context)
             }
@@ -161,7 +161,7 @@ class DeviceAdminRevokedWarningActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
-            DetoxDroidTheme {
+            GetabreakTheme {
                 val accessibilityConsent = rememberAccessibilityConsent()
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -176,7 +176,7 @@ class DeviceAdminRevokedWarningActivity : ComponentActivity() {
                                 WarningReason.DEVICE_ADMIN_REVOKED -> {
                                     runCatching {
                                         startActivity(
-                                            DetoxDroidDeviceAdminReceiver.createRequestDeviceAdminIntent(
+                                            GetabreakDeviceAdminReceiver.createRequestDeviceAdminIntent(
                                                 this,
                                                 getString(R.string.deviceAdminRevoked_reenable_explanation)
                                             )

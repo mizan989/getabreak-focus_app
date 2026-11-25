@@ -6,7 +6,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import com.getabreak.app.system_integration.DetoxDroidAccessibilityService
+import com.getabreak.app.system_integration.GetabreakAccessibilityService
 import com.getabreak.app.system_integration.ScreenTimeSurfaces
 import com.getabreak.app.system_integration.TodaySummary
 import com.getabreak.app.ui.theme.AppearanceSettings.ThemeMode
@@ -21,7 +21,7 @@ import com.getabreak.app.widgets.sizeDpOf
  * [TodayWidgetTier]. Its look, and which of the [TodayWidgetPart]s it shows, is set per widget in
  * [TodayWidgetConfigureActivity].
  *
- * While DetoxDroid runs, [ScreenTimeSurfaces] keeps it current. The host's own periodic update
+ * While getabreak runs, [ScreenTimeSurfaces] keeps it current. The host's own periodic update
  * covers the time it doesn't, and the first update after the widget is placed.
  */
 class TodayWidgetProvider : AppWidgetProvider() {
@@ -66,7 +66,7 @@ class TodayWidgetProvider : AppWidgetProvider() {
         suspend fun update(context: Context, appWidgetIds: IntArray, summary: TodaySummary) {
             val appWidgetManager = AppWidgetManager.getInstance(context)
             val views = TodayWidgetViews(
-                context, summary, DetoxDroidAccessibilityService.instance != null
+                context, summary, GetabreakAccessibilityService.instance != null
             )
             val idsBySetup = appWidgetIds.groupBy {
                 WidgetSettingsStore.loadStyle(it, defaultStyle) to loadParts(it)

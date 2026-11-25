@@ -7,7 +7,7 @@ import android.net.Uri
 import com.getabreak.app.util.appLabel
 
 /**
- * The browsers on this phone, split by whether DetoxDroid can read their address bar, each sorted
+ * The browsers on this phone, split by whether getabreak can read their address bar, each sorted
  * by name.
  */
 data class InstalledBrowsers(val readable: List<Browser>, val unreadable: List<Browser>) {
@@ -15,7 +15,7 @@ data class InstalledBrowsers(val readable: List<Browser>, val unreadable: List<B
 
     companion object {
         /**
-         * Every app that opens web links counts as a browser, minus DetoxDroid itself. Blocking: it
+         * Every app that opens web links counts as a browser, minus getabreak itself. Blocking: it
          * asks the package manager, and looks into the browsers [BrowserAddressBars] does not know.
          */
         fun find(context: Context): InstalledBrowsers {

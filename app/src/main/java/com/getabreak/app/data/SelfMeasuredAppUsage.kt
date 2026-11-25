@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import java.time.LocalDate
 
 /**
- * A day of foreground time for one app as DetoxDroid measured it itself.
+ * A day of foreground time for one app as getabreak measured it itself.
  *
  * Kept apart from [DailyAppUsage] on purpose: the two are measurements of the same thing by
  * different instruments, and merging them would produce a number that is neither.

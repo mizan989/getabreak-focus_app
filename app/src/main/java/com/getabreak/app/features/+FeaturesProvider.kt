@@ -1,6 +1,6 @@
 package com.getabreak.app.features
 
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 import com.getabreak.app.OneMinuteInMs
 import com.getabreak.app.feature_types.Feature
 import com.getabreak.app.feature_types.FeatureId
@@ -9,8 +9,8 @@ import com.getabreak.app.feature_types.OnScreenTurnedOffSubscriptionFeature
 import com.getabreak.app.feature_types.OnScrollEventSubscriptionFeature
 import com.getabreak.app.rules.RuleGroups
 import com.getabreak.app.rules.Rules
-import com.getabreak.app.system_integration.DetoxDroidAccessibilityService
-import com.getabreak.app.system_integration.DetoxDroidState
+import com.getabreak.app.system_integration.GetabreakAccessibilityService
+import com.getabreak.app.system_integration.GetabreakState
 
 /**
  * A helper class that provides access to the features of the app. It provides methods to get a
@@ -103,16 +103,16 @@ object FeaturesProvider {
      * none of its effects until the next app switch happens to reach it.
      */
     private fun notifyScheduleTransitions(previouslyActive: Set<Feature>, active: Set<Feature>) {
-        val state = DetoxDroidAccessibilityService.updateState()
-        if (state == DetoxDroidState.Inactive) return
+        val state = GetabreakAccessibilityService.updateState()
+        if (state == GetabreakState.Inactive) return
         previouslyActive.forEach {
-            if (it !in active) it.onPause(DetoxDroidApplication.appContext)
+            if (it !in active) it.onPause(GetabreakApplication.appContext)
         }
         // a pause is supposed to leave everything off; PauseButtonFeature.resume() starts the
         // features that are active by then
-        if (state != DetoxDroidState.Active) return
+        if (state != GetabreakState.Active) return
         active.forEach {
-            if (it !in previouslyActive) it.onStart(DetoxDroidApplication.appContext)
+            if (it !in previouslyActive) it.onStart(GetabreakApplication.appContext)
         }
     }
 
@@ -126,14 +126,14 @@ object FeaturesProvider {
      */
     fun startOrStopFeature(feature: Feature) {
         reloadActiveFeatures()
-        if (DetoxDroidAccessibilityService.updateState() == DetoxDroidState.Active) {
-            // if DetoxDroid is running, call onStart() or onPause() for the feature
-            if (feature.isActive()) feature.onStart(DetoxDroidApplication.appContext) else feature.onPause(
-                DetoxDroidApplication.appContext
+        if (GetabreakAccessibilityService.updateState() == GetabreakState.Active) {
+            // if getabreak is running, call onStart() or onPause() for the feature
+            if (feature.isActive()) feature.onStart(GetabreakApplication.appContext) else feature.onPause(
+                GetabreakApplication.appContext
             )
         }
         // the Pause feature decides whether the notification shows and whether it offers a pause
-        DetoxDroidAccessibilityService.instance?.updateForegroundNotification()
+        GetabreakAccessibilityService.instance?.updateForegroundNotification()
     }
 
     /**

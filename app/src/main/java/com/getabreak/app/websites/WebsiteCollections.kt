@@ -2,7 +2,7 @@ package com.getabreak.app.websites
 
 import android.content.Context
 import androidx.annotation.StringRes
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 import com.getabreak.app.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -113,7 +113,7 @@ object WebsiteCollections {
             if (loaded.containsKey(collection) || !loading.add(collection)) return@forEach
             scope.launch {
                 try {
-                    load(DetoxDroidApplication.appContext, collection)
+                    load(GetabreakApplication.appContext, collection)
                     onLoaded()
                 } finally {
                     loading.remove(collection)

@@ -161,7 +161,7 @@ private fun AffectedFeaturesDialog(viewModel: PauseButtonFeatureSettingsViewMode
 }
 
 /**
- * A tile to launch the Android Assistant settings. DetoxDroid can be used as Assistant in order to
+ * A tile to launch the Android Assistant settings. getabreak can be used as Assistant in order to
  * launch pauses.
  * @see PauseInteractionService
  */
@@ -340,7 +340,7 @@ fun PickHardwareKeyDialog(
 }
 
 /**
- * The pause button in DetoxDroid's own notification. There is nothing to switch, the notification
+ * The pause button in getabreak's own notification. There is nothing to switch, the notification
  * comes with the feature, so the tile only has something to do while notifications are blocked:
  * it asks for them, and otherwise leads to the notification settings.
  */

@@ -75,7 +75,7 @@ class ConfigBackupTest {
 
     @Test
     fun thePreviewSaysWhatAFeatureHoldsInTheFile() = runBlocking {
-        DetoxDroidApplication.appContext = RuntimeEnvironment.getApplication()
+        GetabreakApplication.appContext = RuntimeEnvironment.getApplication()
         val file = ConfigBackup.serialize(
             mapOf(
                 "GrayscaleAppsFeature_isActivated" to true,

@@ -1,1 +1,0 @@
-Bugfix: User apps not showing in exceptions list for Android >= 11 (#61)

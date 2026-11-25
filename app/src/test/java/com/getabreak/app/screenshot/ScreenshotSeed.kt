@@ -7,7 +7,7 @@ import android.graphics.drawable.GradientDrawable
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 import com.getabreak.app.data.DailyAppUsage
 import com.getabreak.app.data.DailyAppUsageDao
 import com.getabreak.app.data.DailyGrayscaleStats
@@ -19,8 +19,8 @@ import com.getabreak.app.features.PauseButtonFeature
 import com.getabreak.app.rules.RuleGroups
 import com.getabreak.app.websites.Websites
 import com.getabreak.app.premium.PremiumManager
-import com.getabreak.app.system_integration.DetoxDroidAccessibilityService
-import com.getabreak.app.system_integration.DetoxDroidState
+import com.getabreak.app.system_integration.GetabreakAccessibilityService
+import com.getabreak.app.system_integration.GetabreakState
 import com.getabreak.app.ui.screens.usage_stats.UsageStatsSettings
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.shadows.ShadowSettings
@@ -55,17 +55,17 @@ object ScreenshotSeed {
     private val iconColors = listOf(0xFF3B82F6, 0xFFE0457B, 0xFFEF4444, 0xFF10B981, 0xFF22C55E, 0xFF14B8A6, 0xFF8B5CF6)
 
     /**
-     * Makes DetoxDroid appear "running" with two groups and a few features enabled, so the home
+     * Makes getabreak appear "running" with two groups and a few features enabled, so the home
      * screen shows the green "Running" state, the group cards and green feature indicators.
      */
     /** The group the rule screenshot shows, created by [seedActiveState]. */
     lateinit var feedsGroupId: String
 
     fun seedActiveState() {
-        DetoxDroidAccessibilityService.state.value = DetoxDroidState.Active
+        GetabreakAccessibilityService.state.value = GetabreakState.Active
         // the steps need the overlay permission; without it the group screen opens on a warning
         ShadowSettings.setCanDrawOverlays(true)
-        val context = DetoxDroidApplication.appContext
+        val context = GetabreakApplication.appContext
         if (RuleGroups.all.isEmpty()) {
             RuleGroups.create {
                 name = context.getString(R.string.ruleGroups_template_feeds)
@@ -207,8 +207,8 @@ object ScreenshotSeed {
         dao.upsertAll(rows)
     }
 
-    /** Sets the static app context that DetoxDroid's singletons read from. */
+    /** Sets the static app context that getabreak's singletons read from. */
     fun seedAppContext(application: Application) {
-        DetoxDroidApplication.appContext = application
+        GetabreakApplication.appContext = application
     }
 }

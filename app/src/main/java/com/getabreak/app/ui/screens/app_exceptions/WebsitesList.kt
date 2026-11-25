@@ -66,7 +66,7 @@ import java.text.NumberFormat
 
 /**
  * The website half of an app list: a field to add a site, the sites added so far, the collections
- * that come with the app, and which of the phone's browsers DetoxDroid can read. Websites are
+ * that come with the app, and which of the phone's browsers getabreak can read. Websites are
  * entries of the same list as the apps (see [Websites]), so the list type above applies to them
  * the same way.
  *
@@ -75,7 +75,7 @@ import java.text.NumberFormat
  * @param collectionTitle The name of a collection, for the search.
  * @param listType Whether the websites here are the only ones covered or the ones spared.
  * @param advancedExpanded Whether the [WebsiteCollection.advanced] collections are unfolded.
- * @param uncoveredBrowsers Browsers DetoxDroid cannot read that the feature should warn about,
+ * @param uncoveredBrowsers Browsers getabreak cannot read that the feature should warn about,
  *   by name, empty for none. They lead the half and leave the note at its end.
  * @param onShowApps Switches to the app half, where a browser is covered as an app.
  * @param copyButton The "Copy from…" button, which copies apps and websites alike.
@@ -347,7 +347,7 @@ private fun AdvancedCollectionsRow(summary: String, expanded: Boolean, onToggle:
 }
 
 /**
- * The browsers DetoxDroid cannot read and the feature does not cover as apps, while it covers
+ * The browsers getabreak cannot read and the feature does not cover as apps, while it covers
  * every website: whoever wants around the feature only needs to open one of these.
  */
 @Composable
@@ -364,7 +364,7 @@ private fun UncoveredBrowsersWarning(names: List<String>, onShowApps: () -> Unit
 }
 
 /**
- * Which of the phone's browsers DetoxDroid can read, and what it cannot see anywhere. Without a
+ * Which of the phone's browsers getabreak can read, and what it cannot see anywhere. Without a
  * browser it can read this is a warning at the top, since nothing on this side would work.
  *
  * @param nameUnreadable Whether to name the browsers it cannot read, which a warning above can

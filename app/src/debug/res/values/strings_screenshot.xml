@@ -14,7 +14,7 @@
      will auto-discover it and generate that language. No code changes needed. -->
 <resources>
     <string name="screenshot_1_title">Digital detox, your new default.</string>
-    <string name="screenshot_1_subtitle">DetoxDroid quietly winds down your smartphone use — always working in the background.</string>
+    <string name="screenshot_1_subtitle">getabreak quietly winds down your smartphone use — always working in the background.</string>
 
     <string name="screenshot_2_title">Your rules, in plain words.</string>
     <string name="screenshot_2_subtitle">Pick apps and websites, set a budget and a time, and choose what happens: a wait, gray, a scroll break or a lock.</string>
@@ -29,7 +29,7 @@
     <string name="screenshot_5_subtitle">Distracting apps open only after a short wait, long enough to catch the reflex.</string>
 
     <string name="screenshot_6_title">Break infinite scrolling.</string>
-    <string name="screenshot_6_subtitle">Caught doomscrolling? DetoxDroid gently interrupts and sends you on your way.</string>
+    <string name="screenshot_6_subtitle">Caught doomscrolling? getabreak gently interrupts and sends you on your way.</string>
 
     <string name="screenshot_7_title">Understand your habits.</string>
     <string name="screenshot_7_subtitle">See where your time really goes — screen time, app opens, even how far you\'ve scrolled.</string>

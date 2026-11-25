@@ -53,7 +53,7 @@ import com.getabreak.app.util.observeAsState
 import dev.olshevski.navigation.reimagined.hilt.hiltViewModel
 
 /**
- * Guided, computer-free Shizuku setup: install → start via wireless debugging → allow DetoxDroid,
+ * Guided, computer-free Shizuku setup: install → start via wireless debugging → allow getabreak,
  * and for the grayscale permission a one-tap grant as the last step. The wizard advances by itself
  * (the view model polls the Shizuku state) and finishes any pending grayscale activation. What it
  * is for is the [goal], which also picks the wording.

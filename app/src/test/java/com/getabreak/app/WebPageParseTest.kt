@@ -5,7 +5,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 /**
- * What browsers put in their address bar, and what DetoxDroid makes of it. The texts are the
+ * What browsers put in their address bar, and what getabreak makes of it. The texts are the
  * shapes the bars show between and on pages: with and without scheme and "www.", a host alone,
  * their own placeholder, a search being typed, internal pages. Firefox puts the address into the
  * description of its bar instead: after the page title in a custom tab, before the bar's hint

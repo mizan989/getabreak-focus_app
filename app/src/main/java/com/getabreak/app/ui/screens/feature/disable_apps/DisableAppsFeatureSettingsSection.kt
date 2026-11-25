@@ -21,7 +21,7 @@ import com.getabreak.app.R
 import com.getabreak.app.features.DisableAppsMode
 import com.getabreak.app.rules.Step
 import com.getabreak.app.system_integration.AppSuspender
-import com.getabreak.app.system_integration.DetoxDroidDeviceAdminReceiver
+import com.getabreak.app.system_integration.GetabreakDeviceAdminReceiver
 import com.getabreak.app.ui.screens.feature.FeatureViewModel
 import com.getabreak.app.ui.screens.nav_host.NavViewModel
 import com.getabreak.app.ui.screens.nav_host.NavigationRoutes
@@ -59,7 +59,7 @@ fun OperationModeCards(
     // the Shizuku setup comes back to this screen, so what the modes need is re-read on resume
     val lifecycleState = LocalLifecycleOwner.current.lifecycle.observeAsState().value
     val canSuspend = remember(lifecycleState) { AppSuspender.isAvailable }
-    val canDeactivate = remember(lifecycleState) { DetoxDroidDeviceAdminReceiver.isGranted(context) }
+    val canDeactivate = remember(lifecycleState) { GetabreakDeviceAdminReceiver.isGranted(context) }
     val options = listOf(
         CardOption(
             value = DisableAppsMode.BLOCK,

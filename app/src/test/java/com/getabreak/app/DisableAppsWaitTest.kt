@@ -38,7 +38,7 @@ class DisableAppsWaitTest {
 
     @Before
     fun setUp() {
-        DetoxDroidApplication.appContext = RuntimeEnvironment.getApplication()
+        GetabreakApplication.appContext = RuntimeEnvironment.getApplication()
         group = RuleGroups.create {
             name = "Feeds"
             appExceptions = setOf(LISTED_APP)

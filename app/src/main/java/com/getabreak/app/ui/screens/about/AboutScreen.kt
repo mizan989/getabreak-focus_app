@@ -53,7 +53,7 @@ import com.getabreak.app.BuildConfig
 import com.getabreak.app.R
 import com.getabreak.app.features.CommitmentPasswordFeature
 import com.getabreak.app.features.EmergencyBrakeFeature
-import com.getabreak.app.system_integration.DetoxDroidAccessibilityService
+import com.getabreak.app.system_integration.GetabreakAccessibilityService
 import com.getabreak.app.system_integration.ReliabilitySettings
 import com.getabreak.app.ui.screens.nav_host.NavViewModel
 import com.getabreak.app.ui.screens.nav_host.NavigationRoutes
@@ -195,7 +195,7 @@ fun AboutScreen(navViewModel: NavViewModel = NavViewModel.navViewModel()) {
                         onCheckedChange = {
                             keepAlive = it
                             ReliabilitySettings.keepServiceAliveEnabled = it
-                            DetoxDroidAccessibilityService.instance?.updateForegroundNotification()
+                            GetabreakAccessibilityService.instance?.updateForegroundNotification()
                         }
                     )
                     // the wizard rewrites the app lists and budgets of the very features the

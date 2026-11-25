@@ -21,7 +21,7 @@ class ScreenTurnedOnReceiver : BroadcastReceiver() {
         if (intent?.action == Intent.ACTION_USER_PRESENT) context?.let {
             ScreenTimeSurfaces.refreshAfterUnlock(it)
         }
-        val service = DetoxDroidAccessibilityService.instance ?: return
+        val service = GetabreakAccessibilityService.instance ?: return
         // Where there is a lock screen, [Intent.ACTION_SCREEN_ON] arrives while it is still up and
         // [Intent.ACTION_USER_PRESENT] follows once it is gone; a phone without one only sends the
         // former. So the screen turning on counts only while nothing is locked, and the lock screen

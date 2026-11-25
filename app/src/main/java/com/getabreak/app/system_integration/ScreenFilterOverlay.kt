@@ -28,7 +28,7 @@ data class ScreenFilterSpec(
  * A passive full-screen layer that makes whatever is below it duller: a gray wash plus, on
  * Android 12 and newer, a blur of everything behind it.
  *
- * This is what runs instead of the real grayscale filter when DetoxDroid does not hold
+ * This is what runs instead of the real grayscale filter when getabreak does not hold
  * WRITE_SECURE_SETTINGS. It cannot desaturate the screen the way the system daltonizer does: an
  * overlay window is only ever composited *onto* the screen, so the most it can do is pull every
  * pixel towards one color. Mixing in a neutral gray at alpha a scales the distance between the
@@ -143,11 +143,11 @@ object ScreenFilterOverlay {
     /**
      * The context whose window token carries the overlay, and the window type that goes with it.
      * An accessibility service may add [WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY]
-     * windows without holding SYSTEM_ALERT_WINDOW, so as long as DetoxDroid runs at all, the
+     * windows without holding SYSTEM_ALERT_WINDOW, so as long as getabreak runs at all, the
      * filter needs nothing granted. Returns null when neither path is available.
      */
     private fun host(context: Context): Pair<Context, Int>? {
-        DetoxDroidAccessibilityService.instance?.let {
+        GetabreakAccessibilityService.instance?.let {
             return it to WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY
         }
         if (Settings.canDrawOverlays(context)) {

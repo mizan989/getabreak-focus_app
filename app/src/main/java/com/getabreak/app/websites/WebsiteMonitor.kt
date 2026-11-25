@@ -17,7 +17,7 @@ import android.view.accessibility.AccessibilityNodeInfo
  * a bar made with Compose that is a walk through hundreds of nodes, one call each.
  *
  * @param addressBarIds The ids the address bar of an app may have, null for an app that is no
- *   browser DetoxDroid can read, see [BrowserAddressBars.idsFor].
+ *   browser getabreak can read, see [BrowserAddressBars.idsFor].
  * @param readRoot The active window, or null. Recycled here after use.
  * @param onPageChanged Called when the page changed, or when [recheck] asked for a report anyway.
  */
@@ -42,7 +42,7 @@ class WebsiteMonitor(
     /** The address bar of [browserPackage] as found last, see [currentAddressBar]. */
     private var addressBar: AccessibilityNodeInfo? = null
 
-    /** The browser in front, or null when the app in front is none DetoxDroid can read. */
+    /** The browser in front, or null when the app in front is none getabreak can read. */
     var browserPackage: String? = null
         private set
 

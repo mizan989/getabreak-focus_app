@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 import com.getabreak.app.data.repository.ApplicationInfoData
 import com.getabreak.app.data.repository.ApplicationInfoRepository
 import com.getabreak.app.feature_types.AppExceptionListType
@@ -88,7 +88,7 @@ class AppExceptionsViewModel @Inject constructor(
     private val appExceptionsFeature = scope
 
     /**
-     * Package name of DetoxDroid itself.
+     * Package name of getabreak itself.
      */
     private val appPackageName = application.packageName
 
@@ -96,7 +96,7 @@ class AppExceptionsViewModel @Inject constructor(
     private val allowedListTypes = appExceptionsFeature.listTypes
 
     /**
-     * DetoxDroid is never in a list. A group can lock what it names, and a locked DetoxDroid
+     * getabreak is never in a list. A group can lock what it names, and a locked getabreak
      * would have no way back in.
      */
     private val shouldExcludeCurrentApp = true
@@ -183,7 +183,7 @@ class AppExceptionsViewModel @Inject constructor(
     private val _collections = MutableStateFlow<List<CollectionItem>>(emptyList())
     val collections = _collections.asStateFlow()
 
-    /** The browsers on this phone and whether DetoxDroid can read them, null until known. */
+    /** The browsers on this phone and whether getabreak can read them, null until known. */
     private val _browsers = MutableStateFlow<InstalledBrowsers?>(null)
     val browsers = _browsers.asStateFlow()
 
@@ -202,7 +202,7 @@ class AppExceptionsViewModel @Inject constructor(
     private val _browsersCoveredAsApps = MutableStateFlow<List<String>>(emptyList())
     val browsersCoveredAsApps = _browsersCoveredAsApps.asStateFlow()
 
-    /** The browsers DetoxDroid cannot read that the feature does not cover as apps either. */
+    /** The browsers getabreak cannot read that the feature does not cover as apps either. */
     private val _uncoveredUnreadableBrowsers = MutableStateFlow<List<String>>(emptyList())
     val uncoveredUnreadableBrowsers = _uncoveredUnreadableBrowsers.asStateFlow()
 
@@ -328,7 +328,7 @@ class AppExceptionsViewModel @Inject constructor(
                 val websiteCount = Websites.websitesOf(exceptions).size
                 if (appCount + websiteCount == 0) null
                 else ExceptionsCopySource(
-                    source.id, GroupTexts.name(DetoxDroidApplication.appContext, source), appCount, websiteCount
+                    source.id, GroupTexts.name(GetabreakApplication.appContext, source), appCount, websiteCount
                 )
             }
     }

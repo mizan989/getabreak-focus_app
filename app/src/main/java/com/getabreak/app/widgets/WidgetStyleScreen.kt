@@ -56,7 +56,7 @@ import kotlin.math.roundToInt
 
 /**
  * Where a widget's [WidgetStyle] and the parts it shows are picked: the widget itself on top, on
- * the wallpaper (the activity's window shows it, see `Theme.DetoxDroid.WidgetConfigure`), and the
+ * the wallpaper (the activity's window shows it, see `Theme.Getabreak.WidgetConfigure`), and the
  * controls below.
  * @param parts what the widget can show or leave out, [shownParts] what it shows
  * @param preview the widget as it looks in [style], at [previewSize] in dp, or null while it is

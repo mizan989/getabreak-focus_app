@@ -7,9 +7,9 @@ import androidx.lifecycle.AndroidViewModel
 import com.getabreak.app.features.CommitmentPasswordFeature
 import com.getabreak.app.features.EmergencyBrakeFeature
 import com.getabreak.app.system_integration.AccessibilityServiceController
-import com.getabreak.app.system_integration.DetoxDroidAccessibilityService
-import com.getabreak.app.system_integration.DetoxDroidDeviceAdminReceiver
-import com.getabreak.app.system_integration.DetoxDroidState
+import com.getabreak.app.system_integration.GetabreakAccessibilityService
+import com.getabreak.app.system_integration.GetabreakDeviceAdminReceiver
+import com.getabreak.app.system_integration.GetabreakState
 import com.getabreak.app.util.NavigationUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,9 +31,9 @@ class HomeViewModel @Inject constructor(
     /**
      * The current state of the accessibility service. This is a [StateFlow], so it can be observed
      * by other components.
-     * @see DetoxDroidAccessibilityService.state
+     * @see GetabreakAccessibilityService.state
      */
-    val detoxDroidState: StateFlow<DetoxDroidState> = DetoxDroidAccessibilityService.state
+    val getabreakState: StateFlow<GetabreakState> = GetabreakAccessibilityService.state
 
     private val _snackbarState = MutableStateFlow(HomeScreenSnackbarState.Hidden)
     val snackbarState: StateFlow<HomeScreenSnackbarState> = _snackbarState
@@ -42,17 +42,17 @@ class HomeViewModel @Inject constructor(
      * Toggles the state of the accessibility service.
      * Returns null when blocked by the Commitment Password.
      * @param justAgreed whether the user agreed to the accessibility disclosure a moment ago. A
-     * service DetoxDroid cannot switch on by itself then opens the accessibility settings directly,
+     * service getabreak cannot switch on by itself then opens the accessibility settings directly,
      * rather than asking once more in a snackbar.
      * @return the new state of the accessibility service or null if the (de-)activation failed
-     * @see DetoxDroidAccessibilityService
-     * @see DetoxDroidState
+     * @see GetabreakAccessibilityService
+     * @see GetabreakState
      */
-    fun toggleDetoxDroidIsRunning(justAgreed: Boolean = false): DetoxDroidState? {
-        Timber.d("state = ${detoxDroidState.value}")
+    fun toggleGetabreakIsRunning(justAgreed: Boolean = false): GetabreakState? {
+        Timber.d("state = ${getabreakState.value}")
 
-        // Block stopping DetoxDroid while Commitment Password is active and locked
-        if (detoxDroidState.value == DetoxDroidState.Active
+        // Block stopping getabreak while Commitment Password is active and locked
+        if (getabreakState.value == GetabreakState.Active
             && CommitmentPasswordFeature.isActivated
             && !CommitmentPasswordFeature.isSessionUnlocked()
         ) {
@@ -60,18 +60,18 @@ class HomeViewModel @Inject constructor(
             return null
         }
 
-        // stopping DetoxDroid would end a brake on the spot
-        if (detoxDroidState.value != DetoxDroidState.Inactive && EmergencyBrakeFeature.isBraking()) {
+        // stopping getabreak would end a brake on the spot
+        if (getabreakState.value != GetabreakState.Inactive && EmergencyBrakeFeature.isBraking()) {
             setSnackbarState(HomeScreenSnackbarState.BrakeRunning)
             return null
         }
 
-        val shouldBeRunning = detoxDroidState.value != DetoxDroidState.Active
+        val shouldBeRunning = getabreakState.value != GetabreakState.Active
         kotlin.runCatching {
             if (shouldBeRunning && AccessibilityServiceController.activate(application)) {
-                return DetoxDroidState.Active
+                return GetabreakState.Active
             } else if (!shouldBeRunning && AccessibilityServiceController.deactivate(application)) {
-                return DetoxDroidState.Inactive
+                return GetabreakState.Inactive
             }
         }
 
@@ -88,10 +88,10 @@ class HomeViewModel @Inject constructor(
     }
 
     /**
-     * Stops DetoxDroid and all running features, revokes the device admin permission and uninstalls.
+     * Stops getabreak and all running features, revokes the device admin permission and uninstalls.
      * Blocked whenever Commitment Password is active.
      */
-    fun uninstallDetoxDroid(): Boolean {
+    fun uninstallGetabreak(): Boolean {
         if (CommitmentPasswordFeature.isActivated) {
             setSnackbarState(HomeScreenSnackbarState.CommitmentPasswordLocked)
             return false
@@ -100,9 +100,9 @@ class HomeViewModel @Inject constructor(
             setSnackbarState(HomeScreenSnackbarState.BrakeRunning)
             return false
         }
-        DetoxDroidAccessibilityService.instance?.onDestroy()
+        GetabreakAccessibilityService.instance?.onDestroy()
         kotlin.runCatching { AccessibilityServiceController.deactivate(application) }
-        kotlin.runCatching { DetoxDroidDeviceAdminReceiver.revokePermission(application) }
+        kotlin.runCatching { GetabreakDeviceAdminReceiver.revokePermission(application) }
         val intent = Intent(Intent.ACTION_DELETE)
         intent.data = "package:${application.packageName}".toUri()
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK

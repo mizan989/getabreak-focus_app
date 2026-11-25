@@ -34,7 +34,7 @@ class TrustedClockTest {
 
     @Before
     fun setUp() {
-        DetoxDroidApplication.appContext = context
+        GetabreakApplication.appContext = context
         TrustedClock.wallMs = { wall }
         TrustedClock.elapsedMs = { elapsed }
         TrustedClock.bootCount = { boot }

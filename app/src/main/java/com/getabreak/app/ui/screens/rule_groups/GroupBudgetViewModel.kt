@@ -79,7 +79,7 @@ class GroupBudgetViewModel @Inject constructor(
     }
 
     /**
-     * The group's apps' time per day over the last week, from the usage records DetoxDroid keeps,
+     * The group's apps' time per day over the last week, from the usage records getabreak keeps,
      * plus the time on its websites where that is counted.
      */
     private suspend fun readLastDays(): List<DayUsage> {

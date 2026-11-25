@@ -333,7 +333,7 @@ internal fun PermissionsStep(
 }
 
 /**
- * Onboarding step: optional settings that help DetoxDroid keep running in the background. Nothing
+ * Onboarding step: optional settings that help getabreak keep running in the background. Nothing
  * here is required - the user can skip straight past it.
  */
 @Composable

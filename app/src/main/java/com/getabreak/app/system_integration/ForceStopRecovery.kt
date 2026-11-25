@@ -14,9 +14,9 @@ import timber.log.Timber
  * A force stop takes every accessibility service of the stopped package off the enabled list,
  * cancels its jobs and keeps broadcasts away from it until something launches it again. Several
  * vendors force-stop apps when the recent apps are cleared or their battery manager steps in, so to
- * the user DetoxDroid simply switched itself off. The secure setting reads the same either way, so
+ * the user getabreak simply switched itself off. The secure setting reads the same either way, so
  * the service keeps its own record of running: set when it connects, cleared in
- * [DetoxDroidAccessibilityService.onDestroy]. Every deliberate way of switching it off (the in-app
+ * [GetabreakAccessibilityService.onDestroy]. Every deliberate way of switching it off (the in-app
  * stop, the system toggle, uninstalling from the app) ends there. A force stop kills the process
  * before anything is unbound, so onDestroy never runs and the record outlives the setting.
  */
@@ -43,7 +43,7 @@ object ForceStopRecovery {
             !AccessibilityServiceController.isEnabledInSettings(context)
 
     /**
-     * Runs on every process start, the first code of DetoxDroid's that runs after a force stop.
+     * Runs on every process start, the first code of getabreak's that runs after a force stop.
      * Holding WRITE_SECURE_SETTINGS, it puts the service straight back, unless this is a build that
      * asks first and the user has not agreed yet ([AccessibilityServiceController.activate] holds
      * back then). Otherwise the home screen explains what happened.

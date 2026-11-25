@@ -3,7 +3,7 @@ package com.getabreak.app.system_integration
 import android.content.Context
 import android.os.Build
 import androidx.annotation.StringRes
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 import com.getabreak.app.R
 import com.getabreak.app.features.UsageStatsTracker
 import com.getabreak.app.rules.GroupBudgets
@@ -124,7 +124,7 @@ data class TodaySummary(
          * Reads today's numbers. Blocking: the system's usage records sit behind a binder call. The
          * day's event log is walked once and gives the time per app, the unlocks and today's side
          * of the comparison with a usual day; where usage access was not granted, and on some ROMs
-         * a sideloaded app never gets it, the time DetoxDroid measured itself while it ran stands
+         * a sideloaded app never gets it, the time getabreak measured itself while it ran stands
          * in (see [ForegroundTimeRecorder]). A [detailed] reading also has the unlocks and the
          * comparison, which only the widget shows; the comparison walks the week before once a day.
          */
@@ -179,7 +179,7 @@ data class TodaySummary(
             val usedMs = GroupBudgets.usedMs(group)
             return Budget(
                 groupId = group.id,
-                name = GroupTexts.name(DetoxDroidApplication.appContext, group),
+                name = GroupTexts.name(GetabreakApplication.appContext, group),
                 allowedMs = group.budgetMs,
                 leftMs = (group.budgetMs - usedMs).coerceAtLeast(0L),
                 locks = group.locks,

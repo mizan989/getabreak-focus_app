@@ -195,7 +195,7 @@ fun InstalledAppsList(
                     sites = sites,
                     collections = collections,
                     browsers = browsers,
-                    // with every website covered, a browser DetoxDroid cannot read is a way around
+                    // with every website covered, a browser getabreak cannot read is a way around
                     // it, unless the browser itself is covered as an app
                     uncoveredBrowsers = if (
                         websitesInBrowsers.websiteListType == AppExceptionListType.NOT_LIST

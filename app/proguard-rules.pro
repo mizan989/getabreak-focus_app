@@ -25,3 +25,6 @@
 -keepclassmembers class * {
     @rikka.shizuku.** <methods>;
 }
+
+# ErrorProne annotations (referenced by Tink / AndroidX Security Crypto)
+-dontwarn com.google.errorprone.annotations.**

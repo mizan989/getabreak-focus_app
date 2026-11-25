@@ -7,7 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 
 /**
  * Helper object for checking notification permissions and settings.
@@ -51,7 +51,7 @@ object NotificationHelper {
         // Check if the specific channel is enabled (API 26+)
         val isChannelEnabled =
             (context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager)?.getNotificationChannel(
-                DetoxDroidApplication.SERVICE_CHANNEL_ID
+                GetabreakApplication.SERVICE_CHANNEL_ID
             )?.importance != NotificationManager.IMPORTANCE_NONE
 
         return areNotificationsEnabled && isChannelEnabled
@@ -60,7 +60,7 @@ object NotificationHelper {
     /** Opens the Android notification settings for the app's service channel. */
     fun openNotificationSettings(context: Context) {
         NavigationUtil.openNotificationChannelSettings(
-            context, DetoxDroidApplication.SERVICE_CHANNEL_ID
+            context, GetabreakApplication.SERVICE_CHANNEL_ID
         )
     }
 

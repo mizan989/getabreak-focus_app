@@ -26,13 +26,13 @@ import androidx.compose.ui.unit.dp
 import com.getabreak.app.R
 import com.getabreak.app.system_integration.OverlayContent
 import com.getabreak.app.system_integration.OverlayService
-import com.getabreak.app.ui.theme.DetoxDroidTheme
+import com.getabreak.app.ui.theme.GetabreakTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 /**
  * What someone tried while the settings were locked, with the message that says it can't be done.
- * The overlay shows it, or a toast where DetoxDroid may not draw over other apps.
+ * The overlay shows it, or a toast where getabreak may not draw over other apps.
  */
 enum class CommitmentPasswordTamperType(val value: String, val messageRes: Int) {
     Uninstall("uninstall", R.string.feature_commitmentPassword_tamper_overlay_message_uninstall),
@@ -78,7 +78,7 @@ fun CommitmentPasswordTamperWarningOverlay() {
     val tamperType: State<CommitmentPasswordTamperType> =
         CommitmentPasswordTamperWarningOverlayService.tamperType.collectAsState()
 
-    DetoxDroidTheme {
+    GetabreakTheme {
         Box(
             modifier = Modifier
                 .fillMaxSize()

@@ -136,9 +136,9 @@ fun BreakTheme(
     )
 }
 
-/** Backward compatibility alias for DetoxDroidTheme. */
+/** Backward compatibility alias for GetabreakTheme. */
 @Composable
-fun DetoxDroidTheme(
+fun GetabreakTheme(
     darkTheme: Boolean = isAppInDarkTheme(),
     dynamicColor: Boolean = false,
     syncSystemBars: Boolean = true,

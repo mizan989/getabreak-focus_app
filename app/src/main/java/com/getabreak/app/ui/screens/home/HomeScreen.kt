@@ -79,8 +79,8 @@ import com.getabreak.app.features.CommitmentPasswordFeature
 import com.getabreak.app.features.EmergencyBrakeFeature
 import com.getabreak.app.features.FeaturesProvider
 import com.getabreak.app.features.PauseButtonFeature
-import com.getabreak.app.system_integration.DetoxDroidDeviceAdminReceiver
-import com.getabreak.app.system_integration.DetoxDroidState
+import com.getabreak.app.system_integration.GetabreakDeviceAdminReceiver
+import com.getabreak.app.system_integration.GetabreakState
 import com.getabreak.app.system_integration.TodaySummary
 import com.getabreak.app.system_integration.ScreenTimeSurfaces
 import com.getabreak.app.ui.screens.nav_host.NavViewModel
@@ -117,13 +117,13 @@ import timber.log.Timber
 
 /**
  * The start screen of the app. It lists all features and their current state, offers a button to
- * start/stop DetoxDroid and displays some stats about the screen time of the current day.
+ * start/stop getabreak and displays some stats about the screen time of the current day.
  */
 @Composable
 fun HomeScreen(
     homeViewModel: HomeViewModel = viewModel()
 ) {
-    val detoxDroidState: DetoxDroidState = homeViewModel.detoxDroidState.collectAsState().value
+    val getabreakState: GetabreakState = homeViewModel.getabreakState.collectAsState().value
     val snackbarHostState = remember { SnackbarHostState() }
     Box(modifier = Modifier.fillMaxSize()) {
         Scaffold(
@@ -131,10 +131,10 @@ fun HomeScreen(
                 SnackbarHost(hostState = snackbarHostState)
             },
             topBar = {
-                AppBar(detoxDroidState)
+                AppBar(getabreakState)
             },
             floatingActionButton = {
-                StartStopActionButton(detoxDroidState)
+                StartStopActionButton(getabreakState)
             }
         ) {
             HomeScreenContent(it)
@@ -186,19 +186,19 @@ private fun HomeScreenSnackbarContents(
 }
 
 /**
- * The top app bar of the home screen. It displays the current state of DetoxDroid.
- * @see DetoxDroidState
+ * The top app bar of the home screen. It displays the current state of getabreak.
+ * @see GetabreakState
  */
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 private fun AppBar(
-    detoxDroidState: DetoxDroidState, navViewModel: NavViewModel = NavViewModel.navViewModel()
+    getabreakState: GetabreakState, navViewModel: NavViewModel = NavViewModel.navViewModel()
 ) {
     // observed so the status line follows a brake being pulled, extended or running out; the end
     // is read here as well, since the title lambda below is not recomposed for the token alone
     val brakeStateToken = EmergencyBrakeFeature.stateToken.collectAsState().value
-    val brakeEndsAt = remember(brakeStateToken, detoxDroidState) {
-        if (detoxDroidState == DetoxDroidState.Active && EmergencyBrakeFeature.isBraking()) {
+    val brakeEndsAt = remember(brakeStateToken, getabreakState) {
+        if (getabreakState == GetabreakState.Active && EmergencyBrakeFeature.isBraking()) {
             EmergencyBrakeFeature.endsAtText()
         } else null
     }
@@ -216,26 +216,26 @@ private fun AppBar(
                     modifier = Modifier.padding(top = 2.dp)
                 ) {
                     StatusIndicator(
-                        indicatorColor = when (detoxDroidState) {
-                            DetoxDroidState.Active -> if (braking) StatusBrakingColor else StatusActiveColor
-                            DetoxDroidState.Inactive -> StatusInactiveColor
-                            DetoxDroidState.Paused -> StatusPausedColor
+                        indicatorColor = when (getabreakState) {
+                            GetabreakState.Active -> if (braking) StatusBrakingColor else StatusActiveColor
+                            GetabreakState.Inactive -> StatusInactiveColor
+                            GetabreakState.Paused -> StatusPausedColor
                         }
                     )
                     Text(
                         text = stringResource(
-                            id = when (detoxDroidState) {
-                                DetoxDroidState.Active -> if (braking) {
+                            id = when (getabreakState) {
+                                GetabreakState.Active -> if (braking) {
                                     R.string.home_state_braking
                                 } else {
                                     R.string.home_state_active
                                 }
 
-                                DetoxDroidState.Inactive -> R.string.home_state_inactive
-                                DetoxDroidState.Paused -> R.string.home_state_paused
+                                GetabreakState.Inactive -> R.string.home_state_inactive
+                                GetabreakState.Paused -> R.string.home_state_paused
                             }, if (brakeEndsAt != null) {
                                 brakeEndsAt
-                            } else if (detoxDroidState == DetoxDroidState.Paused) {
+                            } else if (getabreakState == GetabreakState.Paused) {
                                 PauseButtonFeature.endsAtText()
                             } else ""
                         ),
@@ -263,7 +263,7 @@ private fun AppBar(
  */
 @Composable
 private fun StartStopActionButton(
-    detoxDroidState: DetoxDroidState, homeViewModel: HomeViewModel = viewModel()
+    getabreakState: GetabreakState, homeViewModel: HomeViewModel = viewModel()
 ) {
     // observed so the lock badge updates when the commitment password is (un)locked
     val commitmentPasswordStateToken = CommitmentPasswordFeature.stateToken.collectAsState().value
@@ -279,7 +279,7 @@ private fun StartStopActionButton(
         text = {
             Text(
                 text = stringResource(
-                    id = if (detoxDroidState != DetoxDroidState.Inactive) R.string.home_stop
+                    id = if (getabreakState != GetabreakState.Inactive) R.string.home_stop
                     else R.string.home_start
                 ),
                 style = MaterialTheme.typography.labelLarge,
@@ -287,14 +287,14 @@ private fun StartStopActionButton(
             )
         },
         icon = {
-            if (cpLocked && detoxDroidState == DetoxDroidState.Active) {
+            if (cpLocked && getabreakState == GetabreakState.Active) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_lock),
                     contentDescription = stringResource(R.string.feature_commitmentPassword_lockedBadge)
                 )
             } else {
                 Icon(
-                    painter = if (detoxDroidState != DetoxDroidState.Inactive) painterResource(
+                    painter = if (getabreakState != GetabreakState.Inactive) painterResource(
                         id = R.drawable.ic_stop
                     ) else painterResource(
                         id = R.drawable.ic_start
@@ -303,11 +303,11 @@ private fun StartStopActionButton(
             }
         },
         onClick = {
-            if (detoxDroidState == DetoxDroidState.Inactive) {
+            if (getabreakState == GetabreakState.Inactive) {
                 val justAgreed = !AccessibilityDisclosureSupport.isAccepted
-                accessibilityConsent.ask { homeViewModel.toggleDetoxDroidIsRunning(justAgreed) }
+                accessibilityConsent.ask { homeViewModel.toggleGetabreakIsRunning(justAgreed) }
             } else {
-                homeViewModel.toggleDetoxDroidIsRunning()
+                homeViewModel.toggleGetabreakIsRunning()
             }
         }
     )
@@ -342,7 +342,7 @@ private fun HomeScreenContent(it: PaddingValues) {
                     .forEach { OpenFeatureTile(feature = it) }
             }
             SettingsGroup {
-                UninstallDetoxDroidTile()
+                UninstallGetabreakTile()
                 OpenAboutTile()
             }
             // Quiet, elegant brand mark footer with room below for floating action button
@@ -415,7 +415,7 @@ private fun HomeTile(
 
 /**
  * An icon on a round badge. While the feature it stands for is on, the badge takes the accent
- * color and wears the green dot that also marks DetoxDroid as running.
+ * color and wears the green dot that also marks getabreak as running.
  */
 @Composable
 private fun IconBadge(icon: Painter, isActivated: Boolean) {
@@ -456,13 +456,13 @@ private fun IconBadge(icon: Painter, isActivated: Boolean) {
 }
 
 /**
- * A tile that uninstalls DetoxDroid when clicked. It is only shown if the device admin permission
+ * A tile that uninstalls getabreak when clicked. It is only shown if the device admin permission
  * is granted. A confirmation dialog is shown when before revoking the device admin permission.
  */
 @Composable
-fun UninstallDetoxDroidTile(viewModel: HomeViewModel = viewModel()) {
+fun UninstallGetabreakTile(viewModel: HomeViewModel = viewModel()) {
     // don't show the uninstall tile if the device admin permission is not granted
-    if (!DetoxDroidDeviceAdminReceiver.isGranted(LocalContext.current)) return
+    if (!GetabreakDeviceAdminReceiver.isGranted(LocalContext.current)) return
 
     val showAreYouSureDialog = remember { mutableStateOf(false) }
     val commitmentPasswordStateToken = CommitmentPasswordFeature.stateToken.collectAsState().value
@@ -482,7 +482,7 @@ fun UninstallDetoxDroidTile(viewModel: HomeViewModel = viewModel()) {
             showAreYouSureDialog.value = false
         }, confirmButton = {
             TextButton(onClick = {
-                viewModel.uninstallDetoxDroid()
+                viewModel.uninstallGetabreak()
                 showAreYouSureDialog.value = false
             }) {
                 Text(text = stringResource(id = R.string.home_uninstall))

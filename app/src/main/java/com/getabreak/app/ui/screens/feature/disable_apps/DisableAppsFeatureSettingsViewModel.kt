@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import com.getabreak.app.features.DisableAppsFeature
 import com.getabreak.app.features.DisableAppsMode
 import com.getabreak.app.system_integration.AppSuspender
-import com.getabreak.app.system_integration.DetoxDroidDeviceAdminReceiver
+import com.getabreak.app.system_integration.GetabreakDeviceAdminReceiver
 import com.getabreak.app.ui.screens.feature.FeatureViewModelFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,7 +34,7 @@ class DisableAppsFeatureSettingsViewModel @Inject constructor(application: Appli
         Timber.d("Changing operation mode to $mode")
         if (mode == DisableAppsFeature.operationMode) return true
         val app = getApplication<Application>()
-        if (mode == DisableAppsMode.DEACTIVATE && !DetoxDroidDeviceAdminReceiver.isGranted(app)) {
+        if (mode == DisableAppsMode.DEACTIVATE && !GetabreakDeviceAdminReceiver.isGranted(app)) {
             return false
         }
         if (mode == DisableAppsMode.SUSPEND && !AppSuspender.isAvailable) {

@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 import com.getabreak.app.R
 import com.getabreak.app.data.DataStoreProperty
 import com.getabreak.app.data.EncryptedPrefs
@@ -17,7 +17,7 @@ import com.getabreak.app.feature_types.LockableFeature
 import com.getabreak.app.feature_types.NeedsPermissionsFeature
 import com.getabreak.app.rules.RuleGroups
 import com.getabreak.app.rules.Step
-import com.getabreak.app.system_integration.DetoxDroidDeviceAdminReceiver
+import com.getabreak.app.system_integration.GetabreakDeviceAdminReceiver
 import com.getabreak.app.ui.screens.feature.commitment_password.CommitmentPasswordFeatureSettingsSection
 import com.getabreak.app.ui.screens.nav_host.NavViewModel
 import com.getabreak.app.util.TrustedClock
@@ -33,8 +33,8 @@ val CommitmentPasswordFeatureId = Feature.createId(CommitmentPasswordFeature::cl
 
 /**
  * The Commitment Password Feature adds an extra layer of commitment by requiring a passphrase to
- * unlock DetoxDroid settings. Once enabled, the selected features are locked behind the passphrase
- * and DetoxDroid cannot be stopped until the session is unlocked.
+ * unlock getabreak settings. Once enabled, the selected features are locked behind the passphrase
+ * and getabreak cannot be stopped until the session is unlocked.
  *
  * Security:
  * - BCrypt hashing (work factor 12) stored in an [EncryptedPrefs] store
@@ -234,7 +234,7 @@ object CommitmentPasswordFeature : Feature(), NeedsPermissionsFeature {
      */
     fun isFeatureProtected(featureId: String): Boolean {
         if (!isActivated) return false
-        if (!isPasswordSet(DetoxDroidApplication.appContext)) return false
+        if (!isPasswordSet(GetabreakApplication.appContext)) return false
         if (featureId == id) return true
 
         // Explicit user choice: lock no feature settings.
@@ -259,7 +259,7 @@ object CommitmentPasswordFeature : Feature(), NeedsPermissionsFeature {
     )
 
     /** Everything the password can lock, the groups first. */
-    fun getLockables(context: Context = DetoxDroidApplication.appContext): List<Lockable> =
+    fun getLockables(context: Context = GetabreakApplication.appContext): List<Lockable> =
         RuleGroups.all.map { group ->
             Lockable(
                 group.id, group.name.ifBlank { context.getString(R.string.ruleGroups_unnamed) },
@@ -394,7 +394,7 @@ object CommitmentPasswordFeature : Feature(), NeedsPermissionsFeature {
         failedAttempts = 0
         lockoutUntil = 0L
         recoveryInitiatedAt = 0L
-        DetoxDroidDeviceAdminReceiver.setUninstallBlocked(context, false)
+        GetabreakDeviceAdminReceiver.setUninstallBlocked(context, false)
         notifyStateChanged()
     }
 
@@ -407,11 +407,11 @@ object CommitmentPasswordFeature : Feature(), NeedsPermissionsFeature {
     // region NeedsPermissionsFeature
 
     override fun hasPermissions(context: Context): Boolean {
-        return DetoxDroidDeviceAdminReceiver.hasDeviceAdminPermission(context)
+        return GetabreakDeviceAdminReceiver.hasDeviceAdminPermission(context)
     }
 
     override fun requestPermissions(context: Context, navViewModel: NavViewModel) {
-        val intent = DetoxDroidDeviceAdminReceiver.createRequestDeviceAdminIntent(
+        val intent = GetabreakDeviceAdminReceiver.createRequestDeviceAdminIntent(
             context = context,
             explanation = context.getString(R.string.feature_commitmentPassword_requiresDeviceAdmin_message)
         )
@@ -440,7 +440,7 @@ object CommitmentPasswordFeature : Feature(), NeedsPermissionsFeature {
             return
         }
         lockSession()
-        DetoxDroidDeviceAdminReceiver.setUninstallBlocked(context, true)
+        GetabreakDeviceAdminReceiver.setUninstallBlocked(context, true)
     }
 
     override fun onPause(context: Context) {

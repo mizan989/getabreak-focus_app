@@ -118,7 +118,7 @@ fun WebsiteUsageCard(
 
 /**
  * What counting the time on websites means, in which of the phone's [browsers], and the button
- * that starts it. Without a browser DetoxDroid can read there is nothing to start.
+ * that starts it. Without a browser getabreak can read there is nothing to start.
  */
 @Composable
 private fun CountWebsitesInvitation(browsers: List<String>, onCount: () -> Unit) {

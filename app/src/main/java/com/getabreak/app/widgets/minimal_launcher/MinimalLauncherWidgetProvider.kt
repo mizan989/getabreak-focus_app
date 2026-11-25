@@ -355,7 +355,7 @@ class MinimalLauncherWidgetProvider : AppWidgetProvider() {
 
         /**
          * Opens the app itself, the way the launcher's own icons do. A detour through a broadcast
-         * that starts the app from here would need DetoxDroid to be allowed to start activities
+         * that starts the app from here would need getabreak to be allowed to start activities
          * from the background, which it is not on every phone and launcher.
          */
         private fun launchPendingIntent(

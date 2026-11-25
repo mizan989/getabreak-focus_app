@@ -14,10 +14,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.lifecycleScope
 import com.getabreak.app.R
-import com.getabreak.app.system_integration.DetoxDroidAccessibilityService
+import com.getabreak.app.system_integration.GetabreakAccessibilityService
 import com.getabreak.app.system_integration.ScreenTimeSurfaces
 import com.getabreak.app.system_integration.TodaySummary
-import com.getabreak.app.ui.theme.DetoxDroidTheme
+import com.getabreak.app.ui.theme.GetabreakTheme
 import com.getabreak.app.widgets.WidgetSettingsStore
 import com.getabreak.app.widgets.WidgetStyle
 import com.getabreak.app.widgets.WidgetStyleScreen
@@ -46,7 +46,7 @@ class TodayWidgetConfigureActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
-            DetoxDroidTheme {
+            GetabreakTheme {
                 val saved by produceState<Pair<WidgetStyle, Set<TodayWidgetPart>>?>(
                     initialValue = null, appWidgetId
                 ) {
@@ -61,7 +61,7 @@ class TodayWidgetConfigureActivity : ComponentActivity() {
                     value = TodayWidgetViews(
                         this@TodayWidgetConfigureActivity,
                         summary,
-                        DetoxDroidAccessibilityService.instance != null
+                        GetabreakAccessibilityService.instance != null
                     )
                 }
                 saved?.let { (initialStyle, initialParts) ->

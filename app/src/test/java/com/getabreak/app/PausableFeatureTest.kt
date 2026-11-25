@@ -31,7 +31,7 @@ class PausableFeatureTest {
 
     @Before
     fun setUp() {
-        DetoxDroidApplication.appContext = RuntimeEnvironment.getApplication()
+        GetabreakApplication.appContext = RuntimeEnvironment.getApplication()
         PauseButtonFeature.isActivated = true
         PauseButtonFeature.pauseExemptFeatureIds = emptySet()
     }

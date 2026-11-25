@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.getabreak.app.R
 import com.getabreak.app.features.FeaturesProvider
-import com.getabreak.app.system_integration.DetoxDroidDeviceAdminReceiver
+import com.getabreak.app.system_integration.GetabreakDeviceAdminReceiver
 import com.getabreak.app.ui.screens.nav_host.NavViewModel
 import com.getabreak.app.ui.screens.nav_host.NavigationRoutes
 import com.getabreak.app.ui.screens.permissions_required.GrantPermissionsCommand
@@ -89,7 +89,7 @@ fun CommitmentPasswordFeatureSettingsSection(
         CommitmentPasswordDialog.NONE -> {}
     }
 
-    if (!DetoxDroidDeviceAdminReceiver.isGranted(context)) {
+    if (!GetabreakDeviceAdminReceiver.isGranted(context)) {
         IconCard(
             icon = Icons.Default.Security,
             contentDescription = stringResource(R.string.feature_commitmentPassword_deviceOwner_hint_title),

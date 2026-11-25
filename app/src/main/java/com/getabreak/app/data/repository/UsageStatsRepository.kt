@@ -360,7 +360,7 @@ class UsageStatsRepository @Inject constructor(
 
     /**
      * Self-measured rows in the shape everything downstream reads. The scroll, break and block
-     * counters are DetoxDroid's own whichever instrument measures the time, and they live in the
+     * counters are getabreak's own whichever instrument measures the time, and they live in the
      * OS table, so they are joined in from there by row id. What stays zero is what only the OS
      * could have filled.
      */

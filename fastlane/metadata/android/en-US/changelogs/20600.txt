@@ -1,5 +1,0 @@
-### Release v2.6.0
-
-✨ New Features
-- implement new onboarding flow
-

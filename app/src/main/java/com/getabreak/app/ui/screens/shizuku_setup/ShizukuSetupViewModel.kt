@@ -6,8 +6,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.getabreak.app.R
 import com.getabreak.app.system_integration.AccessibilityServiceController
-import com.getabreak.app.system_integration.DetoxDroidAccessibilityService
-import com.getabreak.app.system_integration.DetoxDroidState
+import com.getabreak.app.system_integration.GetabreakAccessibilityService
+import com.getabreak.app.system_integration.GetabreakState
 import com.getabreak.app.util.PrivilegedShell
 import com.getabreak.app.util.ShizukuUtils
 import com.getabreak.app.util.hasWriteSecureSettings
@@ -32,7 +32,7 @@ enum class ShizukuSetupGoal {
     GRAYSCALE,
 
     /**
-     * Shizuku itself, running and allowed to run commands for DetoxDroid, so that locked apps can
+     * Shizuku itself, running and allowed to run commands for getabreak, so that locked apps can
      * be suspended. Unlike a permission this is lost at every reboot, until Shizuku is started
      * again.
      */
@@ -41,7 +41,7 @@ enum class ShizukuSetupGoal {
 
 /**
  * Where the user currently stands in the guided Shizuku setup. [READY] means Shizuku runs and
- * DetoxDroid may use it, [COMPLETED] that the goal is reached: for [ShizukuSetupGoal.SUSPEND] the
+ * getabreak may use it, [COMPLETED] that the goal is reached: for [ShizukuSetupGoal.SUSPEND] the
  * same thing, for [ShizukuSetupGoal.GRAYSCALE] the granted permission, no matter how it was granted.
  */
 enum class ShizukuSetupState {
@@ -51,7 +51,7 @@ enum class ShizukuSetupState {
 /**
  * Drives the guided Shizuku setup wizard. The state is derived from binder/package-manager checks
  * and polled every few seconds (off the main thread), so the wizard advances by itself while the
- * user hops between Shizuku, the system settings and DetoxDroid. For the grayscale permission the
+ * user hops between Shizuku, the system settings and getabreak. For the grayscale permission the
  * polling stops once it is granted, as it cannot be lost short of an uninstall. A running Shizuku
  * can stop at any time, so for the suspend goal the polling goes on while the wizard is open.
  */
@@ -137,7 +137,7 @@ class ShizukuSetupViewModel @Inject constructor(
     }
 
     /**
-     * Asks Shizuku to let DetoxDroid use it (Shizuku shows its own confirmation dialog); the
+     * Asks Shizuku to let getabreak use it (Shizuku shows its own confirmation dialog); the
      * polling loop picks up the result.
      */
     fun requestShizukuAccess() {
@@ -169,7 +169,7 @@ class ShizukuSetupViewModel @Inject constructor(
      */
     private fun onCompleted() {
         if (goal != ShizukuSetupGoal.GRAYSCALE) return
-        if (DetoxDroidAccessibilityService.state.value == DetoxDroidState.Inactive) {
+        if (GetabreakAccessibilityService.state.value == GetabreakState.Inactive) {
             runCatching { AccessibilityServiceController.activate(application) }
         }
     }

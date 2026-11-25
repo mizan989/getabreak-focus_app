@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 import com.getabreak.app.R
 import com.getabreak.app.data.DataStoreProperty
 import com.getabreak.app.data.DataStorePropertyTransformer
@@ -28,7 +28,7 @@ import com.getabreak.app.features.GrayscaleAppsFeature.onAppOpened
 import com.getabreak.app.rules.GroupBudgets
 import com.getabreak.app.rules.RuleGroups
 import com.getabreak.app.rules.Rules
-import com.getabreak.app.system_integration.DetoxDroidAccessibilityService
+import com.getabreak.app.system_integration.GetabreakAccessibilityService
 import com.getabreak.app.system_integration.ScreenFilterOverlay
 import com.getabreak.app.system_integration.ScreenFilterSpec
 import com.getabreak.app.ui.screens.feature.grayscale_apps.GrayscaleAppsFeatureSettingsSection
@@ -121,7 +121,7 @@ object GrayscaleAppsFeature : Feature(), OnAppOpenedSubscriptionFeature,
     private val writeSecureSettingsPermission = NeedsWriteSecureSettingsPermission()
 
     /**
-     * The package DetoxDroid itself runs in. Its own screens are never filtered: the filter is
+     * The package getabreak itself runs in. Its own screens are never filtered: the filter is
      * configured on them, and a washed-out, blurred settings screen is both hard to read and hard
      * to get back out of.
      */
@@ -251,7 +251,7 @@ object GrayscaleAppsFeature : Feature(), OnAppOpenedSubscriptionFeature,
     private val systemFilterObserver by lazy {
         object : ContentObserver(mainHandler) {
             override fun onChange(selfChange: Boolean) {
-                kotlin.runCatching { reassertSystemFilter(DetoxDroidApplication.appContext) }
+                kotlin.runCatching { reassertSystemFilter(GetabreakApplication.appContext) }
                     .onFailure { Timber.w(it, "Could not check the system color filter") }
             }
         }
@@ -292,7 +292,7 @@ object GrayscaleAppsFeature : Feature(), OnAppOpenedSubscriptionFeature,
         // app, so dispatching the synthetic event's own package would leave the filter off until
         // the next app switch. In a browser that is the website, if it is listed.
         val foregroundPackage =
-            DetoxDroidAccessibilityService.instance?.foregroundFor(this)?.takeIf { it.isNotEmpty() }
+            GetabreakAccessibilityService.instance?.foregroundFor(this)?.takeIf { it.isNotEmpty() }
                 ?: accessibilityEvent.packageName.toString()
         onAppOpened(context, foregroundPackage, accessibilityEvent)
     }
@@ -402,7 +402,7 @@ object GrayscaleAppsFeature : Feature(), OnAppOpenedSubscriptionFeature,
      */
     override fun onScreenTurnedOff(context: Context?) {
         // The lock screen is not the app the filter was meant for, and it is the first thing the
-        // user sees on the way back. DetoxDroidAccessibilityService forgets the foreground package
+        // user sees on the way back. GetabreakAccessibilityService forgets the foreground package
         // at the same time, so the window event that arrives after unlocking re-evaluates even when
         // it comes from the app that was already open.
         context?.let { if (areEffectsActive) setEffectsActive(it, false) }
@@ -482,7 +482,7 @@ object GrayscaleAppsFeature : Feature(), OnAppOpenedSubscriptionFeature,
      * hand them back. Two cases need it, and neither can be recognised from our own state.
      *
      * A build that kept the applied-state in memory only (and any process killed before it could
-     * write) leaves the daltonizer switched on with nothing saying DetoxDroid owns it. Monochromacy
+     * write) leaves the daltonizer switched on with nothing saying getabreak owns it. Monochromacy
      * is what this feature writes and close to nothing else does, so while the feature is on we take
      * it as ours.
      *
@@ -505,7 +505,7 @@ object GrayscaleAppsFeature : Feature(), OnAppOpenedSubscriptionFeature,
 
     /**
      * Puts the system's own display settings back the way the user had them, and forgets that we
-     * ever touched them. Safe to call when nothing is applied and safe to call while DetoxDroid is
+     * ever touched them. Safe to call when nothing is applied and safe to call while getabreak is
      * not running at all, which is the point:
      * [com.getabreak.app.workers.ServiceWatchdogWorker] calls it whenever it finds the
      * accessibility service switched off, so a device whose service was killed mid-filter does not

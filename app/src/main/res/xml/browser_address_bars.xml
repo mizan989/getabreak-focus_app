@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- The browsers DetoxDroid can tell websites apart in, and where it finds the address of the page
+<!-- The browsers getabreak can tell websites apart in, and where it finds the address of the page
      each one shows: the view id of its address bar as the accessibility service sees it.
 
      An id that starts with "id/" belongs to the browser's own package. Anything else is a Compose

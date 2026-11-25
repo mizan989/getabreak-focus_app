@@ -36,7 +36,7 @@ import com.getabreak.app.util.observeAsState
 
 /**
  * Follow-up nudge to also grant the battery-optimization exemption. Only shown to users who opted
- * into keeping DetoxDroid alive ([ReliabilitySettings.keepServiceAliveEnabled]) but are not yet
+ * into keeping getabreak alive ([ReliabilitySettings.keepServiceAliveEnabled]) but are not yet
  * exempt - the keepalive alone does not defeat aggressive background limits. Dismissible for the
  * session; disappears once the exemption is granted.
  */

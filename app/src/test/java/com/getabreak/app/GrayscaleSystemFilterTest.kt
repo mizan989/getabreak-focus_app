@@ -29,7 +29,7 @@ import org.robolectric.annotation.Config
  * setting is the user's again.
  */
 @RunWith(RobolectricTestRunner::class)
-// A plain Application: DetoxDroid's own hands the display filters back on a thread of its own when
+// A plain Application: getabreak's own hands the display filters back on a thread of its own when
 // the service is off, which it is here, and that thread would race the test for the same settings.
 @Config(application = Application::class, sdk = [34])
 class GrayscaleSystemFilterTest {
@@ -42,7 +42,7 @@ class GrayscaleSystemFilterTest {
 
     @Before
     fun setUp() {
-        DetoxDroidApplication.appContext = context
+        GetabreakApplication.appContext = context
         shadowOf(context).grantPermissions(Manifest.permission.WRITE_SECURE_SETTINGS)
         Settings.Secure.putInt(resolver, DISPLAY_DALTONIZER_ENABLED, 0)
         Settings.Secure.putInt(resolver, DISPLAY_DALTONIZER, -1)

@@ -74,12 +74,12 @@ abstract class Feature {
     )
 
     /**
-     * Called for each [Feature] when DetoxDroid is started or when the feature is activated.
+     * Called for each [Feature] when getabreak is started or when the feature is activated.
      */
     open fun onStart(context: Context) {}
 
     /**
-     * Called for each [Feature] when DetoxDroid is paused (temporarily) or stopped, or when the
+     * Called for each [Feature] when getabreak is paused (temporarily) or stopped, or when the
      * feature is deactivated.
      */
     open fun onPause(context: Context) {}

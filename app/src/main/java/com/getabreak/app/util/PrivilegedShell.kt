@@ -10,14 +10,14 @@ import com.topjohnwu.superuser.Shell
 import timber.log.Timber
 
 /**
- * Whether DetoxDroid holds WRITE_SECURE_SETTINGS. Only adb, root or Shizuku can grant it, see
+ * Whether getabreak holds WRITE_SECURE_SETTINGS. Only adb, root or Shizuku can grant it, see
  * [PrivilegedShell.grantWriteSecureSettings].
  */
 fun Context.hasWriteSecureSettings(): Boolean =
     checkCallingOrSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) ==
             PackageManager.PERMISSION_GRANTED
 
-/** The two ways DetoxDroid can run a privileged shell command by itself: root, or Shizuku. */
+/** The two ways getabreak can run a privileged shell command by itself: root, or Shizuku. */
 object PrivilegedShell {
     private val mainHandler = Handler(Looper.getMainLooper())
 
@@ -42,7 +42,7 @@ object PrivilegedShell {
     }
 
     /**
-     * Runs [command] through Shizuku, which may first ask the user to let DetoxDroid use it.
+     * Runs [command] through Shizuku, which may first ask the user to let getabreak use it.
      * [onDone] learns whether it worked, on the main thread.
      */
     fun runViaShizuku(command: String, onDone: (Boolean) -> Unit) {
@@ -50,7 +50,7 @@ object PrivilegedShell {
     }
 
     /**
-     * Grants DetoxDroid WRITE_SECURE_SETTINGS as root where there is root, through Shizuku
+     * Grants getabreak WRITE_SECURE_SETTINGS as root where there is root, through Shizuku
      * otherwise. Probes for root first: not on the main thread.
      */
     fun grantWriteSecureSettings(context: Context, onDone: (Boolean) -> Unit) {

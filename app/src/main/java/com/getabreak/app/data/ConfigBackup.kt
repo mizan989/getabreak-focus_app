@@ -259,7 +259,7 @@ object ConfigBackup {
     private fun featureIdOf(keyName: String) = keyName.substringBefore('_')
 
     /**
-     * Restarts DetoxDroid so the imported values are the ones it runs on. Every feature reads its
+     * Restarts getabreak so the imported values are the ones it runs on. Every feature reads its
      * preferences once and keeps them in memory (see [DataStoreProperty]), so a running process
      * would go on using what was configured before the import and write it back over the file's
      * values the next time anything changed.
@@ -310,8 +310,8 @@ object ConfigBackup {
      */
     internal fun read(json: String): BackupFile {
         val root = runCatching { JSONObject(json) }
-            .getOrElse { throw IllegalArgumentException("not a DetoxDroid settings file", it) }
-        require(root.optJSONObject(KEY_VALUES) != null) { "not a DetoxDroid settings file" }
+            .getOrElse { throw IllegalArgumentException("not a getabreak settings file", it) }
+        require(root.optJSONObject(KEY_VALUES) != null) { "not a getabreak settings file" }
         val entries = root.getJSONObject(KEY_VALUES)
         val values = mutableMapOf<String, Any>()
         for (name in entries.keys()) {

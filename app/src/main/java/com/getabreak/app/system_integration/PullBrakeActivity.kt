@@ -49,7 +49,7 @@ class PullBrakeActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val message = when {
-            DetoxDroidAccessibilityService.instance == null -> getString(R.string.feature_brake_status_notRunning)
+            GetabreakAccessibilityService.instance == null -> getString(R.string.feature_brake_status_notRunning)
             !EmergencyBrakeFeature.isActivated -> getString(R.string.feature_brake_status_notActivated)
             else -> {
                 EmergencyBrakeFeature.pull(applicationContext)

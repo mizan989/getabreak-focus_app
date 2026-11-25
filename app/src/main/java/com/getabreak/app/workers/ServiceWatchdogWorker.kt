@@ -9,14 +9,14 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 import com.getabreak.app.MainActivity
 import com.getabreak.app.R
 import com.getabreak.app.features.DisableAppsFeature
 import com.getabreak.app.features.FeaturesProvider
 import com.getabreak.app.features.GrayscaleAppsFeature
 import com.getabreak.app.system_integration.AccessibilityServiceController
-import com.getabreak.app.system_integration.DetoxDroidAccessibilityService
+import com.getabreak.app.system_integration.GetabreakAccessibilityService
 import com.getabreak.app.util.NotificationHelper
 import com.getabreak.app.util.hasWriteSecureSettings
 import dagger.assisted.Assisted
@@ -26,7 +26,7 @@ import timber.log.Timber
 /**
  * Periodic health check for the accessibility service. If it is still enabled in secure settings
  * ([AccessibilityServiceController.isEnabledInSettings] - the signal the user flips when
- * starting/stopping DetoxDroid, which survives reboots and process kills) but no longer bound, the
+ * starting/stopping getabreak, which survives reboots and process kills) but no longer bound, the
  * process was killed unexpectedly: this tries a silent re-activate, and after two consecutive
  * failures notifies the user so they can re-enable it.
  */
@@ -38,7 +38,7 @@ class ServiceWatchdogWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         val shouldRun = AccessibilityServiceController.isEnabledInSettings(appContext)
-        val isBound = DetoxDroidAccessibilityService.instance != null
+        val isBound = GetabreakAccessibilityService.instance != null
 
         // A suspended app stays suspended until something lifts it, and the attempt that should
         // have done so fails silently when Shizuku is not running. This is the retry.
@@ -46,7 +46,7 @@ class ServiceWatchdogWorker @AssistedInject constructor(
             .onFailure { Timber.w(it, "ServiceWatchdogWorker: could not release suspended apps") }
 
         if (!shouldRun) {
-            // DetoxDroid is off. Anything it was holding in the system's display settings has to go
+            // getabreak is off. Anything it was holding in the system's display settings has to go
             // back: the accessibility service is the only thing that would undo it, and it is not
             // coming. Without this a service killed mid-filter leaves the screen gray and dimmed
             // with nothing left in the app able to switch it off, which survives a reboot.
@@ -101,7 +101,7 @@ class ServiceWatchdogWorker @AssistedInject constructor(
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val notification =
-            NotificationCompat.Builder(appContext, DetoxDroidApplication.ALERT_CHANNEL_ID)
+            NotificationCompat.Builder(appContext, GetabreakApplication.ALERT_CHANNEL_ID)
                 .setContentTitle(appContext.getString(R.string.reliability_serviceDown_title))
                 .setContentText(appContext.getString(R.string.reliability_serviceDown_message))
                 .setSmallIcon(R.drawable.ic_stat_break)

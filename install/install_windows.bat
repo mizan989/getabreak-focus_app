@@ -62,7 +62,7 @@ echo Installing getabreak on your device...
 
 echo Granting Permissions
 %cd%\platform-tools\adb.exe shell pm grant com.getabreak.app android.permission.WRITE_SECURE_SETTINGS
-%cd%\platform-tools\adb.exe shell "dpm set-device-owner com.getabreak.app/.system_integration.DetoxDroidDeviceAdminReceiver"
+%cd%\platform-tools\adb.exe shell "dpm set-device-owner com.getabreak.app/.system_integration.GetabreakDeviceAdminReceiver"
 
 echo Starting App
 %cd%\platform-tools\adb.exe shell monkey -p com.getabreak.app 1

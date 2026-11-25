@@ -14,12 +14,12 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 /**
- * What DetoxDroid has already done for this user, summed over the retained history. Shown on the
+ * What getabreak has already done for this user, summed over the retained history. Shown on the
  * support sheet: a tip request lands very differently next to "stepped in 47 times for you" than
  * next to a generic feature list.
  */
 data class PremiumImpactStats(
-    /** Doom-scroll breaks + app blocks — the moments DetoxDroid actively stepped in. */
+    /** Doom-scroll breaks + app blocks — the moments getabreak actively stepped in. */
     val interventionCount: Int,
     val grayscaleTimeMs: Long,
     val daysTracked: Int

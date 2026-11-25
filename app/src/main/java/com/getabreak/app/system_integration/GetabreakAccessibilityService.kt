@@ -17,7 +17,7 @@ import android.view.accessibility.AccessibilityEvent
 import android.view.inputmethod.InputMethodManager
 import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 import com.getabreak.app.MainActivity
 import com.getabreak.app.R
 import com.getabreak.app.data.repository.UsageStatsRepository
@@ -44,8 +44,8 @@ import com.getabreak.app.websites.WebsiteCollections
 import com.getabreak.app.websites.WebsiteMonitor
 import com.getabreak.app.websites.Websites
 import com.getabreak.app.workers.ServiceReliabilityScheduler
-import com.getabreak.app.system_integration.DetoxDroidAccessibilityService.Companion.instance
-import com.getabreak.app.system_integration.DetoxDroidAccessibilityService.Companion.state
+import com.getabreak.app.system_integration.GetabreakAccessibilityService.Companion.instance
+import com.getabreak.app.system_integration.GetabreakAccessibilityService.Companion.state
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
@@ -59,7 +59,7 @@ interface UsageStatsSnapshotEntryPoint {
     fun repository(): UsageStatsRepository
 }
 
-enum class DetoxDroidState {
+enum class GetabreakState {
     /**
      * The service is currently running.
      */
@@ -77,11 +77,11 @@ enum class DetoxDroidState {
 }
 
 /**
- * The [DetoxDroidAccessibilityService] is the main service of DetoxDroid. It receives all
+ * The [GetabreakAccessibilityService] is the main service of getabreak. It receives all
  * accessibility events and forwards them to the [features] for processing. It also handles
  * scroll events and forwards them to the [features].
  */
-open class DetoxDroidAccessibilityService : AccessibilityService() {
+open class GetabreakAccessibilityService : AccessibilityService() {
     companion object {
         /** Whether the service is handing the app in front to the features again right now. */
         val isRedispatching: Boolean get() = instance?.redispatching == true
@@ -94,30 +94,30 @@ open class DetoxDroidAccessibilityService : AccessibilityService() {
         private const val LEAVE_WEBSITE_RECHECK_MS = 600L
 
         /**
-         * The current instance of the [DetoxDroidAccessibilityService]. This is set in
+         * The current instance of the [GetabreakAccessibilityService]. This is set in
          * [onCreate] and unset in [onDestroy]. It is guaranteed by Android that only one instance
          * of the service exists at a time, so out of simplicity, we can use a static variable here
          * for easy access.
          */
         @JvmStatic
-        var instance: DetoxDroidAccessibilityService? = null
+        var instance: GetabreakAccessibilityService? = null
 
         /**
          * The current state of the service. This is used to determine whether the service is
          * currently active, paused or inactive. It is a [MutableStateFlow], so it can be observed
          * by other components.
-         * @see DetoxDroidState
+         * @see GetabreakState
          */
-        val state: MutableStateFlow<DetoxDroidState> = MutableStateFlow(DetoxDroidState.Inactive)
+        val state: MutableStateFlow<GetabreakState> = MutableStateFlow(GetabreakState.Inactive)
 
         /**
          * Updates the [state] of the service (and returns it).
          */
-        fun updateState(): DetoxDroidState {
+        fun updateState(): GetabreakState {
             state.value = when {
-                instance == null -> DetoxDroidState.Inactive
-                PauseButtonFeature.isPausing() -> DetoxDroidState.Paused
-                else -> DetoxDroidState.Active
+                instance == null -> GetabreakState.Inactive
+                PauseButtonFeature.isPausing() -> GetabreakState.Paused
+                else -> GetabreakState.Active
             }
             return state.value
         }
@@ -187,7 +187,7 @@ open class DetoxDroidAccessibilityService : AccessibilityService() {
 
     /**
      * The site the browser in front shows, the way it would be typed ("youtube.com"), or null when
-     * no browser DetoxDroid can read is in front. For naming a website that one of DetoxDroid's
+     * no browser getabreak can read is in front. For naming a website that one of getabreak's
      * screens holds back where the list only says "Porn sites".
      */
     fun currentWebsiteName(): String? {
@@ -196,7 +196,7 @@ open class DetoxDroidAccessibilityService : AccessibilityService() {
     }
 
     /**
-     * Goes back in the browser in front, the way out of a website one of DetoxDroid's screens held
+     * Goes back in the browser in front, the way out of a website one of getabreak's screens held
      * back. Going home would leave the browser on that page, and opening the browser again would
      * end on the same screen. It goes back once per call and never on its own: if the page before
      * is held back as well, it gets its screen again, and the user decides again.
@@ -222,7 +222,7 @@ open class DetoxDroidAccessibilityService : AccessibilityService() {
 
     /**
      * Opens an empty page in [browser], in front of the page it shows. Chrome opens it in a tab of
-     * its own, marked as DetoxDroid's, and reuses that tab the next time instead of adding another.
+     * its own, marked as getabreak's, and reuses that tab the next time instead of adding another.
      * The tab the user was in stays as it was: no app can navigate it from outside. False when the
      * browser does not open the page.
      */
@@ -321,13 +321,13 @@ open class DetoxDroidAccessibilityService : AccessibilityService() {
     }
 
     /**
-     * The view model/logic holder for the [DetoxDroidAccessibilityService].
+     * The view model/logic holder for the [GetabreakAccessibilityService].
      * (Note: AccessibilityService is not a typical place for Hilt injection, but if you need dependencies
      * you might need to use @AndroidEntryPoint on the Service)
      */
 
     override fun onCreate() {
-        Timber.i("DetoxDroidAccessibilityService: onCreate")
+        Timber.i("GetabreakAccessibilityService: onCreate")
         super.onCreate()
         instance = this
 
@@ -339,7 +339,7 @@ open class DetoxDroidAccessibilityService : AccessibilityService() {
             Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
                 Timber.e(
                     throwable,
-                    "DetoxDroidAccessibilityService: Uncaught Exception on thread ${thread.name}"
+                    "GetabreakAccessibilityService: Uncaught Exception on thread ${thread.name}"
                 )
                 defaultExceptionHandler?.uncaughtException(thread, throwable)
             }
@@ -378,17 +378,17 @@ open class DetoxDroidAccessibilityService : AccessibilityService() {
     }
 
     override fun onServiceConnected() {
-        Timber.i("DetoxDroidAccessibilityService: onServiceConnected")
+        Timber.i("GetabreakAccessibilityService: onServiceConnected")
         super.onServiceConnected()
 
         updateKeyEventFiltering()
         updateForegroundNotification()
         // The watchdog is only scheduled while there is something to watch, and this is the one
-        // place every way of switching DetoxDroid on passes through, including the system settings.
+        // place every way of switching getabreak on passes through, including the system settings.
         ServiceReliabilityScheduler.schedule(this)
         ServiceReliabilityScheduler.scheduleNextScheduleBoundary(this)
         ForceStopRecovery.recordRunning(this, true)
-        DetoxDroidDeviceAdminReceiver.allowSystemBackups(this)
+        GetabreakDeviceAdminReceiver.allowSystemBackups(this)
     }
 
     /**
@@ -440,33 +440,33 @@ open class DetoxDroidAccessibilityService : AccessibilityService() {
     }
 
     /**
-     * Called when the service is interrupted. This is not used by DetoxDroid (however, [onDestroy]
+     * Called when the service is interrupted. This is not used by getabreak (however, [onDestroy]
      * is used to handle all cleanup operations).
      */
     override fun onInterrupt() {
-        Timber.w("DetoxDroidAccessibilityService: onInterrupt")
+        Timber.w("GetabreakAccessibilityService: onInterrupt")
     }
 
     /**
      * Encourages the system to restart the service if it is killed.
      */
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Timber.i("DetoxDroidAccessibilityService: onStartCommand flags=$flags startId=$startId")
+        Timber.i("GetabreakAccessibilityService: onStartCommand flags=$flags startId=$startId")
         return START_STICKY
     }
 
     override fun onTaskRemoved(rootIntent: Intent?) {
-        Timber.i("DetoxDroidAccessibilityService: onTaskRemoved")
+        Timber.i("GetabreakAccessibilityService: onTaskRemoved")
         super.onTaskRemoved(rootIntent)
     }
 
     override fun onLowMemory() {
-        Timber.w("DetoxDroidAccessibilityService: onLowMemory")
+        Timber.w("GetabreakAccessibilityService: onLowMemory")
         super.onLowMemory()
     }
 
     override fun onTrimMemory(level: Int) {
-        Timber.w("DetoxDroidAccessibilityService: onTrimMemory level=$level")
+        Timber.w("GetabreakAccessibilityService: onTrimMemory level=$level")
         super.onTrimMemory(level)
     }
 
@@ -704,7 +704,7 @@ open class DetoxDroidAccessibilityService : AccessibilityService() {
      * to prevent the user from bypassing their commitment.
      */
     override fun onDestroy() {
-        Timber.i("DetoxDroidAccessibilityService: onDestroy")
+        Timber.i("GetabreakAccessibilityService: onDestroy")
         super.onDestroy()
 
         UsageStatsTracker.shutdown()
@@ -735,7 +735,7 @@ open class DetoxDroidAccessibilityService : AccessibilityService() {
     private fun startForegroundService() {
         val isPausing = PauseButtonFeature.isPausing()
         val isBraking = EmergencyBrakeFeature.isBraking()
-        // the notification being there says that DetoxDroid runs; only a pause or a brake has
+        // the notification being there says that getabreak runs; only a pause or a brake has
         // something to say below the title, namely when it ends
         val stateText = when {
             isBraking -> getString(R.string.home_state_braking, EmergencyBrakeFeature.endsAtText())
@@ -776,7 +776,7 @@ open class DetoxDroidAccessibilityService : AccessibilityService() {
             }
         }
 
-        val builder = NotificationCompat.Builder(this, DetoxDroidApplication.SERVICE_CHANNEL_ID)
+        val builder = NotificationCompat.Builder(this, GetabreakApplication.SERVICE_CHANNEL_ID)
             .withStatus(lines.firstOrNull())
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setOngoing(true)
@@ -786,7 +786,7 @@ open class DetoxDroidAccessibilityService : AccessibilityService() {
             // a lock screen that hides notification content still gets the total and the state,
             // just not the groups
             .setPublicVersion(
-                NotificationCompat.Builder(this, DetoxDroidApplication.SERVICE_CHANNEL_ID)
+                NotificationCompat.Builder(this, GetabreakApplication.SERVICE_CHANNEL_ID)
                     .withStatus(stateText).build()
             )
         if (lines.size > 1) {

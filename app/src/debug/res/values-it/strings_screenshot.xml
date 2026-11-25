@@ -4,7 +4,7 @@
      fastlane/metadata/android/it-IT/images/phoneScreenshots/1.png … 7.png from it. -->
 <resources>
     <string name="screenshot_1_title">Detox digitale, di default.</string>
-    <string name="screenshot_1_subtitle">DetoxDroid riduce piano piano l\'uso del telefono, sempre al lavoro in sottofondo.</string>
+    <string name="screenshot_1_subtitle">getabreak riduce piano piano l\'uso del telefono, sempre al lavoro in sottofondo.</string>
 
     <string name="screenshot_2_title">Le tue regole, in una frase.</string>
     <string name="screenshot_2_subtitle">Scegli app e siti, dai loro un budget e una fascia oraria e decidi cosa succede poi: attesa, grigio, pausa dallo scorrimento o blocco.</string>
@@ -19,7 +19,7 @@
     <string name="screenshot_5_subtitle">Le app che distraggono si aprono solo dopo una breve attesa, quanto basta per accorgersi del riflesso.</string>
 
     <string name="screenshot_6_title">Spezza lo scroll infinito.</string>
-    <string name="screenshot_6_subtitle">Beccato a fare doomscrolling? DetoxDroid ti interrompe con garbo e ti rimanda per la tua strada.</string>
+    <string name="screenshot_6_subtitle">Beccato a fare doomscrolling? getabreak ti interrompe con garbo e ti rimanda per la tua strada.</string>
 
     <string name="screenshot_7_title">Capisci le tue abitudini.</string>
     <string name="screenshot_7_subtitle">Scopri dove finisce davvero il tuo tempo: tempo di schermo, aperture delle app e perfino quanto hai scrollato.</string>

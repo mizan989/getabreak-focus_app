@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 import com.getabreak.app.R
 import com.getabreak.app.data.DataStoreProperty
 import com.getabreak.app.feature_types.BrakeAwareFeature
@@ -21,8 +21,8 @@ import com.getabreak.app.feature_types.LockableFeature
 import com.getabreak.app.feature_types.OnAppOpenedSubscriptionFeature
 import com.getabreak.app.feature_types.PausableFeature
 import com.getabreak.app.rules.RuleGroups
-import com.getabreak.app.system_integration.DetoxDroidAccessibilityService
-import com.getabreak.app.system_integration.DetoxDroidState
+import com.getabreak.app.system_integration.GetabreakAccessibilityService
+import com.getabreak.app.system_integration.GetabreakState
 import com.getabreak.app.system_integration.EmergencyBrakeTileService
 import com.getabreak.app.system_integration.ScreenTimeSurfaces
 import com.getabreak.app.ui.screens.feature.emergency_brake.EmergencyBrakeFeatureSettingsSection
@@ -130,14 +130,14 @@ object EmergencyBrakeFeature : Feature(), LockableFeature {
     private val mainHandler by lazy { Handler(Looper.getMainLooper()) }
 
     private val settleRunnable = Runnable {
-        kotlin.runCatching { settle(DetoxDroidApplication.appContext) }
+        kotlin.runCatching { settle(GetabreakApplication.appContext) }
             .onFailure { Timber.w(it, "Could not release the brake") }
     }
 
     /** Takes the undo action off the notification once it has nothing left to undo. */
     private val undoExpiredRunnable = Runnable {
         _stateToken.update { it + 1 }
-        DetoxDroidAccessibilityService.instance?.updateForegroundNotification()
+        GetabreakAccessibilityService.instance?.updateForegroundNotification()
     }
 
     /**
@@ -297,7 +297,7 @@ object EmergencyBrakeFeature : Feature(), LockableFeature {
      */
     fun reapply(context: Context) {
         if (!isBraking()) return
-        val service = DetoxDroidAccessibilityService.instance ?: return
+        val service = GetabreakAccessibilityService.instance ?: return
         carryToFeatures(context, service)
     }
 
@@ -325,7 +325,7 @@ object EmergencyBrakeFeature : Feature(), LockableFeature {
      */
     private fun apply(context: Context, activeBefore: Set<Feature>) {
         refresh(context)
-        val service = DetoxDroidAccessibilityService.instance ?: return
+        val service = GetabreakAccessibilityService.instance ?: return
         if (PauseButtonFeature.isPausing()) {
             // a brake ends a pause; resuming starts every feature the pause had suspended, which
             // includes the ones the brake has just opened the schedule of
@@ -342,8 +342,8 @@ object EmergencyBrakeFeature : Feature(), LockableFeature {
         carryToFeatures(context, service)
     }
 
-    private fun carryToFeatures(context: Context, service: DetoxDroidAccessibilityService) {
-        if (DetoxDroidAccessibilityService.updateState() != DetoxDroidState.Active) return
+    private fun carryToFeatures(context: Context, service: GetabreakAccessibilityService) {
+        if (GetabreakAccessibilityService.updateState() != GetabreakState.Active) return
         FeaturesProvider.activeFeatures.filter { it is PausableFeature }.forEach {
             kotlin.runCatching {
                 (it as? BrakeAwareFeature)?.onBrakeChanged(context)
@@ -360,7 +360,7 @@ object EmergencyBrakeFeature : Feature(), LockableFeature {
     private fun refresh(context: Context) {
         _stateToken.update { it + 1 }
         scheduleEnd(context)
-        DetoxDroidAccessibilityService.instance?.updateForegroundNotification()
+        GetabreakAccessibilityService.instance?.updateForegroundNotification()
         // the launcher widget dims the apps a brake blocks
         ScreenTimeSurfaces.invalidate(context)
         // a tile that is on screen right now is only redrawn when asked

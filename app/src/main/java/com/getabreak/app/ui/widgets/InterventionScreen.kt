@@ -54,10 +54,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.getabreak.app.R
-import com.getabreak.app.ui.theme.DetoxDroidTheme
+import com.getabreak.app.ui.theme.GetabreakTheme
 
 /**
- * The calm, dark full-screen layout DetoxDroid uses when it holds the user back from an app: a
+ * The calm, dark full-screen layout getabreak uses when it holds the user back from an app: a
  * slowly breathing badge, a title, a message, an optional line of context, and the [actions] the
  * situation offers ([InterventionPrimaryButton], [InterventionSecondaryButton], [DrainingBar]).
  */
@@ -71,7 +71,7 @@ fun InterventionScreen(
 ) {
     // the screen is dark whatever the system theme, and hosted by an activity the theme also
     // colors the system bars, which must not come out light on it
-    DetoxDroidTheme(darkTheme = true, syncSystemBars = false) {
+    GetabreakTheme(darkTheme = true, syncSystemBars = false) {
         Column(
             modifier = Modifier
                 .fillMaxSize()

@@ -107,7 +107,7 @@ fun AppUsageRow(
 }
 
 /**
- * An app's icon, or for a website a globe of the same size, since a site has no icon DetoxDroid
+ * An app's icon, or for a website a globe of the same size, since a site has no icon getabreak
  * could show without fetching one.
  */
 @Composable

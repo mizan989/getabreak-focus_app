@@ -33,7 +33,7 @@ import com.getabreak.app.ui.screens.nav_host.NavHostScreen
 import com.getabreak.app.ui.screens.nav_host.NavViewModel
 import com.getabreak.app.ui.screens.nav_host.NavigationRoutes
 import com.getabreak.app.ui.screens.usage_stats.TrendsCarouselTestTag
-import com.getabreak.app.ui.theme.DetoxDroidTheme
+import com.getabreak.app.ui.theme.GetabreakTheme
 import com.github.takahirom.roborazzi.captureRoboImage
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -62,7 +62,7 @@ import javax.inject.Inject
  * — they cannot be instantiated standalone because `NavViewModel.navViewModel()` casts the local
  * activity to [MainActivity] and reimagined `hiltViewModel()` needs a nav-entry scope. The
  * grayscale / exceptions / doomscrolling / minimal-launcher beats are static mock scenes (see
- * [MockScenes]), per product decision, since Roborazzi can only render DetoxDroid's own UI.
+ * [MockScenes]), per product decision, since Roborazzi can only render getabreak's own UI.
  *
  * Each slot's colour, caption icon and composition come from [Slot] and [CardShape].
  *
@@ -79,8 +79,8 @@ class StoreScreenshotTest {
     val hiltRule = HiltAndroidRule(this)
 
     /**
-     * Runs between Hilt setup and the activity launch (order 1 of 3): DetoxDroid's singletons read
-     * from [com.getabreak.app.DetoxDroidApplication.appContext], which is never set under
+     * Runs between Hilt setup and the activity launch (order 1 of 3): getabreak's singletons read
+     * from [com.getabreak.app.GetabreakApplication.appContext], which is never set under
      * HiltTestApplication — so it must exist before [MainActivity] first renders the home screen.
      */
     @get:Rule(order = 1)
@@ -320,7 +320,7 @@ class StoreScreenshotTest {
         val subtitle = activity.getString(subtitleRes)
         activity.runOnUiThread {
             activity.setContent {
-                DetoxDroidTheme(darkTheme = false, dynamicColor = false) { card(title, subtitle) }
+                GetabreakTheme(darkTheme = false, dynamicColor = false) { card(title, subtitle) }
             }
         }
         afterCompose()

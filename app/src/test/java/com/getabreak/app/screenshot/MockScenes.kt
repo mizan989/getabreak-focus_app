@@ -47,7 +47,7 @@ import android.graphics.ColorMatrixColorFilter
 
 /**
  * Renders [content] into an offscreen layer and desaturates it with a saturation-0 colour matrix —
- * the same visual effect DetoxDroid's Grayscale feature applies to the whole system. Used to show
+ * the same visual effect getabreak's Grayscale feature applies to the whole system. Used to show
  * a "before/after" of the grayscale feature on a mock social feed without touching real apps.
  */
 fun Modifier.grayscale(): Modifier = drawWithContent {
@@ -632,7 +632,7 @@ private val mockLauncherApps = listOf(
 
 /**
  * A minimal, text-only launcher home screen (no external assets): a soft twilight wallpaper, the
- * time, and a plain list of app names instead of a grid of colourful icons — DetoxDroid's Minimal
+ * time, and a plain list of app names instead of a grid of colourful icons — getabreak's Minimal
  * Launcher widget. Deliberately calm and low-contrast so it reads as the antidote to the busy feed.
  */
 @Composable

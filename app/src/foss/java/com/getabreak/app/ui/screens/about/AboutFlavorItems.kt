@@ -4,9 +4,9 @@ import android.app.Activity
 import androidx.compose.runtime.Composable
 
 /**
- * FOSS: there is no app store to review DetoxDroid on, so this contributes nothing to the About
+ * FOSS: there is no app store to review getabreak on, so this contributes nothing to the About
  * list. The sibling `src/googlePlay/…/AboutFlavorItems.kt` (private overlay, gitignored) adds a
- * "Rate DetoxDroid" tile under the same fully-qualified name.
+ * "Rate getabreak" tile under the same fully-qualified name.
  */
 @Suppress("UNUSED_PARAMETER")
 @Composable

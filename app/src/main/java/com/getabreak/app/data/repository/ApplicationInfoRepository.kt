@@ -1,7 +1,7 @@
 package com.getabreak.app.data.repository
 
 import android.content.pm.PackageManager
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 import com.getabreak.app.util.getAppCategoryTitle
 import com.getabreak.app.util.isSystemApp
 
@@ -26,8 +26,8 @@ object ApplicationInfoRepository {
      * Returns a list of all installed apps and a set of all app categories.
      */
     fun getInstalledApps(): List<ApplicationInfoData> {
-        val context = DetoxDroidApplication.appContext
-        val packageManager = DetoxDroidApplication.appContext.packageManager
+        val context = GetabreakApplication.appContext
+        val packageManager = GetabreakApplication.appContext.packageManager
         val installedApps =
             packageManager.getInstalledApplications(PackageManager.MATCH_UNINSTALLED_PACKAGES)
                 .map { appInfo ->
@@ -50,7 +50,7 @@ object ApplicationInfoRepository {
      * so a selection summary and the selection list itself always arrive at the same number.
      */
     fun countInstalled(packageNames: Set<String>): Int {
-        val packageManager = DetoxDroidApplication.appContext.packageManager
+        val packageManager = GetabreakApplication.appContext.packageManager
         return packageNames.count { packageName ->
             runCatching {
                 packageManager.getApplicationInfo(

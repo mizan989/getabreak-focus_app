@@ -20,7 +20,7 @@ import kotlin.math.abs
 
 /**
  * Always-active tracker that collects usage statistics (scroll events, app opens, etc.)
- * independently of any user-facing DetoxDroid feature.
+ * independently of any user-facing getabreak feature.
  *
  * This is not a full [Feature] — it never appears in the feature settings list and cannot
  * be toggled by the user. It is called directly from the accessibility service and provides
@@ -43,7 +43,7 @@ object UsageStatsTracker {
     val scrollDistanceCounter = DailyAppCounter()
 
     /**
-     * Foreground time DetoxDroid measures itself, for the phones where the OS will not hand its
+     * Foreground time getabreak measures itself, for the phones where the OS will not hand its
      * own numbers over.
      */
     val foregroundTimeRecorder = ForegroundTimeRecorder()
@@ -158,7 +158,7 @@ object UsageStatsTracker {
     /**
      * Persists the live counters at most every [SCROLL_SNAPSHOT_DEBOUNCE_MS], so at most that much
      * is lost to a force-close. Counters only: this runs every few minutes of use, and walking the
-     * whole day's OS event log for it made DetoxDroid *itself* the battery drain.
+     * whole day's OS event log for it made getabreak *itself* the battery drain.
      */
     private fun maybeSnapshotCounters() {
         val now = SystemClock.elapsedRealtime()

@@ -27,8 +27,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.getabreak.app.R
 import com.getabreak.app.features.DisableAppsFeature
 import com.getabreak.app.features.PauseButtonFeature
-import com.getabreak.app.system_integration.DetoxDroidAccessibilityService
-import com.getabreak.app.system_integration.DetoxDroidState
+import com.getabreak.app.system_integration.GetabreakAccessibilityService
+import com.getabreak.app.system_integration.GetabreakState
 import com.getabreak.app.system_integration.OverlayService
 import com.getabreak.app.ui.widgets.DrainingBar
 import com.getabreak.app.ui.widgets.InterventionPrimaryButton
@@ -91,10 +91,10 @@ class WaitBeforeOpeningActivity : ComponentActivity() {
         heldBackApp = readHeldBackApp(intent)
         setContent {
             BackHandler(onBack = ::leave)
-            val detoxDroidState by DetoxDroidAccessibilityService.state.collectAsState()
-            LaunchedEffect(detoxDroidState) {
-                // a pause (or DetoxDroid stopping) lets the app through right away
-                if (detoxDroidState == DetoxDroidState.Inactive ||
+            val getabreakState by GetabreakAccessibilityService.state.collectAsState()
+            LaunchedEffect(getabreakState) {
+                // a pause (or getabreak stopping) lets the app through right away
+                if (getabreakState == GetabreakState.Inactive ||
                     PauseButtonFeature.isFeaturePaused(DisableAppsFeature)
                 ) finish()
             }

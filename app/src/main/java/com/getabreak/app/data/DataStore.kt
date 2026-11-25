@@ -6,7 +6,7 @@ import androidx.datastore.preferences.core.MutablePreferences
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,7 +25,7 @@ import timber.log.Timber
  * @see persistValue
  * @see loadValue
  */
-val DataStore: DataStore<Preferences> by lazy { DetoxDroidApplication.appContext.dataStore }
+val DataStore: DataStore<Preferences> by lazy { GetabreakApplication.appContext.dataStore }
 
 /**
  * Persists one write at a time, in the order they were made. With writes free to start in any
@@ -43,7 +43,7 @@ private val dataStorePersistMutex = Mutex()
  * @see persistValue
  * @see loadValue
  */
-val Context.dataStore by preferencesDataStore("detox_droid_preferences")
+val Context.dataStore by preferencesDataStore("getabreak_preferences")
 
 /**
  * Helper function to persist a value to the data store. Writes run on a serialized background

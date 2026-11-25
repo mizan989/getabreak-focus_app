@@ -35,8 +35,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.getabreak.app.R
 import com.getabreak.app.features.EmergencyBrakeFeature
-import com.getabreak.app.system_integration.DetoxDroidAccessibilityService
-import com.getabreak.app.system_integration.DetoxDroidState
+import com.getabreak.app.system_integration.GetabreakAccessibilityService
+import com.getabreak.app.system_integration.GetabreakState
 import com.getabreak.app.ui.screens.feature.AddQuickSettingsTile
 import com.getabreak.app.ui.screens.feature.FeatureViewModel
 import com.getabreak.app.ui.widgets.ChipFlowRow
@@ -125,7 +125,7 @@ private fun BrakeCard(
     val brake = rememberBrakeState()
     val activated = featureViewModel.featureIsActive.collectAsState().value
     val running =
-        DetoxDroidAccessibilityService.state.collectAsState().value != DetoxDroidState.Inactive
+        GetabreakAccessibilityService.state.collectAsState().value != GetabreakState.Inactive
     val usable = activated && running
     val duration = viewModel.duration.collectAsState().value
     val durationText = formatDurationMsCompact(context, TimeUnit.MINUTES.toMillis(duration.toLong()))

@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import java.time.LocalDate
 
 /**
- * A day of time on one website, as DetoxDroid counted it while the browser showed it. Kept apart
+ * A day of time on one website, as getabreak counted it while the browser showed it. Kept apart
  * from the app tables: the time is part of a browser's screen time, not time on top of it.
  * @see com.getabreak.app.features.UsageStatsTracker.websiteTimeRecorder
  */

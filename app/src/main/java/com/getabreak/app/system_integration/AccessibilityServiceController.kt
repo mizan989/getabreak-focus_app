@@ -4,11 +4,11 @@ import android.accessibilityservice.AccessibilityService
 import android.content.Context
 import android.content.Intent
 import android.provider.Settings
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 import com.getabreak.app.ui.widgets.AccessibilityDisclosureSupport
 
 /**
- * Programmatically enables/disables the [DetoxDroidAccessibilityService].
+ * Programmatically enables/disables the [GetabreakAccessibilityService].
  *
  * Enabling means editing the secure setting that lists enabled accessibility services, which needs
  * the WRITE_SECURE_SETTINGS permission: without it [Settings.Secure.putString] throws and callers
@@ -20,7 +20,7 @@ object AccessibilityServiceController {
      * The component name of the accessibility service, as used in the secure settings list.
      */
     val AccessibilityServiceComponent =
-        DetoxDroidApplication::class.java.`package`!!.name + "/" + DetoxDroidAccessibilityService::class.java.name
+        GetabreakApplication::class.java.`package`!!.name + "/" + GetabreakAccessibilityService::class.java.name
 
     /**
      * The currently enabled accessibility services as a clean component list (the OS stores them
@@ -34,7 +34,7 @@ object AccessibilityServiceController {
 
     /**
      * Whether the accessibility service is currently listed as enabled in the system's secure
-     * settings. This doubles as the persisted "the user wants DetoxDroid running" signal: it is set
+     * settings. This doubles as the persisted "the user wants getabreak running" signal: it is set
      * by [activate], cleared by [deactivate], and survives process death and reboot. A force stop is
      * the exception, the system clears it then, see [ForceStopRecovery]. Reading it needs no
      * permission.
@@ -47,12 +47,12 @@ object AccessibilityServiceController {
      * enabled accessibility services and starting the service. The service is then triggered
      * manually once to make sure it is running.
      *
-     * Holding WRITE_SECURE_SETTINGS, DetoxDroid switches the service on without the system's own
+     * Holding WRITE_SECURE_SETTINGS, getabreak switches the service on without the system's own
      * warning, so it waits for [AccessibilityDisclosureSupport.isAccepted] in a build that asks
      * first. A service the user has on already is not held back: putting it back up is a repair,
      * not a first start.
      * @return whether the service was started, so false too while the disclosure is unanswered
-     * @see DetoxDroidAccessibilityService
+     * @see GetabreakAccessibilityService
      */
     fun activate(context: Context): Boolean {
         if (!AccessibilityDisclosureSupport.isAccepted && !isEnabledInSettings(context)) return false
@@ -66,7 +66,7 @@ object AccessibilityServiceController {
             context.contentResolver, Settings.Secure.ACCESSIBILITY_ENABLED, "1"
         )
         return context.startService(
-            Intent(context, DetoxDroidAccessibilityService::class.java)
+            Intent(context, GetabreakAccessibilityService::class.java)
         ) != null
     }
 
@@ -75,17 +75,17 @@ object AccessibilityServiceController {
      *
      * A connected service can switch itself off through [AccessibilityService.disableSelf], which
      * needs no permission and clears the secure setting on its own. Without that path, stopping
-     * DetoxDroid required WRITE_SECURE_SETTINGS just like starting it, so a user who never granted
+     * getabreak required WRITE_SECURE_SETTINGS just like starting it, so a user who never granted
      * it could turn the app on and then not off again.
      *
      * That only unbinds the system from the service. [activate] also starts it, and a service that
      * is both bound and started is destroyed only once it is stopped as well, so it is stopped
      * here too. Editing the setting directly stays as the fallback for the case where the
      * component is listed as enabled but no instance is connected.
-     * @see DetoxDroidAccessibilityService
+     * @see GetabreakAccessibilityService
      */
     fun deactivate(context: Context): Boolean {
-        val service = DetoxDroidAccessibilityService.instance
+        val service = GetabreakAccessibilityService.instance
         if (service != null) {
             service.disableSelf()
         } else {
@@ -97,7 +97,7 @@ object AccessibilityServiceController {
             )
         }
         val stopped = context.stopService(
-            Intent(context, DetoxDroidAccessibilityService::class.java)
+            Intent(context, GetabreakAccessibilityService::class.java)
         )
         return service != null || stopped
     }

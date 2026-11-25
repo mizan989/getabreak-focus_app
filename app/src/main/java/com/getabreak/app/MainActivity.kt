@@ -26,7 +26,7 @@ import com.getabreak.app.ui.screens.nav_host.NavHostScreen
 import com.getabreak.app.ui.screens.nav_host.NavViewModel
 import com.getabreak.app.ui.screens.nav_host.NavigationRoutes
 import com.getabreak.app.ui.screens.splash.SplashScreen
-import com.getabreak.app.ui.theme.DetoxDroidTheme
+import com.getabreak.app.ui.theme.GetabreakTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             var showSplash by remember { mutableStateOf(initialShowSplash) }
 
-            DetoxDroidTheme { // A surface container using the 'background' color from the theme
+            GetabreakTheme { // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
@@ -104,7 +104,7 @@ class MainActivity : ComponentActivity() {
         private const val ACTION_OPEN_HOME = "com.getabreak.app.OPEN_HOME"
         private const val ACTION_OPEN_GROUP = "com.getabreak.app.OPEN_GROUP"
 
-        /** Opens the usage screen in the running DetoxDroid task, or in a new one. */
+        /** Opens the usage screen in the running getabreak task, or in a new one. */
         fun openUsageStatsIntent(context: Context): PendingIntent =
             link(context, ACTION_OPEN_USAGE_STATS)
 
@@ -116,7 +116,7 @@ class MainActivity : ComponentActivity() {
         fun openFeatureIntent(context: Context, featureId: FeatureId): PendingIntent =
             link(context, ACTION_OPEN_FEATURE, Uri.fromParts("feature", featureId, null))
 
-        /** Opens the start screen, where DetoxDroid is switched on. */
+        /** Opens the start screen, where getabreak is switched on. */
         fun openHomeIntent(context: Context): PendingIntent = link(context, ACTION_OPEN_HOME)
 
         /** Opens the group with [groupId]. */

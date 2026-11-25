@@ -147,12 +147,12 @@ abstract class OverlayService(private val overlayContent: OverlayContent) : Life
     /**
      * Closes the overlay and takes the user out of what it was shown over: home from an app (and
      * with [forceStop], the app out of the recent apps as well, where that is possible), back in the
-     * browser from a website, see [DetoxDroidAccessibilityService.leaveWebsite].
+     * browser from a website, see [GetabreakAccessibilityService.leaveWebsite].
      */
     fun leave(forceStop: Boolean = false) {
         if (isOverWebsite) {
             dismissOverlay()
-            DetoxDroidAccessibilityService.instance?.leaveWebsite()
+            GetabreakAccessibilityService.instance?.leaveWebsite()
             return
         }
         closeOverlay()

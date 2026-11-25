@@ -8,7 +8,7 @@ import android.content.Intent
 import com.getabreak.app.R
 import timber.log.Timber
 
-class DetoxDroidDeviceAdminReceiver : DeviceAdminReceiver() {
+class GetabreakDeviceAdminReceiver : DeviceAdminReceiver() {
     companion object {
         fun isGranted(context: Context): Boolean {
             return (context.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager?)?.isDeviceOwnerApp(
@@ -20,7 +20,7 @@ class DetoxDroidDeviceAdminReceiver : DeviceAdminReceiver() {
             val dpm =
                 context.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager?
                     ?: return false
-            val componentName = ComponentName(context, DetoxDroidDeviceAdminReceiver::class.java)
+            val componentName = ComponentName(context, GetabreakDeviceAdminReceiver::class.java)
             return dpm.isAdminActive(componentName)
         }
 
@@ -43,7 +43,7 @@ class DetoxDroidDeviceAdminReceiver : DeviceAdminReceiver() {
 
         /**
          * Puts the system backup service back on. Android switches it off as soon as a device
-         * owner exists, and DetoxDroid becomes one only to hide apps from the launcher and to
+         * owner exists, and getabreak becomes one only to hide apps from the launcher and to
          * block its own uninstall. Neither has anything to do with backups, so taking device
          * ownership should not quietly stop the user's scheduled backups from running.
          *
@@ -56,7 +56,7 @@ class DetoxDroidDeviceAdminReceiver : DeviceAdminReceiver() {
                     context.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager?
                         ?: return
                 val componentName =
-                    ComponentName(context, DetoxDroidDeviceAdminReceiver::class.java)
+                    ComponentName(context, GetabreakDeviceAdminReceiver::class.java)
                 if (!dpm.isBackupServiceEnabled(componentName)) {
                     dpm.setBackupServiceEnabled(componentName, true)
                     Timber.d("re-enabled the system backup service")
@@ -68,7 +68,7 @@ class DetoxDroidDeviceAdminReceiver : DeviceAdminReceiver() {
             return Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN).apply {
                 putExtra(
                     DevicePolicyManager.EXTRA_DEVICE_ADMIN,
-                    ComponentName(context, DetoxDroidDeviceAdminReceiver::class.java)
+                    ComponentName(context, GetabreakDeviceAdminReceiver::class.java)
                 )
                 putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, explanation)
             }

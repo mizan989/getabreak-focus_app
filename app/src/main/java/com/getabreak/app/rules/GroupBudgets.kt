@@ -4,7 +4,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 import com.getabreak.app.data.DataStoreProperty
 import com.getabreak.app.system_integration.ScreenTimeSurfaces
 import timber.log.Timber
@@ -57,7 +57,7 @@ object GroupBudgets {
         runCatching {
             Rules.reevaluateForeground()
             // the widgets show what is left, and the launcher widget dims what is now locked
-            ScreenTimeSurfaces.invalidate(DetoxDroidApplication.appContext)
+            ScreenTimeSurfaces.invalidate(GetabreakApplication.appContext)
         }.onFailure { Timber.e(it, "Could not apply a budget that ran out") }
     }
 
@@ -124,8 +124,8 @@ object GroupBudgets {
     }
 
     /**
-     * Ends every running session: the screen went off, DetoxDroid paused or stopped. Nothing is in
-     * front of a screen that is off, and a paused DetoxDroid sees no more app switches that could
+     * Ends every running session: the screen went off, getabreak paused or stopped. Nothing is in
+     * front of a screen that is off, and a paused getabreak sees no more app switches that could
      * end the session later.
      */
     @Synchronized

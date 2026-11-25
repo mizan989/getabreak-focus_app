@@ -38,11 +38,6 @@
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
 
-    <!-- android.permission.BIND_QUICK_SETTINGS_TILE permission to add a quick settings tile -->
-    <uses-permission
-        android:name="android.permission.BIND_QUICK_SETTINGS_TILE"
-        tools:ignore="ProtectedPermissions" />
-
     <!-- Shizuku permission for non-root privileged operations -->
     <uses-permission android:name="moe.shizuku.manager.permission.API_V23" />
 
@@ -58,7 +53,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:name=".DetoxDroidApplication"
+        android:name=".GetabreakApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -66,13 +61,13 @@
         android:label="@string/app_displayName"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DetoxDroid"
+        android:theme="@style/Theme.Getabreak"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_displayName"
-            android:theme="@style/Theme.DetoxDroid">
+            android:theme="@style/Theme.Getabreak">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -100,7 +95,7 @@
             android:exported="false"
             android:launchMode="singleTask"
             android:showWhenLocked="true"
-            android:theme="@style/Theme.DetoxDroid" />
+            android:theme="@style/Theme.Getabreak" />
         <!-- singleInstance: a task of its own, so finishing it returns to the app it held back
              instead of to whatever getabreak screen was left open -->
         <activity
@@ -108,13 +103,13 @@
             android:excludeFromRecents="true"
             android:exported="false"
             android:launchMode="singleInstance"
-            android:theme="@style/Theme.DetoxDroid.Intervention" />
+            android:theme="@style/Theme.Getabreak.Intervention" />
         <activity
             android:name=".widgets.minimal_launcher.MinimalLauncherWidgetConfigureActivity"
             android:excludeFromRecents="true"
             android:exported="true"
             android:label="@string/widget_minimalLauncher_configure_title"
-            android:theme="@style/Theme.DetoxDroid.WidgetConfigure">
+            android:theme="@style/Theme.Getabreak.WidgetConfigure">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -125,14 +120,14 @@
             android:excludeFromRecents="true"
             android:exported="true"
             android:label="@string/widget_today_name"
-            android:theme="@style/Theme.DetoxDroid.WidgetConfigure">
+            android:theme="@style/Theme.Getabreak.WidgetConfigure">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
 
         <service
-            android:name=".system_integration.DetoxDroidAccessibilityService"
+            android:name=".system_integration.GetabreakAccessibilityService"
             android:description="@string/app_accessibilityService_description"
             android:exported="false"
             android:foregroundServiceType="specialUse"
@@ -160,7 +155,7 @@
         <service android:name=".ui.screens.feature.commitment_password.CommitmentPasswordTamperWarningOverlayService" />
 
         <receiver
-            android:name="com.getabreak.app.system_integration.DetoxDroidDeviceAdminReceiver"
+            android:name="com.getabreak.app.system_integration.GetabreakDeviceAdminReceiver"
             android:exported="true"
             android:label="getabreak Device Admin"
             android:permission="android.permission.BIND_DEVICE_ADMIN">
@@ -202,7 +197,7 @@
         <receiver
             android:name=".system_integration.BootCompletedReceiver"
             android:enabled="true"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />

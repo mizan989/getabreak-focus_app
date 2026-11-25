@@ -25,7 +25,7 @@ import org.robolectric.annotation.Config
 class OnboardingLockTest {
     @Before
     fun setUp() {
-        DetoxDroidApplication.appContext = RuntimeEnvironment.getApplication()
+        GetabreakApplication.appContext = RuntimeEnvironment.getApplication()
     }
 
     @After

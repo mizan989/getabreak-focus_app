@@ -3,15 +3,15 @@ package com.getabreak.app.rules
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 import com.getabreak.app.feature_types.Feature
 import com.getabreak.app.feature_types.NeedsPermissionsFeature
 import com.getabreak.app.features.DisableAppsFeature
 import com.getabreak.app.features.EmergencyBrakeFeature
 import com.getabreak.app.features.FeaturesProvider
 import com.getabreak.app.features.PauseButtonFeature
-import com.getabreak.app.system_integration.DetoxDroidAccessibilityService
-import com.getabreak.app.system_integration.DetoxDroidState
+import com.getabreak.app.system_integration.GetabreakAccessibilityService
+import com.getabreak.app.system_integration.GetabreakState
 import com.getabreak.app.system_integration.ScreenTimeSurfaces
 import com.getabreak.app.websites.WebPage
 import com.getabreak.app.websites.Websites
@@ -117,7 +117,7 @@ object Rules {
         return foreground
     }
 
-    /** Nothing is in front: the screen went off, DetoxDroid paused or stopped. */
+    /** Nothing is in front: the screen went off, getabreak paused or stopped. */
     fun onNothingInFront() {
         current = null
         GroupBudgets.stopAll()
@@ -206,7 +206,7 @@ object Rules {
      * features keep their state; the workers call from theirs.
      */
     fun reevaluateForeground() = onMain {
-        DetoxDroidAccessibilityService.instance?.redispatchForegroundApp()
+        GetabreakAccessibilityService.instance?.redispatchForegroundApp()
     }
 
     /** The active groups the last time [onGroupsChanged] or a schedule reload looked. */
@@ -235,9 +235,9 @@ object Rules {
         if (active == lastActiveGroupIds && windows == lastBudgetWindows) return false
         lastActiveGroupIds = active
         lastBudgetWindows = windows
-        if (DetoxDroidAccessibilityService.updateState() == DetoxDroidState.Active) {
+        if (GetabreakAccessibilityService.updateState() == GetabreakState.Active) {
             reevaluateForeground()
-            onMain { DisableAppsFeature.onLocksChanged(DetoxDroidApplication.appContext) }
+            onMain { DisableAppsFeature.onLocksChanged(GetabreakApplication.appContext) }
         }
         return true
     }
@@ -258,12 +258,12 @@ object Rules {
             Handler(Looper.getMainLooper()).post { onGroupsChanged() }
             return
         }
-        val context = DetoxDroidApplication.appContext
+        val context = GetabreakApplication.appContext
         runCatching {
             val activeBefore = FeaturesProvider.activeFeatures
             FeaturesProvider.reloadActiveFeatures()
             val activeAfter = FeaturesProvider.activeFeatures
-            if (DetoxDroidAccessibilityService.updateState() == DetoxDroidState.Active) {
+            if (GetabreakAccessibilityService.updateState() == GetabreakState.Active) {
                 activeBefore.filter { it !in activeAfter }.forEach { it.onPause(context) }
                 activeAfter.filter { it !in activeBefore }.forEach { it.onStart(context) }
             }
@@ -272,7 +272,7 @@ object Rules {
             reevaluateForeground()
             // a group that was edited away or switched off hands its suspended or hidden apps back
             DisableAppsFeature.onLocksChanged(context)
-            DetoxDroidAccessibilityService.instance?.updateForegroundNotification()
+            GetabreakAccessibilityService.instance?.updateForegroundNotification()
         }.onFailure { Timber.w(it, "Could not apply the changed groups to the running features") }
         runCatching { ScreenTimeSurfaces.invalidate(context) }
         runCatching { ServiceReliabilityScheduler.scheduleNextScheduleBoundary(context) }

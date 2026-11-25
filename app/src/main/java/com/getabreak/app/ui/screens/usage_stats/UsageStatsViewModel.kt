@@ -341,7 +341,7 @@ class UsageStatsViewModel @Inject constructor(
 
         // Unlocks and hour histograms: for ranges beyond the OS event-log retention (and for
         // selected days that may lie beyond it), prefer the persisted daily device stats. Short
-        // ranges keep using the live event log, which also covers days DetoxDroid wasn't running.
+        // ranges keep using the live event log, which also covers days getabreak wasn't running.
         // The persisted buckets are device-level with no per-app breakdown, so for those ranges the
         // "when" chart still counts apps the user left out of everything else.
         val deviceRows = when {
@@ -456,7 +456,7 @@ class UsageStatsViewModel @Inject constructor(
     }
 
     /**
-     * Room only has rows for days DetoxDroid was tracking, while the OS keeps roughly a week of
+     * Room only has rows for days getabreak was tracking, while the OS keeps roughly a week of
      * per-day usage buckets. Backfills range days missing from Room with the OS data so recent
      * history isn't shown as empty (backfilled days carry screen time only, no counters).
      */
@@ -492,7 +492,7 @@ class UsageStatsViewModel @Inject constructor(
     ): Map<String, AggregatedAppStats> {
         return rows.groupBy { it.packageName }.mapValues { (pkg, pkgRows) ->
             // Both sources can only undercount: the OS event log is truncated to its retention
-            // window (about a week), and Room misses days DetoxDroid wasn't tracking (e.g.
+            // window (about a week), and Room misses days getabreak wasn't tracking (e.g.
             // backfilled days). Taking the max of the two therefore gives the best estimate.
             AggregatedAppStats(
                 packageName = pkg,

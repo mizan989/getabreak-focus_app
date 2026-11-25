@@ -29,13 +29,13 @@ import kotlin.time.Duration.Companion.milliseconds
 /**
  * Builds the screen time widget's layouts from one [TodaySummary]. Labels and icons are read once
  * and shared by every layout, since Android 12 and later get all of them in a single update.
- * @param detoxDroidRunning whether DetoxDroid runs. While it doesn't, the widget says so in place of
+ * @param getabreakRunning whether getabreak runs. While it doesn't, the widget says so in place of
  * the label under the screen time, and a tap leads to where it is switched on.
  */
 internal class TodayWidgetViews(
     private val context: Context,
     private val summary: TodaySummary,
-    private val detoxDroidRunning: Boolean,
+    private val getabreakRunning: Boolean,
 ) {
     private val packageName = context.packageName
     private val screenTime = summary.screenTimeMs.milliseconds.toHrMinString(context)
@@ -44,7 +44,7 @@ internal class TodayWidgetViews(
     private val comparison = scrollComparisonText(context, summary.scrolledMeters)
     private val vsUsual = summary.vsUsual?.text(context)
     private val vsUsualShort = summary.vsUsual?.shortText(context)
-    private val open: PendingIntent = if (detoxDroidRunning) {
+    private val open: PendingIntent = if (getabreakRunning) {
         MainActivity.openUsageStatsIntent(context)
     } else {
         MainActivity.openHomeIntent(context)
@@ -175,10 +175,10 @@ internal class TodayWidgetViews(
         setViewVisibility(R.id.widget_today_scrolled_group, visibleIf(showScrolled))
     }
 
-    /** The label under the screen time, or in its place that DetoxDroid is off. */
+    /** The label under the screen time, or in its place that getabreak is off. */
     private fun RemoteViews.bindCaption() {
-        setViewVisibility(R.id.widget_today_caption, visibleIf(detoxDroidRunning))
-        setViewVisibility(R.id.widget_today_off, visibleIf(!detoxDroidRunning))
+        setViewVisibility(R.id.widget_today_caption, visibleIf(getabreakRunning))
+        setViewVisibility(R.id.widget_today_off, visibleIf(!getabreakRunning))
     }
 
     /** Shows [text] in the view with [viewId], or hides it without any. */

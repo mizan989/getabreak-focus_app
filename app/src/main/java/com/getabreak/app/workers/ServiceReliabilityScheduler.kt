@@ -27,7 +27,7 @@ object ServiceReliabilityScheduler {
     private const val CHECK_NOW_WORK = "service_watchdog_now"
 
     /**
-     * Enqueues the periodic health check, or cancels it again on a device where DetoxDroid was
+     * Enqueues the periodic health check, or cancels it again on a device where getabreak was
      * never started. There is nothing to watch over until the user switches it on once, and a
      * quarter-hourly wake-up on a phone whose owner has moved on is pure cost.
      *

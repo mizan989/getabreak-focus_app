@@ -29,7 +29,7 @@ sealed interface AddressBarReading {
 }
 
 /**
- * The browsers whose websites DetoxDroid tells apart, from `res/xml/browser_address_bars.xml` or
+ * The browsers whose websites getabreak tells apart, from `res/xml/browser_address_bars.xml` or
  * from what they are built on, and reading their address bar.
  */
 object BrowserAddressBars {
@@ -48,7 +48,7 @@ object BrowserAddressBars {
 
     /**
      * The ids the address bar of [packageName] may have, in the order they are tried, or null when
-     * it is no browser DetoxDroid can read. Blocking the first time it is asked about an app the
+     * it is no browser getabreak can read. Blocking the first time it is asked about an app the
      * table does not name, which is [probe]d then.
      */
     fun idsFor(context: Context, packageName: String): List<String>? {

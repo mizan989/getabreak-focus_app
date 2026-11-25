@@ -34,17 +34,17 @@ import javax.inject.Inject
  * Implements [Configuration.Provider] to support [androidx.hilt.work.HiltWorker] with Hilt.
  */
 @HiltAndroidApp
-class DetoxDroidApplication : Application(), Configuration.Provider {
+class GetabreakApplication : Application(), Configuration.Provider {
     companion object {
         lateinit var appContext: Application
-        const val SERVICE_CHANNEL_ID = "detox_droid_service_channel"
+        const val SERVICE_CHANNEL_ID = "getabreak_service_channel"
 
         /**
          * Separate from [SERVICE_CHANNEL_ID], which is deliberately silent because it carries an
          * ongoing status notification. Something the user has to act on cannot share a channel
          * whose whole point is to stay out of the way.
          */
-        const val ALERT_CHANNEL_ID = "detox_droid_alert_channel"
+        const val ALERT_CHANNEL_ID = "getabreak_alert_channel"
     }
 
     @Inject
@@ -68,7 +68,7 @@ class DetoxDroidApplication : Application(), Configuration.Provider {
             DebugLog.init(this)
             Timber.plant(DebugLogTree(logcatPriority))
             Timber.i(
-                "Started DetoxDroid %s (%s, %d) on Android %s (API %d), %s %s",
+                "Started getabreak %s (%s, %d) on Android %s (API %d), %s %s",
                 BuildConfig.VERSION_NAME, BuildConfig.FLAVOR, BuildConfig.VERSION_CODE,
                 Build.VERSION.RELEASE, Build.VERSION.SDK_INT, Build.MANUFACTURER, Build.MODEL
             )
@@ -96,7 +96,7 @@ class DetoxDroidApplication : Application(), Configuration.Provider {
         if (!isMainProcess()) return
 
         scheduleUsageStatsSnapshot()
-        // before anything reads the secure setting as "DetoxDroid is off"
+        // before anything reads the secure setting as "getabreak is off"
         ForceStopRecovery.onAppStart(this)
         // the rules the features used to carry become groups, before anything reads either
         RuleGroupsMigration.runIfNeeded(this)
@@ -137,7 +137,7 @@ class DetoxDroidApplication : Application(), Configuration.Provider {
     }
 
     /**
-     * Hands the system's display settings back when DetoxDroid is not running. Force-stopping an app
+     * Hands the system's display settings back when getabreak is not running. Force-stopping an app
      * disables its accessibility service and puts the package in the stopped state, where it
      * receives no broadcasts at all: neither BOOT_COMPLETED nor the watchdog reaches it, not even
      * across a reboot. Opening the app is the only thing left that runs our code, and a user whose

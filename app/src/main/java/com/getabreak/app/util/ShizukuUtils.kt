@@ -4,7 +4,7 @@ import android.content.pm.PackageManager
 import android.os.Handler
 import android.os.Looper
 import android.os.ParcelFileDescriptor
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 import moe.shizuku.server.IShizukuService
 import rikka.shizuku.Shizuku
 import timber.log.Timber
@@ -43,7 +43,7 @@ object ShizukuUtils {
      * apart from no Shizuku at all for a renamed one.
      */
     fun isShizukuInstalled(): Boolean = isShizukuServerRunning() || runCatching {
-        val packageManager = DetoxDroidApplication.appContext.packageManager
+        val packageManager = GetabreakApplication.appContext.packageManager
         listOf(SHIZUKU_PACKAGE_NAME, SHIZUKU_MANAGER_PACKAGE_NAME).any { packageName ->
             runCatching { packageManager.getPackageInfo(packageName, 0) }.isSuccess
         }

@@ -11,7 +11,7 @@ import com.getabreak.app.R
 import com.getabreak.app.ui.widgets.SimpleListTile
 
 /**
- * Offers one of DetoxDroid's tiles to the Quick Settings, so nobody has to find it in the tile
+ * Offers one of getabreak's tiles to the Quick Settings, so nobody has to find it in the tile
  * editor. Adding a tile changes no setting, so it stays tappable while the settings are locked.
  * @see com.getabreak.app.util.offerQuickSettingsTile
  */

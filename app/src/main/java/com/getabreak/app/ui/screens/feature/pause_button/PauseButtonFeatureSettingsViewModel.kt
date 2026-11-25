@@ -10,7 +10,7 @@ import com.getabreak.app.R
 import com.getabreak.app.feature_types.Feature
 import com.getabreak.app.feature_types.FeatureId
 import com.getabreak.app.features.PauseButtonFeature
-import com.getabreak.app.system_integration.DetoxDroidAccessibilityService
+import com.getabreak.app.system_integration.GetabreakAccessibilityService
 import com.getabreak.app.system_integration.PauseTileService
 import com.getabreak.app.util.offerQuickSettingsTile
 import com.getabreak.app.util.NotificationHelper
@@ -113,7 +113,7 @@ class PauseButtonFeatureSettingsViewModel @Inject constructor(application: Appli
      * key events.
      */
     fun showHardwareKeyDialog() {
-        if (DetoxDroidAccessibilityService.instance == null) {
+        if (GetabreakAccessibilityService.instance == null) {
             // the accessibility service is not running, so we can't pick a hardware key
             val context = getApplication<Application>()
             Toast.makeText(
@@ -125,7 +125,7 @@ class PauseButtonFeatureSettingsViewModel @Inject constructor(application: Appli
         }
         // we want to pick a hardware key, so we have to listen for key events
         _newHardwareKeySelection.value = _hardwareKey.value
-        DetoxDroidAccessibilityService.instance?.onKeyEventListener = { event ->
+        GetabreakAccessibilityService.instance?.onKeyEventListener = { event ->
             _newHardwareKeySelection.value = event.keyCode
             true
         }
@@ -143,7 +143,7 @@ class PauseButtonFeatureSettingsViewModel @Inject constructor(application: Appli
         }
         // clear the listener only after the key is persisted — its setter re-evaluates whether
         // the service still needs to filter hardware key events at all
-        DetoxDroidAccessibilityService.instance?.onKeyEventListener = null
+        GetabreakAccessibilityService.instance?.onKeyEventListener = null
         setVisibilityOfDialog(PauseButtonFeatureSettingsViewModelDialog.NONE)
     }
 

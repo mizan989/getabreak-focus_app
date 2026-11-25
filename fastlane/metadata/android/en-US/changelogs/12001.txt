@@ -1,2 +1,0 @@
-Bugfix: Grayscale exceptions not working (#54)
-Bugfix: App crashes with NullPointerException when opening certain apps (#56)

@@ -89,7 +89,7 @@ platform-tools/adb install -r -t "$APK_FILE"
 
 echo "Granting Permissions"
 platform-tools/adb shell pm grant com.getabreak.app android.permission.WRITE_SECURE_SETTINGS
-platform-tools/adb shell "dpm set-device-owner com.getabreak.app/.system_integration.DetoxDroidDeviceAdminReceiver"
+platform-tools/adb shell "dpm set-device-owner com.getabreak.app/.system_integration.GetabreakDeviceAdminReceiver"
 
 echo "Starting App"
 platform-tools/adb shell monkey -p com.getabreak.app 1

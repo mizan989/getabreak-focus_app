@@ -5,7 +5,7 @@ import android.os.SystemClock
 import android.provider.Settings
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 import com.getabreak.app.data.DataStoreProperty
 
 /**
@@ -24,7 +24,7 @@ object TrustedClock {
     internal var elapsedMs: () -> Long = SystemClock::elapsedRealtime
     internal var bootCount: () -> Int = {
         Settings.Global.getInt(
-            DetoxDroidApplication.appContext.contentResolver, Settings.Global.BOOT_COUNT, -1
+            GetabreakApplication.appContext.contentResolver, Settings.Global.BOOT_COUNT, -1
         )
     }
 

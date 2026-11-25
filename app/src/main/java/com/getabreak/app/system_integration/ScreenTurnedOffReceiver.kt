@@ -17,7 +17,7 @@ class ScreenTurnedOffReceiver : BroadcastReceiver() {
         // Features that drop what they are showing while the screen is off need a window event to
         // put it back, and no event arrives when the user unlocks straight into the app they left.
         // Forgetting the package turns that first event back into an app switch.
-        DetoxDroidAccessibilityService.instance?.forgetForegroundPackage()
+        GetabreakAccessibilityService.instance?.forgetForegroundPackage()
         // nothing is in front of a screen that is off, so the groups' budgets stop counting
         Rules.onNothingInFront()
         UsageStatsTracker.onScreenTurnedOff()

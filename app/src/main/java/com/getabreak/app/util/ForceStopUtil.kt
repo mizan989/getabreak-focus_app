@@ -25,7 +25,7 @@ object ForceStopUtil {
 
     /**
      * Tries to force-stop [packageName] in the background. Safe to call from any thread;
-     * never throws and never stops DetoxDroid itself.
+     * never throws and never stops getabreak itself.
      */
     fun tryForceStop(context: Context, packageName: String) {
         val appContext = context.applicationContext

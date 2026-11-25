@@ -14,7 +14,7 @@ import com.getabreak.app.ui.screens.feature.commitment_password.CommitmentPasswo
 import timber.log.Timber
 
 internal class CommitmentPasswordTamperGuard(
-    private val service: DetoxDroidAccessibilityService
+    private val service: GetabreakAccessibilityService
 ) {
     private data class WindowSnapshot(
         val text: String,
@@ -80,7 +80,7 @@ internal class CommitmentPasswordTamperGuard(
             return CommitmentPasswordTamperType.Accessibility
         }
 
-        if (!mentionsDetoxDroid(snapshot.text)) return null
+        if (!mentionsGetabreak(snapshot.text)) return null
         if (className.contains("deviceadmin")) return CommitmentPasswordTamperType.DeviceAdmin
 
         val isUninstallFlow = eventPackageName in packageInstallerPackages
@@ -96,8 +96,8 @@ internal class CommitmentPasswordTamperGuard(
         snapshot: WindowSnapshot
     ): Boolean {
         val hasDetoxAccessibilityServiceMarker = snapshot.text.contains(accessibilityServiceName)
-                || snapshot.text.contains("detoxdroidaccessibilityservice")
-                || snapshot.text.contains("${appPackageName}.system_integration.detoxdroidaccessibilityservice")
+                || snapshot.text.contains("getabreakaccessibilityservice")
+                || snapshot.text.contains("${appPackageName}.system_integration.getabreakaccessibilityservice")
         if (!hasDetoxAccessibilityServiceMarker) return false
 
         val isAccessibilityContext = className.contains("accessibility")
@@ -112,7 +112,7 @@ internal class CommitmentPasswordTamperGuard(
         return isAccessibilityContext || isServiceToggleOrWarningSurface
     }
 
-    private fun mentionsDetoxDroid(text: String): Boolean {
+    private fun mentionsGetabreak(text: String): Boolean {
         return text.contains(appPackageName) || text.contains(appName)
     }
 
@@ -169,7 +169,7 @@ internal class CommitmentPasswordTamperGuard(
         val now = System.currentTimeMillis()
         if (now - lastUninstallBlockAssertionAt < 60_000L) return
         lastUninstallBlockAssertionAt = now
-        DetoxDroidDeviceAdminReceiver.setUninstallBlocked(service, true)
+        GetabreakDeviceAdminReceiver.setUninstallBlocked(service, true)
     }
 
     private fun showTamperWarning(attemptType: CommitmentPasswordTamperType) {

@@ -41,10 +41,10 @@ object UsageStatsSettings {
     )
 
     /**
-     * Whether DetoxDroid counts the time on each website in the browsers it can read. Off until
+     * Whether getabreak counts the time on each website in the browsers it can read. Off until
      * the user switches it on: it means reading the address bar of every browser all the time,
      * which nothing else asks for, and a list of sites is closer to a browsing history than
-     * anything else DetoxDroid keeps.
+     * anything else getabreak keeps.
      */
     var countWebsites: Boolean by DataStoreProperty(
         booleanPreferencesKey("UsageStatsScreen_countWebsites"), false

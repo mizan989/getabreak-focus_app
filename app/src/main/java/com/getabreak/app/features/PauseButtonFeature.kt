@@ -19,7 +19,7 @@ import com.getabreak.app.feature_types.LockableFeature
 import com.getabreak.app.feature_types.PausableFeature
 import com.getabreak.app.features.PauseButtonFeature.hardwareKey
 import com.getabreak.app.rules.Rules
-import com.getabreak.app.system_integration.DetoxDroidAccessibilityService
+import com.getabreak.app.system_integration.GetabreakAccessibilityService
 import com.getabreak.app.system_integration.PauseInteractionService
 import com.getabreak.app.system_integration.PauseTileService
 import com.getabreak.app.ui.screens.feature.pause_button.PauseButtonFeatureSettingsSection
@@ -31,18 +31,18 @@ import java.time.format.FormatStyle
 import java.util.concurrent.TimeUnit
 
 /**
- * The [PauseButtonFeature] can be used to pause DetoxDroid for a defined amount of time. It will
- * call [Feature.onPause] for all active features and DetoxDroid will ignore all accessibility
+ * The [PauseButtonFeature] can be used to pause getabreak for a defined amount of time. It will
+ * call [Feature.onPause] for all active features and getabreak will ignore all accessibility
  * events until the pause is over.
  *
- * The user can pause DetoxDroid:
+ * The user can pause getabreak:
  *
  * - by long-pressing the hardware key defined in [hardwareKey] for 2 seconds (see
- * [DetoxDroidAccessibilityService.onKeyEvent],
+ * [GetabreakAccessibilityService.onKeyEvent],
  *
  * - by clicking the pause button in the quick settings tile (see [PauseTileService]), or
  *
- * - by setting DetoxDroid as default assistant app (see [PauseInteractionService]).
+ * - by setting getabreak as default assistant app (see [PauseInteractionService]).
  */
 object PauseButtonFeature : Feature(), LockableFeature {
     override val texts: FeatureTexts = FeatureTexts(
@@ -73,7 +73,7 @@ object PauseButtonFeature : Feature(), LockableFeature {
     )
 
     /**
-     * The hardware key that can be used to pause DetoxDroid by long-pressing it for 2 seconds.
+     * The hardware key that can be used to pause getabreak by long-pressing it for 2 seconds.
      */
     var hardwareKey: Int by DataStoreProperty(
         intPreferencesKey("${id}_hardwareKey"), KeyEvent.KEYCODE_UNKNOWN
@@ -128,7 +128,7 @@ object PauseButtonFeature : Feature(), LockableFeature {
     /**
      * Called when the feature itself is deactivated or paused as a feature (NOT when the user
      * presses the pause button — that is [beginPause]). A running pause must not survive the
-     * feature being switched off, otherwise DetoxDroid would stay paused with no way to resume.
+     * feature being switched off, otherwise getabreak would stay paused with no way to resume.
      */
     override fun onPause(context: Context) {
         if (isPausing()) resume() else mainHandler.removeCallbacks(autoResumeRunnable)
@@ -149,7 +149,7 @@ object PauseButtonFeature : Feature(), LockableFeature {
         ).show()
 
         // Update the foreground notification to reflect paused state
-        DetoxDroidAccessibilityService.instance?.updateForegroundNotification()
+        GetabreakAccessibilityService.instance?.updateForegroundNotification()
     }
 
     fun togglePause(context: Context) {
@@ -192,9 +192,9 @@ object PauseButtonFeature : Feature(), LockableFeature {
             if (!stop && it.id in pauseExemptFeatureIds) return@forEach
             it.onPause(context)
         }
-        // a paused DetoxDroid sees no app switches that could end a budget's session later
+        // a paused getabreak sees no app switches that could end a budget's session later
         Rules.onNothingInFront()
-        DetoxDroidAccessibilityService.updateState()
+        GetabreakAccessibilityService.updateState()
     }
 
     fun resume() {
@@ -202,7 +202,7 @@ object PauseButtonFeature : Feature(), LockableFeature {
         // from the resume instead of being skipped entirely
         pauseUntil = pauseUntil.coerceAtMost(System.currentTimeMillis())
         mainHandler.removeCallbacks(autoResumeRunnable)
-        DetoxDroidAccessibilityService.instance?.let { service ->
+        GetabreakAccessibilityService.instance?.let { service ->
             // restart the features the pause suspended; exempt features were never paused
             FeaturesProvider.activeFeatures.forEach {
                 if (it.id in pauseExemptFeatureIds) return@forEach
@@ -211,7 +211,7 @@ object PauseButtonFeature : Feature(), LockableFeature {
             // Update the foreground notification to reflect resumed state
             service.updateForegroundNotification()
         }
-        DetoxDroidAccessibilityService.updateState()
+        GetabreakAccessibilityService.updateState()
         // the app in front counts again, and the features judge it as if it had just come up
         Rules.reevaluateForeground()
     }

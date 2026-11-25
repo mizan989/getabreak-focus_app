@@ -5,7 +5,7 @@ import java.time.LocalDate
 import java.util.concurrent.ConcurrentHashMap
 
 /**
- * How long each app was in front today, measured by DetoxDroid itself. The same measurement keyed
+ * How long each app was in front today, measured by getabreak itself. The same measurement keyed
  * by site instead of package is the time on websites (see
  * [com.getabreak.app.features.UsageStatsTracker.websiteTimeRecorder]).
  *
@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap
  * already knows which app is in front, so the time can be taken from there instead.
  *
  * It is a fallback and not the source of truth, because it can only measure what it was there for:
- * nothing before DetoxDroid was installed, nothing while it was stopped, and nothing from a work
+ * nothing before getabreak was installed, nothing while it was stopped, and nothing from a work
  * profile the service does not see.
  */
 class ForegroundTimeRecorder(

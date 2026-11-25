@@ -16,7 +16,7 @@ import java.util.Locale
  */
 object BatteryOptimizationHelper {
     /**
-     * Whether DetoxDroid is currently exempt from battery optimization (Doze / App Standby).
+     * Whether getabreak is currently exempt from battery optimization (Doze / App Standby).
      */
     fun isIgnoringBatteryOptimizations(context: Context): Boolean {
         val powerManager = context.getSystemService(Context.POWER_SERVICE) as? PowerManager
@@ -25,7 +25,7 @@ object BatteryOptimizationHelper {
     }
 
     /**
-     * Opens the system's battery-optimization list so the user can exempt DetoxDroid manually.
+     * Opens the system's battery-optimization list so the user can exempt getabreak manually.
      * Falls back to the app's details screen if the list activity is unavailable on this device.
      */
     fun openBatteryOptimizationSettings(context: Context) {

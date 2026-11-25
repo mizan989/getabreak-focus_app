@@ -356,7 +356,7 @@ private fun DoneStep(viewModel: OnboardingViewModel) {
                 )
             }
         }
-        // DetoxDroid starts the service itself only with the permission and the user's go-ahead
+        // getabreak starts the service itself only with the permission and the user's go-ahead
         if (!accessibilityEnabled &&
             (!writeSecureSettingsGranted || !AccessibilityDisclosureSupport.isAccepted)
         ) {

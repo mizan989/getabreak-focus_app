@@ -89,7 +89,7 @@ internal object LogLineFormat {
 }
 
 /**
- * A record of what DetoxDroid logs, kept on the device so it can go along with a bug report. Debug
+ * A record of what getabreak logs, kept on the device so it can go along with a bug report. Debug
  * builds keep it from the start, release builds once the user turns it on (see [isEnabled]).
  *
  * One background thread writes the entries to a file in the order they were logged, outside the

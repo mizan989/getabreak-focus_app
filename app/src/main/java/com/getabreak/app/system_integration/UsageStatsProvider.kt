@@ -5,7 +5,7 @@ import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.os.Build
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 import com.getabreak.app.util.startOfDayMillis
 import java.time.LocalDate
 import java.time.ZoneId
@@ -38,7 +38,7 @@ object UsageStatsProvider {
     private const val SESSION_GAP_THRESHOLD_MS = 5L * 60L * 1000L
 
     private val usageStatsManager: UsageStatsManager
-        get() = DetoxDroidApplication.appContext.getSystemService(
+        get() = GetabreakApplication.appContext.getSystemService(
             Context.USAGE_STATS_SERVICE
         ) as UsageStatsManager
 

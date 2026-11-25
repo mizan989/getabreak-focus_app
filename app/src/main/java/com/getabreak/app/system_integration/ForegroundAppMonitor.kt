@@ -221,13 +221,13 @@ class ForegroundAppMonitor(
                 className.contains("overview", ignoreCase = true)
 
     /**
-     * Whether the window is one DetoxDroid put on the screen itself rather than a screen the user
+     * Whether the window is one getabreak put on the screen itself rather than a screen the user
      * navigated to: the grayscale screen filter, the doomscroll break, the block screen. They are
-     * reported under DetoxDroid's own package, and counting one as an app switch is a loop. Showing
+     * reported under getabreak's own package, and counting one as an app switch is a loop. Showing
      * the filter looks like leaving the app the filter was meant for, so the filter comes back off,
      * which makes that app current again, which puts the filter back.
      *
-     * DetoxDroid's activities are told apart by their class name living inside the package. An
+     * getabreak's activities are told apart by their class name living inside the package. An
      * overlay reports the class of whatever view it attached, which does not.
      */
     private fun isOwnOverlayWindow(signal: WindowSignal) =

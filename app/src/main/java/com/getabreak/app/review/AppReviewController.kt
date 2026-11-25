@@ -10,7 +10,7 @@ import java.time.LocalDate
  * Frequency-capped gate in front of the flavor-specific [AppReviewSupport] review dialog.
  *
  * Call sites mark *meaningful moments* — the user just unlocked premium, or is looking at usage
- * stats proving DetoxDroid has been stepping in for them — and this controller decides whether a
+ * stats proving getabreak has been stepping in for them — and this controller decides whether a
  * review request is appropriate at all. Google's quota already keeps the dialog rare, but the caps
  * here also keep us from burning that quota (and the user's patience) on every visit.
  *

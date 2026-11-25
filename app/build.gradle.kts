@@ -27,7 +27,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
@@ -37,7 +38,7 @@ android {
     // Distribution flavors: `foss` is the complete app that
     // GitHub/F-Droid ship; `googlePlay` swaps the premium/review seams for Play Billing and
     // in-app review. The Google-specific sources and dependencies live in a gitignored private
-    // overlay (`googlePlay.gradle.kts` + `src/googlePlay/`), so public clones build `foss` only.
+    // overlay (`googlePlay.gradle` + `src/googlePlay/`), so public clones build `foss` only.
     flavorDimensions += "distribution"
     productFlavors {
         create("foss") {
@@ -49,7 +50,7 @@ android {
         }
     }
     // Generates locales_config.xml from the res/values-* folders and wires it into the manifest,
-    // so Android 13+ offers DetoxDroid in the system per-app language picker. New translations are
+    // so Android 13+ offers getabreak in the system per-app language picker. New translations are
     // picked up automatically — the default locale is declared in res/resources.properties.
     androidResources {
         generateLocaleConfig = true
@@ -75,7 +76,8 @@ android {
         }
     }
     lint {
-        abortOnError = false
+        abortOnError = true
+        baseline = file("lint-baseline.xml")
     }
 
     testOptions {

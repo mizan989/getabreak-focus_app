@@ -1,1 +1,0 @@
-Implemented "minimum time between pauses" feature

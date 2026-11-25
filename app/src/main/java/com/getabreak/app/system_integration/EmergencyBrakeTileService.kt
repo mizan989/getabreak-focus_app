@@ -15,7 +15,7 @@ import com.getabreak.app.features.EmergencyBrakeFeature
 class EmergencyBrakeTileService : TileService() {
     override fun onClick() {
         super.onClick()
-        if (DetoxDroidAccessibilityService.instance == null || !EmergencyBrakeFeature.isActivated) {
+        if (GetabreakAccessibilityService.instance == null || !EmergencyBrakeFeature.isActivated) {
             return
         }
         when {
@@ -40,7 +40,7 @@ class EmergencyBrakeTileService : TileService() {
         val tile = qsTile ?: return
         val braking = EmergencyBrakeFeature.isBraking()
         tile.state = when {
-            DetoxDroidAccessibilityService.updateState() == DetoxDroidState.Inactive -> Tile.STATE_UNAVAILABLE
+            GetabreakAccessibilityService.updateState() == GetabreakState.Inactive -> Tile.STATE_UNAVAILABLE
             !EmergencyBrakeFeature.isActivated -> Tile.STATE_UNAVAILABLE
             braking -> Tile.STATE_ACTIVE
             else -> Tile.STATE_INACTIVE

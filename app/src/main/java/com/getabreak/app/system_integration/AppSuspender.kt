@@ -1,7 +1,7 @@
 package com.getabreak.app.system_integration
 
 import androidx.datastore.preferences.core.stringSetPreferencesKey
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 import com.getabreak.app.data.DataStoreProperty
 import com.getabreak.app.util.ShizukuUtils
 import timber.log.Timber
@@ -23,7 +23,7 @@ import timber.log.Timber
  */
 object AppSuspender {
     /**
-     * The packages DetoxDroid has suspended and not released again. Persisted, because after a
+     * The packages getabreak has suspended and not released again. Persisted, because after a
      * process death this is the only record of what has to be handed back.
      */
     private var suspendedApps: Set<String> by DataStoreProperty(
@@ -39,12 +39,12 @@ object AppSuspender {
     val isAvailable: Boolean get() = ShizukuUtils.canExecuteCommandsSilently()
 
     /**
-     * Suspends [packageNames], minus the ones already suspended and DetoxDroid itself.
+     * Suspends [packageNames], minus the ones already suspended and getabreak itself.
      */
     fun suspend(packageNames: Collection<String>) {
         val targets = packageNames
             .filter { ShizukuUtils.isSafePackageName(it) }
-            .filterNot { it == DetoxDroidApplication.appContext.packageName }
+            .filterNot { it == GetabreakApplication.appContext.packageName }
             .minus(suspendedApps)
         if (targets.isEmpty()) return
         if (!isAvailable) {

@@ -58,7 +58,7 @@ import java.time.format.FormatStyle
  * Saves the configuration to a file of the user's choosing and reads it back.
  *
  * Restoring shows what the file holds and what would change before anything is written, then
- * restarts DetoxDroid. It is out of reach while the commitment password holds any feature, because
+ * restarts getabreak. It is out of reach while the commitment password holds any feature, because
  * a file exported before the password went on would otherwise put that configuration back over it.
  * Saving stays available: the file carries neither the password nor anything it protects.
  */

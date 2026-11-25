@@ -21,8 +21,8 @@
 
 <a href="https://github.com/mizan989/getabreak-focus_app/stargazers"><img src="https://img.shields.io/github/stars/mizan989/getabreak-focus_app?style=flat-square" alt="GitHub Stars"></a>
 <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPL--3.0-blue?style=flat-square" alt="License"></a>
-<a href="https://kotlinlang.org"><img src="https://img.shields.io/badge/Kotlin-1.9.24-7F52FF?style=flat-square&logo=kotlin" alt="Kotlin"></a>
-<a href="https://developer.android.com/jetpack/compose"><img src="https://img.shields.io/badge/Jetpack%20Compose-1.6-4285F4?style=flat-square&logo=jetpackcompose" alt="Compose"></a>
+<a href="https://kotlinlang.org"><img src="https://img.shields.io/badge/Kotlin-2.2.10-7F52FF?style=flat-square&logo=kotlin" alt="Kotlin"></a>
+<a href="https://developer.android.com/jetpack/compose"><img src="https://img.shields.io/badge/Jetpack%20Compose-1.7-4285F4?style=flat-square&logo=jetpackcompose" alt="Compose"></a>
 <a href="https://developer.android.com/training/data-storage/room"><img src="https://img.shields.io/badge/Storage-Room%20DB%20%2B%20DataStore-3DDC84?style=flat-square&logo=sqlite" alt="Storage"></a>
 <a href="https://developer.android.com/guide/topics/text/accessibility-services"><img src="https://img.shields.io/badge/Core-Accessibility%20Service-black?style=flat-square" alt="Accessibility"></a>
 
@@ -158,7 +158,7 @@ sequenceDiagram
 - **Android Device / Emulator:** Android 8.0+ (API Level 26 or higher)
 - **Development Environment:**
   - JDK 17 or JDK 21+
-  - Android SDK (Build Tools 34.0.0+)
+  - Android SDK (Platform 36, Build Tools 36.0.0+)
   - Gradle 8.5+
 
 ### Building from Source
@@ -193,7 +193,7 @@ getabreak requires key Android permissions to enforce digital wellbeing at the O
 | **Accessibility Service** | Monitors foreground window changes, detects app launches, and tracks scroll depth to interrupt doomscrolling. |
 | **Usage Stats (`PACKAGE_USAGE_STATS`)** | Reads on-device daily screen time and application launch counts for the dashboard and widgets. |
 | **System Alert Window (`SYSTEM_ALERT_WINDOW`)** | Renders non-intrusive friction countdowns and intervention blocking screens over target apps. |
-| **Notification Listener** | Mutes distracting notification badges and alerts while focus sessions or Do Not Disturb are active. |
+| **Do Not Disturb Access (`ACCESS_NOTIFICATION_POLICY`)** | Switches Do Not Disturb on and off during focus sessions. |
 | **Device Admin (Optional)** | Prevents impulsive uninstallation during active focus sessions when Commitment Password is enabled. |
 | **Write Secure Settings (Optional)** | Enables native hardware grayscale and Extra Dim via Shizuku, root, or a one-time ADB command. |
 
@@ -222,7 +222,7 @@ app/src/main/java/com/getabreak/app/
 └── util/                    # Usage access helpers, navigation, and time formatters
 ```
 
-- **Language:** Kotlin 1.9
+- **Language:** Kotlin 2.2
 - **UI Framework:** Jetpack Compose + Material 3
 - **Dependency Injection:** Dagger Hilt
 - **Local Persistence:** Room (SQLite) + Jetpack DataStore Preferences
@@ -235,4 +235,4 @@ app/src/main/java/com/getabreak/app/
 
 getabreak is free and open-source software licensed under the **GNU General Public License v3.0** ([GPL-3.0](LICENSE)).
 
-Based on the original DetoxDroid project by Felix Schulze, completely redesigned and rebranded as **getabreak** with a monochromatic native interface, zero donation/tip-jar requests, and ungated digital wellbeing capabilities.
+Based on the original DetoxDroid project by Felix Schulze and contributors (GPL-3.0). Modified and rebranded as **getabreak** by Md Mizan, 2026: monochromatic native interface, no donation requests, and no feature gating in the FOSS build.

@@ -40,7 +40,7 @@ import java.time.LocalDate
  * the moments that matter to what is shown, an app switch and the screen going off, plus the
  * screen coming back on into another day; the app in front grows by the minute in between, which
  * nobody is looking at a widget to see. What the surfaces show
- * besides the records (the apps left out, the budgets, what is blocked, whether DetoxDroid runs,
+ * besides the records (the apps left out, the budgets, what is blocked, whether getabreak runs,
  * usage access, the clock, the language) is followed from [start] on, and a change there shows at
  * once, see [invalidate].
  *
@@ -112,10 +112,10 @@ object ScreenTimeSurfaces {
                 .drop(1)
                 .collect { invalidate(appContext) }
         }
-        // DetoxDroid starting, stopping or pausing: the widget says when it is off, and nothing
+        // getabreak starting, stopping or pausing: the widget says when it is off, and nothing
         // is blocked while it is off or paused
         scope.launch {
-            DetoxDroidAccessibilityService.state.drop(1).collect { invalidate(appContext) }
+            GetabreakAccessibilityService.state.drop(1).collect { invalidate(appContext) }
         }
         // With usage access the numbers come from the system's records, and only those know the
         // unlocks. The watcher also fires for other apps and other permissions, hence the compare.
@@ -216,7 +216,7 @@ object ScreenTimeSurfaces {
             val widgetIds = TodayWidgetProvider.widgetIds(context)
             val launcherIds = MinimalLauncherWidgetProvider.liveWidgetIds(context)
             val notificationShown =
-                DetoxDroidAccessibilityService.instance?.showsNotification == true
+                GetabreakAccessibilityService.instance?.showsNotification == true
             if (widgetIds.isEmpty() && launcherIds.isEmpty() && !notificationShown) {
                 // nothing keeps the last reading current from here on, so nothing may show it
                 latest = null
@@ -231,7 +231,7 @@ object ScreenTimeSurfaces {
             }
             if (notificationShown) {
                 withContext(Dispatchers.Main) {
-                    DetoxDroidAccessibilityService.instance?.updateForegroundNotification()
+                    GetabreakAccessibilityService.instance?.updateForegroundNotification()
                 }
             }
         }

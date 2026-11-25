@@ -87,7 +87,7 @@ object DistractingAppsHeuristic {
     /**
      * Ranks the candidates (highest score first, deterministic tie-breaking) and pre-checks the
      * top scorers above [PRE_CHECK_SCORE_THRESHOLD], capped at [MAX_PRE_CHECKED_APPS]. Callers
-     * are expected to have filtered out non-launchable apps and DetoxDroid itself beforehand.
+     * are expected to have filtered out non-launchable apps and getabreak itself beforehand.
      * @param limit how many apps to keep: the onboarding shows [MAX_DISPLAYED_APPS], a group
      * template picks from all of them
      */

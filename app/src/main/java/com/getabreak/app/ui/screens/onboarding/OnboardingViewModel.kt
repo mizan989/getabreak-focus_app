@@ -9,8 +9,8 @@ import com.getabreak.app.feature_types.AppExceptionListType
 import com.getabreak.app.features.BreakDoomScrollingFeature
 import com.getabreak.app.rules.RuleGroups
 import com.getabreak.app.system_integration.AccessibilityServiceController
-import com.getabreak.app.system_integration.DetoxDroidAccessibilityService
-import com.getabreak.app.system_integration.DetoxDroidState
+import com.getabreak.app.system_integration.GetabreakAccessibilityService
+import com.getabreak.app.system_integration.GetabreakState
 import com.getabreak.app.system_integration.ReliabilitySettings
 import com.getabreak.app.util.BatteryOptimizationHelper
 import com.getabreak.app.util.DistractingAppsHeuristic
@@ -206,10 +206,10 @@ class OnboardingViewModel @Inject constructor(
      * connects (it binds asynchronously after [enableAccessibilityService]).
      */
     val accessibilityEnabled: StateFlow<Boolean> =
-        DetoxDroidAccessibilityService.state.map { it != DetoxDroidState.Inactive }.stateIn(
+        GetabreakAccessibilityService.state.map { it != GetabreakState.Inactive }.stateIn(
             viewModelScope,
             SharingStarted.Eagerly,
-            DetoxDroidAccessibilityService.state.value != DetoxDroidState.Inactive
+            GetabreakAccessibilityService.state.value != GetabreakState.Inactive
         )
 
     /** True when WRITE_SECURE_SETTINGS can be granted right here via root or Shizuku. */
@@ -270,7 +270,7 @@ class OnboardingViewModel @Inject constructor(
     fun setKeepServiceAlive(enabled: Boolean) {
         ReliabilitySettings.keepServiceAliveEnabled = enabled
         _keepServiceAliveEnabled.value = enabled
-        DetoxDroidAccessibilityService.instance?.updateForegroundNotification()
+        GetabreakAccessibilityService.instance?.updateForegroundNotification()
     }
 
     fun openBatteryOptimizationSettings() =
@@ -321,7 +321,7 @@ class OnboardingViewModel @Inject constructor(
             }
             RuleGroups.onChanged()
         }
-        // start DetoxDroid itself if possible (throws without WRITE_SECURE_SETTINGS)
+        // start getabreak itself if possible (throws without WRITE_SECURE_SETTINGS)
         runCatching { AccessibilityServiceController.activate(application) }
         OnboardingState.isOnboardingCompleted = true
         return true

@@ -1,6 +1,6 @@
 package com.getabreak.app.rules
 
-import com.getabreak.app.DetoxDroidApplication
+import com.getabreak.app.GetabreakApplication
 import com.getabreak.app.feature_types.SupportsAppExceptionsFeature
 import com.getabreak.app.feature_types.SupportsScheduleFeature
 import com.getabreak.app.features.FeaturesProvider
@@ -33,6 +33,6 @@ object RuleOwners {
         }
         val feature = FeaturesProvider.getFeatureById(id) ?: return
         FeaturesProvider.startOrStopFeature(feature)
-        ServiceReliabilityScheduler.scheduleNextScheduleBoundary(DetoxDroidApplication.appContext)
+        ServiceReliabilityScheduler.scheduleNextScheduleBoundary(GetabreakApplication.appContext)
     }
 }

@@ -25,8 +25,8 @@ import com.getabreak.app.feature_types.PausableFeature
 import com.getabreak.app.rules.RuleGroups
 import com.getabreak.app.rules.Rules
 import com.getabreak.app.system_integration.AppSuspender
-import com.getabreak.app.system_integration.DetoxDroidAccessibilityService
-import com.getabreak.app.system_integration.DetoxDroidDeviceAdminReceiver
+import com.getabreak.app.system_integration.GetabreakAccessibilityService
+import com.getabreak.app.system_integration.GetabreakDeviceAdminReceiver
 import com.getabreak.app.system_integration.OverlayService
 import com.getabreak.app.ui.screens.feature.disable_apps.AppDisabledOverlayService
 import com.getabreak.app.ui.screens.feature.disable_apps.DisableAppsFeatureSettingsSection
@@ -138,11 +138,11 @@ object DisableAppsFeature : Feature(), OnAppOpenedSubscriptionFeature,
 
     /**
      * The apps that are locked right now: named by a group whose lock has taken hold. Opening one
-     * ends on the block screen, or finds it deactivated or suspended. None while DetoxDroid is not
+     * ends on the block screen, or finds it deactivated or suspended. None while getabreak is not
      * running or the feature is paused.
      */
     fun blockedApps(): Set<String> {
-        val enforcing = DetoxDroidAccessibilityService.instance != null && isActive() &&
+        val enforcing = GetabreakAccessibilityService.instance != null && isActive() &&
                 !PauseButtonFeature.isFeaturePaused(this)
         return if (enforcing) Rules.lockedApps() else emptySet()
     }
@@ -187,7 +187,7 @@ object DisableAppsFeature : Feature(), OnAppOpenedSubscriptionFeature,
     override fun onPause(context: Context) {
         waitedForApps.clear()
         if (operationMode == DisableAppsMode.DEACTIVATE) {
-            // whatever is hidden comes back when DetoxDroid is paused
+            // whatever is hidden comes back when getabreak is paused
             setAppsDeactivated(context, lockableApps() + hiddenApps, false)
         }
         AppSuspender.releaseAll()
@@ -253,7 +253,7 @@ object DisableAppsFeature : Feature(), OnAppOpenedSubscriptionFeature,
         val leaving = leavingWebsite
         leavingWebsite = null
         if (packageName == leaving) {
-            DetoxDroidAccessibilityService.instance?.leaveWebsite()
+            GetabreakAccessibilityService.instance?.leaveWebsite()
             return
         }
         val decision = Rules.lockDecision(packageName)
@@ -270,11 +270,11 @@ object DisableAppsFeature : Feature(), OnAppOpenedSubscriptionFeature,
 
             is Rules.LockDecision.Wait -> {
                 // not on a re-evaluation: the app is in front already, and the wait is for an open
-                val opening = !DetoxDroidAccessibilityService.isRedispatching
+                val opening = !GetabreakAccessibilityService.isRedispatching
                 if (opening && packageName !in waitedForApps && mayHoldBack(context)) {
                     WaitBeforeOpeningActivity.start(
                         context, packageName, decision.waitMs,
-                        label = DetoxDroidAccessibilityService.instance?.currentWebsiteName()
+                        label = GetabreakAccessibilityService.instance?.currentWebsiteName()
                             ?.takeIf { Websites.isWebsite(packageName) }
                     )
                 }
@@ -331,13 +331,13 @@ object DisableAppsFeature : Feature(), OnAppOpenedSubscriptionFeature,
      * @see DevicePolicyManager.setApplicationHidden
      */
     fun setAppsDeactivated(context: Context, apps: Set<String>, deactivated: Boolean) {
-        if (apps.isEmpty() || !DetoxDroidDeviceAdminReceiver.isGranted(context)) return
+        if (apps.isEmpty() || !GetabreakDeviceAdminReceiver.isGranted(context)) return
         Timber.d("Setting apps deactivated: $deactivated for $apps")
         val devicePolicyManager =
             (context.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager)
         apps.forEach {
             val appDeactivated = devicePolicyManager.setApplicationHidden(
-                ComponentName(context, DetoxDroidDeviceAdminReceiver::class.java), it, deactivated
+                ComponentName(context, GetabreakDeviceAdminReceiver::class.java), it, deactivated
             )
             Timber.d("Operation on $it was successful: $appDeactivated")
         }

@@ -67,7 +67,7 @@ import androidx.lifecycle.lifecycleScope
 import com.getabreak.app.R
 import com.getabreak.app.features.DisableAppsFeature
 import com.getabreak.app.system_integration.ScreenTimeSurfaces
-import com.getabreak.app.ui.theme.DetoxDroidTheme
+import com.getabreak.app.ui.theme.GetabreakTheme
 import com.getabreak.app.ui.widgets.apps.AppFilterSheet
 import com.getabreak.app.ui.widgets.apps.AppListSectionHeader
 import com.getabreak.app.ui.widgets.apps.AppSelectionListItem
@@ -110,7 +110,7 @@ class MinimalLauncherWidgetConfigureActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
-            DetoxDroidTheme {
+            GetabreakTheme {
                 // the persisted selection, style and parts are loaded off the main thread; the
                 // screen shows its (already async) app-list loading state until they are ready
                 val savedConfig by produceState<SavedConfig?>(initialValue = null, appWidgetId) {
