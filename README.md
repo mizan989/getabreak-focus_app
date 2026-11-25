@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/mizan989/getabreak-focus_app">
-    <img src="fastlane/metadata/android/en-US/images/icon.png" alt="getabreak Logo" width="100" height="100" style="border-radius: 20px;">
+    <img src="docs/icon.png" alt="getabreak Logo" width="100" height="100" style="border-radius: 20px;">
   </a>
 </p>
 
@@ -141,12 +141,12 @@ sequenceDiagram
 ## UI Showcase
 
 <p align="center">
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" alt="Break Minimal Launcher" width="16%" style="border-radius: 8px; margin: 4px;" />
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" alt="Break Main Dashboard" width="16%" style="border-radius: 8px; margin: 4px;" />
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" alt="Break Rule Configuration" width="16%" style="border-radius: 8px; margin: 4px;" />
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" alt="Break Friction Intervention" width="16%" style="border-radius: 8px; margin: 4px;" />
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" alt="Break Settings & Controls" width="16%" style="border-radius: 8px; margin: 4px;" />
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/6.png" alt="Break Screen Time & Stats" width="16%" style="border-radius: 8px; margin: 4px;" />
+  <img src="docs/phoneScreenshots/1.png" alt="Break Minimal Launcher" width="16%" style="border-radius: 8px; margin: 4px;" />
+  <img src="docs/phoneScreenshots/2.png" alt="Break Main Dashboard" width="16%" style="border-radius: 8px; margin: 4px;" />
+  <img src="docs/phoneScreenshots/3.png" alt="Break Rule Configuration" width="16%" style="border-radius: 8px; margin: 4px;" />
+  <img src="docs/phoneScreenshots/4.png" alt="Break Friction Intervention" width="16%" style="border-radius: 8px; margin: 4px;" />
+  <img src="docs/phoneScreenshots/5.png" alt="Break Settings & Controls" width="16%" style="border-radius: 8px; margin: 4px;" />
+  <img src="docs/phoneScreenshots/6.png" alt="Break Screen Time & Stats" width="16%" style="border-radius: 8px; margin: 4px;" />
 </p>
 
 ---
