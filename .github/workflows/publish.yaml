@@ -258,7 +258,9 @@ jobs:
       # overlay (app/googlePlay.gradle + app/src/googlePlay/) and is released separately via
       # the Play Console.
       - name: Build APK
-        run: ./gradlew assembleFossRelease
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleFossRelease
 
       - name: Sign APK
         id: sign_app
